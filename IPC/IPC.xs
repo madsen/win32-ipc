@@ -45,13 +45,13 @@ WaitForMultiple(AV* hArray,BOOL fWaitAll,DWORD dwTimeOut)
 	if ( sv_isa(svCurrSV,"Win32::Process") ||
 	     sv_isa(svCurrSV,"Win32::Mutex") ||
 	     sv_isa(svCurrSV,"Win32::Semaphore") ||
-	     sv_isa(svCurrSV,"Win32::ChangeNotification"))
+	     sv_isa(svCurrSV,"Win32::ChangeNotify"))
 	{
 	    tmp = SvIV( (SV *)SvRV( svCurrSV));
 	    CurrObj = (Cipc *)tmp;
 	}
 	else {			 
-	    warn("WaitForMultipleObjects: Can only wait on Semaphore,mutex,ChangeNotification, or Process Objects");
+	    warn("WaitForMultipleObjects: Can only wait on Semaphore,mutex,ChangeNotify, or Process Objects");
 	    return(WAIT_FAILED);
 	}
 

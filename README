@@ -5,23 +5,23 @@ from CPAN that could previously only be used with Activeware's
 "Perl for Win32"(TM).
 
 Most other non-Win32 extensions should build fairly smoothly using
-the MakeMaker support available in perl 5.004, so they are not included
-in this bundle.
+the MakeMaker support available in perl 5.004 and later, so they are
+not included in this bundle.
 
 
 ---NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
 |                                                                       |
 |  This distribution does not contain binaries.  Look for a binary      |
-|  distribution of perl 5.004 and this bundle on CPAN.                  |
+|  distribution of perl 5.004_01 and various other goodies on CPAN.     |
 |                                                                       |
 ---NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
 
 
-This collection will build with perl5.004, using either Visual
-C++ 4.x+ or Borland C++ 5.0x+, on the Windows NT platform.  You need to
-apply a largish patch to perl5.004 and rebuild and install perl, before
-building this set of modules.  See README.win32 in the perl distribution
-for details on how to build perl on Win32.
+This collection will build with perl5.004_01 and later, using either
+Visual C++ 4.x+ or Borland C++ 5.0x+, on the Windows NT platform.  You
+need to build and install perl before building this set of modules.  See
+README.win32 in the perl distribution for details on how to build perl
+for the Win32 platform.
 
 Here is what this bundle contains:
 
@@ -89,16 +89,8 @@ Here is what this bundle contains:
 
 Building:
 
-   + First you need to apply a patch to perl 5.004 and rebuild it.
-     If you don't have GNU patch for win32, get it from:
-         http://www-personal.umich.edu/~gsar/patch2_1-win32-exe.zip
-     and put the binary somewhere in your path.  Extract perl 5.004
-     source, and cd to the perl toplevel, and apply the patch
-     contained in this distribution like so:
-         patch -p1 -N < \path\to\this\dist\perlwin-400_1.patch
-     Follow instructions in README.win32 in the perl distribution
-     to build perl (you will need either Visual C++ or Borland C++),
-     and install it.
+   + First you need to build perl 5.004_01 (you will need either
+     Visual C++ or Borland C++), and install it.
 
    + That done, you need to extract this distribution into an NTFS
      partition (the tests in the FileSecurity module and Net* modules
@@ -106,7 +98,7 @@ Building:
      run.  NetAdmin will only work if you have some kind of
      live network connection.  NetResource requires that you
      be part of a domain or workgroup.  You may also need
-     Administrator prvileges for running some of the tests.
+     Administrator privileges for running some of the tests.
      If one or more of these conditions will not be met, you may
      wish to build in the subdirectories one by one.  The steps
      below will work either at the toplevel directory, or in each

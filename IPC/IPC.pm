@@ -1,6 +1,6 @@
 package Win32::IPC;
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 =head1 NAME
 

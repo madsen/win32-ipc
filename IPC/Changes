@@ -2,4 +2,6 @@ Revision history for Perl extension Win32::IPC.
 
 0.01  Sat Apr  5 14:24:55 1997
 	- original version; created by h2xs 1.18
+0.02  Fri Jul  4 12:19:12 1997
+	- fixed refs to obsolete "ChangeNotification"
 
