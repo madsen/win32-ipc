@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: IPC/IPC.xs 18 2008-02-04 19:47:59 -0600 dubiously $
+// $Id: IPC/IPC.xs 78 2008-02-04 20:40:50 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::IPC
@@ -9,17 +9,9 @@
 //
 //--------------------------------------------------------------------
 
-#if defined(__cplusplus)
-extern "C" {
-#endif
-
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-
-#if defined(__cplusplus)
-}
-#endif
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -41,7 +33,7 @@ WaitForMultiple(AV* hArray, BOOL fWaitAll, DWORD dwTimeOut)
     return IV_MAX;
   }
 
-  aHandles = safemalloc(count * sizeof(HANDLE));
+  New(0,aHandles,count,HANDLE);
 
   // Create the array of handles for the WaitForMultipleObjects call
 
@@ -82,7 +74,7 @@ WaitForMultiple(AV* hArray, BOOL fWaitAll, DWORD dwTimeOut)
   // Now wait for something to happen
 
   result = WaitForMultipleObjects(count, aHandles, fWaitAll, dwTimeOut);
-  safefree(aHandles);
+  Safefree(aHandles);
 
   if ((result >= WAIT_OBJECT_0) && (result < WAIT_OBJECT_0 + count))
     return result - WAIT_OBJECT_0 + 1;

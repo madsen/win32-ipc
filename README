@@ -1,23 +1,29 @@
-Welcome to libwin32 version 0.12.
+Welcome to libwin32 version 0.13.
 
 
 WHAT
 ----
 
-This is a bundle of "Win32-only" extensions that provides a quick migration
-path for people wanting to use the core support for win32 in perl 5.004
-and later.  It features the complete set of Win32-specific extensions
-available from CPAN that could previously only be used with ActiveState's
-"Perl for Win32"(TM).
+This used to be a bundle of extensions that provided a quick migration path
+for people wanting to use the core support for win32 in perl 5.004 and later.
 
-Most other non-Win32 extensions should build fairly smoothly using
-the MakeMaker support available in perl 5.004 and later, so they are
-not included in this bundle.
+With the release of Perl version 5.005 (which brings ActiveState's changes
+to Perl sources into the mainstream), this library of extensions has
+assumed loftier motives.  The long term goal of this project is to provide
+a coherent collection of modules that allow access to the functionality
+provided by the Win32 API, while maintaining the style and spirit of Perl.
+Like Perl, the intention is to make "easy things easy, and hard things
+possible".  Note that we are nowhere close to this goal at the present
+time, but we are slowly getting there.
+
+As the name suggests, all modules in this distribution are Win32-specific.
+They cannot be used on platforms that do not support the Win32 API.
 
 This distribution has been pre-compiled for the x86 architecture.  The
 precompiled binaries can ONLY be used with the perl5.00402-bindist04-bc.zip
 distribution from CPAN.  See the "WHAT TO DO" section for installation
-instructions.
+instructions.  Binaries compatible with "ActivePerl" should be available
+soon from http://www.activestate.com/.
 
 
 WHAT HAS CHANGED
@@ -26,37 +32,34 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-Version 0.11 was never publicly released.  This release has the following
-changes over the previous one (version 0.10):
+This release has the following changes over the previous one (version 0.12):
 
-   + Jutta Klebe has contributed a new module, Win32::PerfLib. It
-     provides comprehensive facilities for accessing performance counters
-     on Windows NT.  See the documentation in PerfLib/PerfLib.pm.
+   + New modules from Tye McQueen: Win32API-Registry-0.15 and
+     Win32-TieRegistry-0.21.  These are much better designed and implemented
+     than Win32-Registry.  They also begin the concerted effort to layer
+     user-friendly implementations of Win32 functionality on top of a
+     comprehensive set of Win32API-* modules.
 
-   + Many, many fixes and enhancements in Win32::OLE, thanks to Jan Dubois
-     See OLE/Changes for a detailed list.
+   + New module from Bret Giddings: Win32API-Net-0.04 provides access to the
+     Lan Manager API.  Currently supports only the account management
+     functions, but the long-term intent is to support most of the Net* API.
 
-   + Win32::NetAdmin supports new functions: GetAliasFromRID(),
-     GetUserGroupFromRID(), LocalGroupGetMembersWithDomain(), and
-     GetServerDisks() (thanks to David Gardiner and Jutta Klebe).
-     A few broken constants have been fixed and missing ones added
-     (thanks to Dave Roth).  Most symbols are exported on request
-     (thanks to Tye McQueen).
+   + Newer version of Win32::OLE from Jan Dubois.  See OLE/Changes for
+     detailed list.
 
-   + Bug fixes for Win32::ChangeNotify (from Chris Madsen, thanks).
+   + PerfLib bugs fixed (thanks to Jutta Klebe and Henry Ptasinski
+     <henry@epigram.com>).
 
-   + Win32::Registry exports older symbols for compatibility (thanks to
-     Tye McQueen).  Reg*Key() functions enable priveleges as needed
-     (thanks to Jutta Klebe).
+   + Subversive use of LDLOADLIBS in Internet/Makefile.PL fixed.
 
-   + Win32::Service now reports stopped services (merged from ActiveState's
-     sources, thanks).
+   + Fixed GPF in NetAdmin::LocalGroupIsMember()
 
-   + Win32::GetArchName() and Win32::GetChipName() functions have been
-     added, for compatibility.
+   + Win32::Registry now supports setting REG_NONE entries.  Spurious
+     warnings on 'use' fixed.
 
-   + The bug whereby Win32::Process couldn't be loaded on Win95 should be
-     fixed.
+   + install.bat has improved sanity checks (thanks to Tye McQueen).
+
+   + Various tweaks to help PERL_OBJECT build
 
 Many thanks to all the contributors.
 
@@ -66,13 +69,12 @@ WHAT IT HAS
 
 This bundle contains:
 
-   * The collection of modules originally distributed by the Activeware
+   * The collection of modules originally distributed by the ActiveState
      folks as part of their "Perl for Win32"(TM) port.  These have been
      modified so that they will build under MakeMaker using perls greater
-     than 5.004 and Visual C++.  Along the way, I have added many
-     bugfixes to make these modules work correctly.
+     than 5.004.  There have been many bugfixes.
 
-     The complete list of Activeware extensions is available:
+     The complete list of ActiveState extensions is available:
 
         Win32/ChangeNotify
         Win32/EventLog
@@ -90,7 +92,8 @@ This bundle contains:
         Win32/WinError
 
      Note this covers all of the Win32 extensions distributed by
-     Activeware (as of build 316).
+     ActiveState (as of build 316).  Win32::OLE is currently most
+     actively maintained by Jan Dubois <jan.dubois@ibm.net>.
 
      These extensions have been re-engineered to use the XS interface
      language, yet the changes are compatible with the originals.  This
@@ -99,7 +102,7 @@ This bundle contains:
      change in future.
 
      The only deliberately incompatible change is in the Win32::OLE
-     module.  While the Activeware port used the "OLE::" and "Win32::"
+     module.  While the ActiveState port used the "OLE::" and "Win32::"
      namespaces for the functionality contained in this module, this
      port uses "Win32::OLE::" consistently.  For a list of other
      incompatibilities in Win32::OLE, see the embedded documentation
@@ -129,6 +132,15 @@ This bundle contains:
    * The Win32::PerfLib module to access performance counters on
      remote and local Windows NT systems, contributed by
      Jutta M. Klebe <jmk@exc.bybyte.de>.
+
+   * The Win32::TieRegistry module for easy access to the registry,
+     layered over the Win32API::Registry module that exposes the
+     Registry API functions.  Both modules are maintained by Tye McQueen
+     <tye@metronet.com>.
+
+   * The Win32API::Net module, which is a small step towards
+     comprehensive Net* API functionality, maintained by Bret Giddings
+     <bret@essex.ac.uk>.
 
 
 WHAT TO DO
@@ -177,7 +189,25 @@ possible if you use the 4DOS command shell, but YMMV).
      README.win32 in the perl distribution for details on how to build
      perl for the Win32 platform.
 
-   + That done, you need to extract this distribution into an NTFS
+   + Make sure your perl is properly configured.  "perl -V:libpth" should
+     report a valid path to your compiler's library files.  The perl
+     binaries from ActiveState are known to report a bogus value here.
+     To fix the problem, you will have to edit the Config.pm file (found
+     somewhere like c:\perl\5.00502\lib\MSWin32-x86-object\Config.pm) and
+     set the line that begins with "libpth=" to something like:
+
+		libpth='c:\devstudio\vc\lib'
+
+     If you built perl yourself and see the problem, it probably means you
+     didn't specify the library location properly in the Makefile used to
+     build perl.
+
+     Another common problem is not making perlcrt.lib available from
+     the 'libpth' location.  perlcrt.lib may or may not be needed
+     if you have perl 5.005 or later, depending on whether you built
+     perl to use it.  ActiveState's perl binaries need it.
+
+   + All that done, you need to extract this distribution into an NTFS
      partition (the tests in the FileSecurity module and Net* modules
      will fail otherwise).  The testsuite for OLE needs Excel to
      run.  NetAdmin will only work if you have some kind of
@@ -197,13 +227,11 @@ possible if you use the 4DOS command shell, but YMMV).
      installations may have problems finding all the libraries).
      
    + If the Internet extension doesn't build due to lack of libraries
-     (the wininet.h header is included), fetch the libraries from
-     Aldo Calpini's website: "http://www.divinf.it/dada/perl/internet/".
-     Look for a file named "WinInet.zip".  If the wininet.h or wininet.dll
-     in your system are newer than the ones in WinInet.zip, discard them
-     before copying WinInet.lib into the Internet/ directory.  [Aldo's
-     site doesn't seem to exist anymore.  You should be able to get
-     the files from http://www.microsoft.com/ if you look around.]
+     (the wininet.h header is included), fetch the Platform SDK from
+     "http://www.microsoft.com/msdn/sdk/".  You need to look for wininet.h
+     and wininet.dll.  If either of those is newer than the ones you already
+     have, replace the older ones, and copy the newer wininet.lib into the
+     Internet/ directory.
 
    + Remove the 'blib' directory (it contains the precompiled binaries)
 
@@ -222,26 +250,20 @@ available compiler, and perl configuration.
 WHAT THEN
 ---------
 
-A brief statment of intent:  I am doing this to ease the transition
-for many people who may wish to start using the latest perl on win32
-platforms.  Long term development of these modules remains the
-responsibility of the respective authors.
+If you find any problems with these modules, kindly report them to both
+the original author and to me.  While I have fixed many problems in these
+modules, I may also have introduced brand new bugs in the process :)
 
 I wish to thank the authors of these modules for their effort in making
 them useful, and for making them freely available.
 
-If you find any problems with these modules, kindly report them to
-me.  While I have fixed many problems in these modules, I may also have
-introduced brand new bugs in the process :)
-
-Suggestions, patches, testsuite additions, wholesale rewrites and
-additional ports of modules welcome.
+Suggestions, patches, testsuite additions, and wholesale rewrites welcome.
 
 Enjoy!
 
 Gurusamy Sarathy
 gsar@umich.edu
-11 May 1998
+17 Sep 1998
 
 
 WHATEVER

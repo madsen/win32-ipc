@@ -23,7 +23,7 @@ package Win32::IPC;
 # Base class for Win32 synchronization objects
 #---------------------------------------------------------------------
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 
 require Exporter;
 require DynaLoader;

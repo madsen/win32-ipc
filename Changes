@@ -1,7 +1,40 @@
 Revision history for Perl extension libwin32.
 
 
-0.11  Mon May 11 00:32:33 1998
+0.13  Thu Sep 17 19:35:20 1998
+
+   + New modules from Tye McQueen: Win32API-Registry-0.15 and
+     Win32-TieRegistry-0.21.  These are much better designed and implemented
+     than Win32-Registry.  They also begin the concerted effort to layer
+     user-friendly implementations of Win32 functionality on top of a
+     comprehensive set of Win32API-* modules.
+
+   + New module from Bret Giddings: Win32API-Net-0.04 provides access to the
+     Lan Manager API.  Currently supports only the account management
+     functions, but the long-term intent is to support most of the Net* API.
+
+   + Newer version of Win32::OLE from Jan Dubois.  See OLE/Changes for
+     detailed list.
+
+   + PerfLib bugs fixed (thanks to Jutta Klebe and Henry Ptasinski
+     <henry@epigram.com>).
+
+   + Subversive use of LDLOADLIBS in Internet/Makefile.PL fixed.
+
+   + Fixed GPF in NetAdmin::LocalGroupIsMember()
+
+   + Win32::Registry now supports setting REG_NONE entries.  Spurious
+     warnings on 'use' fixed.
+
+   + install.bat has improved sanity checks (thanks to Tye McQueen).
+
+   + Various tweaks to help PERL_OBJECT build
+
+0.12  Mon May 11 00:32:33 1998
+
+   + Applied serious OLE bugfixes from Jan Dubois for public release.
+
+0.11  (unreleased)
 
    + Jutta Klebe has contributed a new module, Win32::PerfLib. It
      provides comprehensive facilities for accessing performance counters

@@ -1,5 +1,8 @@
 Revision history for Perl extension Win32::IPC.
 
+1.01  Tue Sep 15 12:25:16 1998
+	- use New/Safefree instead of safemalloc/safefree
+
 1.00  Fri Feb  6 1998 10:51:40
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C

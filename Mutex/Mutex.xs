@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: Mutex/Mutex.xs 18 2008-02-04 19:47:59 -0600 dubiously $
+// $Id: Mutex/Mutex.xs 78 2008-02-04 20:40:50 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::Mutex
@@ -9,17 +9,9 @@
 //
 //--------------------------------------------------------------------
 
-#if defined(__cplusplus)
-extern "C" {
-#endif
-
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-
-#if defined(__cplusplus)
-}
-#endif
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
