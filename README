@@ -1,9 +1,13 @@
-This is a collection of modules stolen from the Activeware port
-and modified so that they will build under MakeMaker using perls
-greater than 5.003_99 and Visual C++.  If you only have 5.003_99, you
-will need to apply the supplied patch to the perl5.003_99 sources.
-Read the instructions at the top of the patch file, apply it,
-rebuild perl and install it before attempting to build these extensions.
+This is a collection of modules originally distributed by the Activeware
+folks as part of their "Perl for Win32"(TM) port.  They have been modified
+so that they will build under MakeMaker using perls greater than 5.003_99
+and Visual C++.  Along the way, I have added many bugfixes to make these
+modules work correctly.
+
+This collection will build with perl5.003_99a and later.  You will first
+need to build and install that perl before proceeding with this set
+of modules.  See README.win32 in the perl distribution for details on
+how to build perl on Win32.
 
 The following extensions have been "ported":
 
@@ -16,14 +20,27 @@ The following extensions have been "ported":
     Win32/Registry
     Win32/Service
     Win32/WinError
+    Win32/ChangeNotify
+    Win32/IPC
+    Win32/Mutex
+    Win32/Process
+    Win32/Semaphore
 
-All of the extensions have been re-engineered to use the XS
-interface language.  Working on these has become a rather
-unpleasant task due to what I consider to be poor design and
-implementation of these modules.  While I have tried to keep my
-changes compatible with the originals at the present time, I plan
-to rework these modules radically once there is full port of all
-the Activeware extensions.
+Note this covers all of the Win32 extensions distributed by
+Activeware (as of build 306).
+
+These extensions have been re-engineered to use the XS
+interface language.  Working on these was a rather unpleasant
+task due to what I consider to be poor design and
+implementation of these modules.  While I have tried to keep most
+of my changes compatible with the originals at the present time, I
+plan to rework these modules radically when I find the time.
+
+The only incompatible change is in the Win32::OLE module.  While
+the Activeware port used the "OLE::" and "Win32::" namespaces for
+the functionality contained in this module, this port uses
+"Win32::OLE::" consistently.  For a list of other incompatibilities
+in this module, see the embedded documentation in "OLE/OLE.pm".
 
 Building:
 
@@ -32,11 +49,12 @@ Building:
       fail otherwise).  The testsuite for OLE needs Excel to
       run.  NetAdmin will only work if you have some kind of
       live network connection.  NetResource requires that you
-      be part of a domain or workgroup.  If one or more of
-      these conditions will not be met, you may wish to build
-      in the subdirectories one by one.  The steps below will
-      work either at the toplevel directory, or in each of the
-      individual extension subdirectories.
+      be part of a domain or workgroup.  You may also need
+      Administrator prvileges for running some of the tests.
+      If one or more of these conditions will not be met, you may
+      wish to build in the subdirectories one by one.  The steps
+      below will work either at the toplevel directory, or in each
+      of the individual extension subdirectories.
    
     + You need MS Visual C++ (NetAdmin needs ver. 4.0+, ver. 2.0
       should suffice for the others).
@@ -52,21 +70,24 @@ Building:
 I hope this kickstarts the process of bringing the divergant Win32::
 extensions back into the MakeMaker fold.
 
-The following modules available in the Activeware port are not
-available in this one:
-
-    Win32/ChangeNotify
-    Win32/IPC
-    Win32/Mutex
-    Win32/Process
-    Win32/Semaphore
-
-They are waiting on the availability of the CPerl object in core
-perl (I may rework them to not rely on CPerl).
-
-Suggestions, patches, rewrites and additional ports of modules welcome.
+Suggestions, patches, testsuite additions, wholesale rewrites and
+additional ports of modules welcome.
 
 Gurusamy Sarathy
 gsar@umich.edu
 11-MAY-1997
+
+
+COPYRIGHT
+
+
+    (c) 1995 Microsoft Corporation. All rights reserved. 
+	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
+
+    Other modifications (c) 1997 by Gurusamy Sarathy <gsar@umich.edu>
+
+    You may distribute under the terms of either the GNU General Public
+    License or the Artistic License, as specified in the README file
+    of the Perl distribution.
+
 

@@ -1,0 +1,4 @@
+DWORD                   T_IV
+HKEY                    T_IV
+HANDLE                  T_IV
+BOOL			T_IV
