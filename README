@@ -11,26 +11,24 @@ in this bundle.
 
 ---NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
 |                                                                       |
-|  This distribution does not contain binaries at this time.  There are |
-|  plans to distribute binaries of both perl 5.004 and this bundle,     |
-|  once 5.004 is available.                                             |
+|  This distribution does not contain binaries.  Look for a binary      |
+|  distribution of perl 5.004 and this bundle on CPAN.                  |
 |                                                                       |
 ---NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
 
 
-This collection will build with perl5.003_99a and later, using Visual
-C++ 4.x or later on the Windows NT platform (Visual C++ 2.x may suffice
-for most modules, some will fail for lack of header files in those old
-compilers).  You will first need to build and install perl before
-proceeding with this set of modules.  See README.win32 in the perl
-distribution for details on how to build perl on Win32.
+This collection will build with perl5.004, using either Visual
+C++ 4.x+ or Borland C++ 5.0x+, on the Windows NT platform.  You need to
+apply a largish patch to perl5.004 and rebuild and install perl, before
+building this set of modules.  See README.win32 in the perl distribution
+for details on how to build perl on Win32.
 
 Here is what this bundle contains:
 
    * The collection of modules originally distributed by the Activeware
      folks as part of their "Perl for Win32"(TM) port.  These have been
      modified so that they will build under MakeMaker using perls greater
-     than 5.003_99 and Visual C++.  Along the way, I have added many
+     than 5.004 and Visual C++.  Along the way, I have added many
      bugfixes to make these modules work correctly.
 
      The complete list of Activeware extensions is available:
@@ -91,9 +89,20 @@ Here is what this bundle contains:
 
 Building:
 
-   + You need to extract this into an NTFS file system (the
-     tests in the FileSecurity module and Net* modules will
-     fail otherwise).  The testsuite for OLE needs Excel to
+   + First you need to apply a patch to perl 5.004 and rebuild it.
+     If you don't have GNU patch for win32, get it from:
+         http://www-personal.umich.edu/~gsar/patch2_1-win32-exe.zip
+     and put the binary somewhere in your path.  Extract perl 5.004
+     source, and cd to the perl toplevel, and apply the patch
+     contained in this distribution like so:
+         patch -p1 -N < \path\to\this\dist\perlwin-400_1.patch
+     Follow instructions in README.win32 in the perl distribution
+     to build perl (you will need either Visual C++ or Borland C++),
+     and install it.
+
+   + That done, you need to extract this distribution into an NTFS
+     partition (the tests in the FileSecurity module and Net* modules
+     will fail otherwise).  The testsuite for OLE needs Excel to
      run.  NetAdmin will only work if you have some kind of
      live network connection.  NetResource requires that you
      be part of a domain or workgroup.  You may also need
@@ -103,9 +112,16 @@ Building:
      below will work either at the toplevel directory, or in each
      of the individual extension subdirectories.
    
-   + You need MS Visual C++ (NetAdmin and Internet need ver. 4.x+,
-     ver. 2.0 should suffice for the others).
-   
+   + You need either MS Visual C++ (NetAdmin needs ver. 4.x+, Internet
+     needs ver. 5.0. ver. 2.0 should suffice for the others) or
+     Borland C++ 5.0.  Make sure you have the full installation of
+     either of these compilers ("Minimal" installations or CDROM-based
+     installations may have problems finding all the libraries).  If
+     the Internet extension doesn't build due to lack of libraries
+     (the wininet.h header is included), fetch the libraries from
+     Aldo Calpini's website: "http://www.divinf.it/data/perl/internet/".
+     Look for a file named "WinInet.zip".
+
    + perl Makefile.PL               [either at toplevel or in subdirs]
    
    + nmake                          [either at toplevel or in subdirs]
@@ -133,7 +149,7 @@ additional ports of modules welcome.
 
 Gurusamy Sarathy
 gsar@umich.edu
-13-MAY-1997
+28-MAY-1997
 
 
 COPYRIGHT

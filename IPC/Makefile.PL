@@ -1,11 +1,12 @@
 use ExtUtils::MakeMaker;
+use Config;
+$BORLAND = 1 if $Config{'cc'} =~ /^bcc32/i;
 WriteMakefile(
-    'INC'	=> '-GX',
+    'INC'	=> ($BORLAND ? '' : '-GX'),
     'NAME'	=> 'Win32::IPC',
     'VERSION_FROM' => 'IPC.pm', # finds $VERSION
     'XS'	=> { 'IPC.xs' => 'IPC.cpp' },
     'dist'	=> { COMPRESS => 'gzip -9f', SUFFIX => 'gz' },
-    'dynamic_lib' => { 'OTHERLDFLAGS' => q[] },
 );
 
 sub MY::xs_c {
@@ -15,9 +16,3 @@ sub MY::xs_c {
 ';
 }
 
-sub MY::c_o {
-    '
-.cpp$(OBJ_EXT):
-	$(CCCMD) $(CCCDLFLAGS) -I$(PERL_INC) $(DEFINE) -Tp$*.cpp
-';
-}

@@ -4,6 +4,7 @@
 // Semaphore object creation layer.
 
 #define WIN32_LEAN_AND_MEAN
+#include <stdlib.h>
 #include <math.h>		// avoid VC-5.0 brainmelt
 #include <windows.h>
 #include "Semaphore.hpp"

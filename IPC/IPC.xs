@@ -1,5 +1,6 @@
 // IPC module definition.
 
+#include <stdlib.h>
 #include <math.h>	// this to avoid VC-5.0 brainmelt
 #include "IPC.hpp"
 #define WIN32_LEAN_AND_MEAN
