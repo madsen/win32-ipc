@@ -1,5 +1,9 @@
 Revision history for Perl extension Win32::Semaphore.
 
+1.02  Mon May 22 2000 21:53:04
+	- support for passing Unicode strings to new() and open() methods
+	  (Doug Lankshear <dougl@activestate.com>)
+
 1.01  Sun Feb  8 1998 20:16:56
 	- Add Open() function for compat
 

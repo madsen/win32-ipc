@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: Event/Event.xs 78 2008-02-04 20:40:50 -0600 dubiously $
+// $Id: Event/Event.xs 119 2008-02-05 03:46:28 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::Event
@@ -12,6 +12,8 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+
+#include "../ppport.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -34,7 +36,14 @@ CODE:
     sec.nLength = sizeof(SECURITY_ATTRIBUTES);
     sec.bInheritHandle = TRUE;        // allow inheritance
     sec.lpSecurityDescriptor = NULL;  // calling processes' security
-    RETVAL = CreateEvent(&sec,manual,initial,name);
+    if (name && USING_WIDE()) {
+	WCHAR wbuffer[MAX_PATH+1];
+	A2WHELPER(name, wbuffer, sizeof(wbuffer));
+	RETVAL = CreateEventW(&sec,manual,initial,wbuffer);
+    }
+    else {
+	RETVAL = CreateEventA(&sec,manual,initial,name);
+    }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:
@@ -46,7 +55,14 @@ open(className, name)
     char*  className
     LPCSTR name
 CODE:
-    RETVAL = OpenEvent(EVENT_ALL_ACCESS, TRUE, name);
+    if (USING_WIDE()) {
+	WCHAR wbuffer[MAX_PATH+1];
+	A2WHELPER(name, wbuffer, sizeof(wbuffer));
+	RETVAL = OpenEventW(EVENT_ALL_ACCESS, TRUE, wbuffer);
+    }
+    else {
+	RETVAL = OpenEventA(EVENT_ALL_ACCESS, TRUE, name);
+    }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:

@@ -1,5 +1,8 @@
 Revision history for Perl extension Win32::IPC.
 
+1.02  Mon May 22 21:16:37 2000
+	- support for building under Perl v5.6.0
+
 1.01  Tue Sep 15 12:25:16 1998
 	- use New/Safefree instead of safemalloc/safefree
 

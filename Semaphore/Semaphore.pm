@@ -23,7 +23,7 @@ package Win32::Semaphore;
 # Use Win32 semaphore objects for synchronization
 #---------------------------------------------------------------------
 
-$VERSION = '1.01';
+$VERSION = '1.02';
 
 use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;

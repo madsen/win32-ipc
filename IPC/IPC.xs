@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: IPC/IPC.xs 78 2008-02-04 20:40:50 -0600 dubiously $
+// $Id: IPC/IPC.xs 119 2008-02-05 03:46:28 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::IPC
@@ -13,6 +13,8 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#include "../ppport.h"
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
@@ -20,6 +22,7 @@
 static IV
 WaitForMultiple(AV* hArray, BOOL fWaitAll, DWORD dwTimeOut)
 {
+  dTHX;
   int	   count;
   SV **    svpp;
   HANDLE   handle;

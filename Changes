@@ -1,6 +1,36 @@
 Revision history for Perl extension libwin32.
 
 
+0.16  Mon May 22 22:16:41 2000
+
+   + Support for building under Perl 5.6.0.
+   
+   + Partial support for passing Unicode strings to many of the extensions,
+     under Perl 5.6.0.  Not all extensions support this yet.
+
+   + Win32API-File has been upgraded to v0.09 (thanks to Tye McQueen).
+     See APIFile/Changes for the detailed list of changes.  The
+     APIFile/ex directory contains several new examples.
+
+   + Win32API-Registry has been upgraded to v0.22 (thanks again to
+     Tye McQueen).  See APIRegistry/Changes for the details on what's
+     new.
+
+   + Win32-Clipboard has been upgraded to v0.51 (thanks to Aldo
+     Calpini).  This version has documentation in POD format, and
+     supports three different formats to access clipboard data,
+     and comes with sample code.  See Clipboard/README and the
+     Clipboard/samples directory.
+
+   + Win32-OLE has been upgraded to v0.13 (thanks to Jan Dubois
+     <jand@activestate.com>).  The article on Win32::OLE from The Perl Journal
+     is now included in POD format.  For the detailed list of changes, see
+     OLE/Changes and OLE/lib/Win32/OLE/NEWS.pod.
+
+   + Various minor cleanups and bug fixes.
+
+   + A TODO file has been added.
+
 0.151 Sun Sep 26 16:29:29 1999
 
    + The 5.00402 binaries were missing from the package.  Doh!

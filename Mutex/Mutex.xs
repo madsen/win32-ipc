@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: Mutex/Mutex.xs 78 2008-02-04 20:40:50 -0600 dubiously $
+// $Id: Mutex/Mutex.xs 119 2008-02-05 03:46:28 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::Mutex
@@ -12,6 +12,8 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+
+#include "../ppport.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -33,7 +35,14 @@ CODE:
     sec.nLength = sizeof(SECURITY_ATTRIBUTES);
     sec.bInheritHandle = TRUE;        // allow inheritance
     sec.lpSecurityDescriptor = NULL;  // calling processes' security
-    RETVAL = CreateMutex(&sec,initial,name);
+    if (name && USING_WIDE()) {
+	WCHAR wbuffer[MAX_PATH+1];
+	A2WHELPER(name, wbuffer, sizeof(wbuffer));
+	RETVAL = CreateMutexW(&sec,initial,wbuffer);
+    }
+    else {
+	RETVAL = CreateMutexA(&sec,initial,name);
+    }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:
@@ -45,7 +54,14 @@ open(className, name)
     char*  className
     LPCSTR name
 CODE:
-    RETVAL = OpenMutex(MUTEX_ALL_ACCESS, TRUE, name);
+    if (USING_WIDE()) {
+	WCHAR wbuffer[MAX_PATH+1];
+	A2WHELPER(name, wbuffer, sizeof(wbuffer));
+	RETVAL = OpenMutexW(MUTEX_ALL_ACCESS, TRUE, wbuffer);
+    }
+    else {
+	RETVAL = OpenMutexA(MUTEX_ALL_ACCESS, TRUE, name);
+    }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:

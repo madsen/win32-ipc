@@ -1,5 +1,8 @@
 Revision history for Perl extension Win32::ChangeNotify.
 
+1.03  Mon May 22 2000 20:32:04
+        - support for passing Unicode strings to new() method
+
 1.02  Sun Jun 13 1999 12:33:09
 	- Bug fix to AUTOLOAD (FILE_NOTIFY_CHANGE_* constants now work)
 	  (courtesy Christopher J. Madsen)

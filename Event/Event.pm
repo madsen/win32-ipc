@@ -18,7 +18,7 @@ package Win32::Event;
 # Use Win32 event objects for synchronization
 #---------------------------------------------------------------------
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 
 use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;

@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: Semaphore/Semaphore.xs 78 2008-02-04 20:40:50 -0600 dubiously $
+// $Id: Semaphore/Semaphore.xs 119 2008-02-05 03:46:28 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::Semaphore
@@ -12,6 +12,8 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+
+#include "../ppport.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -29,11 +31,18 @@ new(className, initial, max, name=NULL)
     LPCSTR name
 CODE:
     {
-      SECURITY_ATTRIBUTES  sec;
-      sec.nLength = sizeof(SECURITY_ATTRIBUTES);
-      sec.bInheritHandle = TRUE;	// allow inheritance
-      sec.lpSecurityDescriptor = NULL;  // calling processes' security
-      RETVAL = CreateSemaphore(&sec, initial, max, name);
+	SECURITY_ATTRIBUTES  sec;
+	sec.nLength = sizeof(SECURITY_ATTRIBUTES);
+	sec.bInheritHandle = TRUE;	// allow inheritance
+	sec.lpSecurityDescriptor = NULL;  // calling processes' security
+	if (name && USING_WIDE()) {
+	    WCHAR wbuffer[MAX_PATH+1];
+	    A2WHELPER(name, wbuffer, sizeof(wbuffer));
+	    RETVAL = CreateSemaphoreW(&sec, initial, max, wbuffer);
+	}
+	else {
+	    RETVAL = CreateSemaphoreA(&sec, initial, max, name);
+	}
     }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
@@ -46,7 +55,14 @@ open(className, name)
     char*  className
     LPCSTR name
 CODE:
-    RETVAL = OpenSemaphore(SEMAPHORE_ALL_ACCESS, TRUE, name);
+    if (USING_WIDE()) {
+	WCHAR wbuffer[MAX_PATH+1];
+	A2WHELPER(name, wbuffer, sizeof(wbuffer));
+	RETVAL = OpenSemaphoreW(SEMAPHORE_ALL_ACCESS, TRUE, wbuffer);
+    }
+    else {
+	RETVAL = OpenSemaphoreA(SEMAPHORE_ALL_ACCESS, TRUE, name);
+    }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:

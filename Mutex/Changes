@@ -1,5 +1,9 @@
 Revision history for Perl extension Win32::Mutex.
 
+1.02  Mon May 22 21:19:43 2000
+	- support for passing Unicode strings to the new() and open()
+	  methods (thanks to Doug Lankshear <dougl@activestate.com>)
+
 1.01  Sun Feb  8 1998 20:17:15
 	- Added Open() function for compat
 
