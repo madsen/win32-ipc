@@ -1,5 +1,39 @@
 Revision history for Perl extension libwin32.
 
+0.24  14 February 2005
+
+   + This release corresponds to libwin32 in ActivePerl 5.8.6.811.
+     It is intended to be the baseline for applying accumulated
+     patches.
+
+0.22  (unreleased)
+
+   + Win32::IsAdminUser() by Steve Hay has been added to Win32.xs.
+
+0.21  (unreleased)
+
+   + Win32::Internet had various bug fixes applied.  This includes a
+     memory leak in SetOption() and argument handling of the accept()
+     and HttpOpenRequest() methods.
+
+   + Win32::OLE updated to 0.17
+     See OLE/changes for list of changes.
+
+   + Win32::GetOSName() now identifies Windows 2003 as "Win2003".
+
+0.20  (unreleased)
+
+   + Win32::EventLog updated to 0.074.  It fixes a bug that made some
+     message texts containing positional parameters unretrievable.
+
+   + Win32::GetFolderPath() and CSIDL_xxx constants added to Win32 module.
+
+   + Win32::Job now propagates environment variables to the subprocesses.
+
+   + Win32::OLE updated to 0.16
+     See OLE/changes for list of changes.
+
+   + Win32::Shortcut coredump during process exit has been fixed.
 
 0.191 Mon Jul  8 17:30:53 2002
 
