@@ -1,5 +1,9 @@
 Revision history for Perl extension Win32::ChangeNotify.
 
+1.01  Sun Apr 26 1998 13:28:49
+	- Bug fixes to `new' and `close' methods (courtesy
+	  Chris Madsen)
+
 1.00  Fri Feb  6 1998 10:35:22
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C

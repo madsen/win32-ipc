@@ -23,7 +23,7 @@ package Win32::Semaphore;
 # Use Win32 semaphore objects for synchronization
 #---------------------------------------------------------------------
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 
 use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;
@@ -37,6 +37,7 @@ require DynaLoader;
 bootstrap Win32::Semaphore;
 
 sub Create  { $_[0] = new('Win32::Semaphore',@_[1..3]) }
+sub Open  { $_[0] = Win32::Semaphore->open($_[1]) }
 sub Release { &release }
 
 1;

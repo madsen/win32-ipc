@@ -23,8 +23,9 @@ package Win32::ChangeNotify;
 # Monitor directory for changes
 #---------------------------------------------------------------------
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 
+use Carp;
 use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;
 require DynaLoader;
@@ -72,6 +73,7 @@ sub new {
         $filter = 0;
         foreach (split(/[\s|]+/, $_[3])) {
             $filter |= constant("FILE_NOTIFY_CHANGE_" . uc $_);
+            carp "Invalid filter $_" if $!;
         }
     }
     _new($class,$path,$subtree,$filter);

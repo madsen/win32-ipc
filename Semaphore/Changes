@@ -1,5 +1,8 @@
 Revision history for Perl extension Win32::Semaphore.
 
+1.01  Sun Feb  8 1998 20:16:56
+	- Add Open() function for compat
+
 1.00  Fri Feb  6 1998 11:01:57
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C

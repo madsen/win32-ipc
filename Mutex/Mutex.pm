@@ -23,7 +23,7 @@ package Win32::Mutex;
 # Use Win32 mutex objects for synchronization
 #---------------------------------------------------------------------
 
-$VERSION = '1.00';
+$VERSION = '1.01';
 
 use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;
@@ -37,6 +37,7 @@ require DynaLoader;
 bootstrap Win32::Mutex;
 
 sub Create  { $_[0] = Win32::Mutex->new(@_[1..2]) }
+sub Open  { $_[0] = Win32::Mutex->open($_[1]) }
 sub Release { &release }
 
 1;

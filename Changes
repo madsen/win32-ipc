@@ -1,6 +1,37 @@
 Revision history for Perl extension libwin32.
 
 
+0.11  Mon May 11 00:32:33 1998
+
+   + Jutta Klebe has contributed a new module, Win32::PerfLib. It
+     provides comprehensive facilities for accessing performance counters
+     on Windows NT.  See the documentation in PerfLib/PerfLib.pm.
+
+   + Many, many fixes and enhancements in Win32::OLE, thanks to Jan Dubois
+     See OLE/Changes for a detailed list.
+
+   + Win32::NetAdmin supports new functions: GetAliasFromRID(),
+     GetUserGroupFromRID(), LocalGroupGetMembersWithDomain(), and
+     GetServerDisks() (thanks to David Gardiner and Jutta Klebe).
+     A few broken constants have been fixed and missing ones added
+     (thanks to Dave Roth).  Most symbols are exported on request
+     (thanks to Tye McQueen).
+
+   + Bug fixes for Win32::ChangeNotify (from Chris Madsen, thanks).
+
+   + Win32::Registry exports older symbols for compatibility (thanks to
+     Tye McQueen).  Reg*Key() functions enable priveleges as needed
+     (thanks to Jutta Klebe).
+
+   + Win32::Service now reports stopped services (merged from ActiveState's
+     sources, thanks).
+
+   + Win32::GetArchName() and Win32::GetChipName() functions have been
+     added, for compatibility.
+
+   + The bug whereby Win32::Process couldn't be loaded on Win95 should be
+     fixed.
+
 0.10  Fri Feb  6 21:32:33 1998
 
    + Chris Madsen <ac608@yfn.ysu.edu> has rethought and rewritten the IPC

@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: ChangeNotify/ChangeNotify.xs 18 2008-02-04 19:47:59 -0600 dubiously $
+// $Id: ChangeNotify/ChangeNotify.xs 48 2008-02-04 20:21:21 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::ChangeNotify
@@ -125,7 +125,7 @@ close(handle)
 CODE:
     if (handle != INVALID_HANDLE_VALUE) {
       RETVAL = FindCloseChangeNotification(handle);
-      handle = INVALID_HANDLE_VALUE;
+      sv_setiv(SvRV(ST(0)), (IV)INVALID_HANDLE_VALUE);
     } else XSRETURN_UNDEF;
 OUTPUT:
     RETVAL

@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.10.
+Welcome to libwin32 version 0.12.
 
 
 WHAT
@@ -7,15 +7,17 @@ WHAT
 This is a bundle of "Win32-only" extensions that provides a quick migration
 path for people wanting to use the core support for win32 in perl 5.004
 and later.  It features the complete set of Win32-specific extensions
-available from CPAN that could previously only be used with Activeware's
+available from CPAN that could previously only be used with ActiveState's
 "Perl for Win32"(TM).
 
 Most other non-Win32 extensions should build fairly smoothly using
 the MakeMaker support available in perl 5.004 and later, so they are
 not included in this bundle.
 
-This distribution has been pre-compiled for the x86 architecture.  See
-the "WHAT TO DO" section for installation instructions.
+This distribution has been pre-compiled for the x86 architecture.  The
+precompiled binaries can ONLY be used with the perl5.00402-bindist04-bc.zip
+distribution from CPAN.  See the "WHAT TO DO" section for installation
+instructions.
 
 
 WHAT HAS CHANGED
@@ -24,49 +26,37 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-This release has the following changes over the previous one:
+Version 0.11 was never publicly released.  This release has the following
+changes over the previous one (version 0.10):
 
-   + Chris Madsen <ac608@yfn.ysu.edu> has rethought and rewritten the IPC
-     related modules.  The Win32::Event module is new.  In his own words:
+   + Jutta Klebe has contributed a new module, Win32::PerfLib. It
+     provides comprehensive facilities for accessing performance counters
+     on Windows NT.  See the documentation in PerfLib/PerfLib.pm.
 
-	The Win32::IPC modules
+   + Many, many fixes and enhancements in Win32::OLE, thanks to Jan Dubois
+     See OLE/Changes for a detailed list.
 
-		Win32::ChangeNotify
-		Win32::Event
-		Win32::IPC
-		Win32::Mutex
-		Win32::Semaphore
+   + Win32::NetAdmin supports new functions: GetAliasFromRID(),
+     GetUserGroupFromRID(), LocalGroupGetMembersWithDomain(), and
+     GetServerDisks() (thanks to David Gardiner and Jutta Klebe).
+     A few broken constants have been fixed and missing ones added
+     (thanks to Dave Roth).  Most symbols are exported on request
+     (thanks to Tye McQueen).
 
-	have been almost completely rewritten and are now at version 1.00.
-	The rather inconsistent ActiveWare interface is still supported, but
-	you should really use the newer and more powerful interface (using
-	lower case method names).
+   + Bug fixes for Win32::ChangeNotify (from Chris Madsen, thanks).
 
-	Consult the documentation for each module for details on how to
-	convert from the old interface.
+   + Win32::Registry exports older symbols for compatibility (thanks to
+     Tye McQueen).  Reg*Key() functions enable priveleges as needed
+     (thanks to Jutta Klebe).
 
-	In addition, Win32::Process has been slightly altered to work with
-	Win32::IPC.  Process objects should now work with Win32::IPC's wait_*
-	functions (they were supposed to work before, but they didn't).  You
-	will have to load Win32::IPC yourself, because Win32::Process does
-	not.
+   + Win32::Service now reports stopped services (merged from ActiveState's
+     sources, thanks).
 
-   + Yet more OLE fixes from Jan Dubois <jan.dubois@ibm.net>.
+   + Win32::GetArchName() and Win32::GetChipName() functions have been
+     added, for compatibility.
 
-   + NetAdmin enhancements from Jutta Klebe <jmk@exc.bybyte.de>
-
-   + Updated FileSecurity to base version 0.67.
-
-   + Win32::Registry sports additional functions that correspond to the
-     Win32 Registry API functions.
-
-   + Misc. changes
-	- fixed buggy InitiateSystemShutdown()
-	- New compatibility XSUBs: MsgBox(), LoadLibrary(), FreeLibrary(),
-	  GetProcAddress(), RegisterServer(), UnregisterServer()
-
-   + Other minor bugs have been fixed.  See "Changes" files in individual
-     module subdirectories.
+   + The bug whereby Win32::Process couldn't be loaded on Win95 should be
+     fixed.
 
 Many thanks to all the contributors.
 
@@ -100,7 +90,7 @@ This bundle contains:
         Win32/WinError
 
      Note this covers all of the Win32 extensions distributed by
-     Activeware (as of build 315).
+     Activeware (as of build 316).
 
      These extensions have been re-engineered to use the XS interface
      language, yet the changes are compatible with the originals.  This
@@ -134,7 +124,11 @@ This bundle contains:
 
      These have only received just the bare modifications needed to
      build them under MakeMaker.  *.xs are really C/C++ files
-     masquerading as XS.  Win32/ODBC hasn't been tested much.
+     masquerading as XS.
+
+   * The Win32::PerfLib module to access performance counters on
+     remote and local Windows NT systems, contributed by
+     Jutta M. Klebe <jmk@exc.bybyte.de>.
 
 
 WHAT TO DO
@@ -150,7 +144,11 @@ If you want to use the precompiled binaries:
        http://www.perl.com/CPAN/authors/id/GSAR/perl5.00402-bindist04-bc.zip
      Unzip that, thoroughly read the README file, and install it.  Note that
      the it comes with an older version of libwin32, but you'll be
-     completely replacing that in the next few steps.
+     completely replacing that in the next few steps. [Well not completely--
+     the Win32::AdminMisc module has been dropped since Dave Roth is
+     distributing newer versions compatible with the above binary
+     distribution, so the old AdminMisc will be left alone.  See
+     http://www.roth.net/perl/adminmisc for how to get the latest.]
 
    + Make sure the newly installed perl is available from the command line.
      Typing "perl -v" should report version 5.004_02.  If not, make sure
@@ -166,8 +164,9 @@ If you want to use the precompiled binaries:
      still others may require Administrator privileges, or a full
      fledged Windows network.
 
-The following applies only if you want to rebuild using your C compiler.
-Otherwise, skip to the next section.
+The following applies only if you need to rebuild using your C compiler.
+(Note that you HAVE to do this if you built Perl yourself.)  Otherwise,
+skip to the next section.
 
 This set of modules will build with perl5.004_01 and later on the Windows
 NT platform.  Building on Windows 95 is not supported (but it may be
@@ -191,10 +190,10 @@ possible if you use the 4DOS command shell, but YMMV).
      below will work either at the toplevel directory, or in each
      of the individual extension subdirectories.
    
-   + You need either MS Visual C++ (NetAdmin needs ver. 4.x+, Internet
-     needs ver. 5.0. ver. 2.0 should suffice for the others) or
-     Borland C++ 5.02.  Make sure you have the full installation of
-     either of these compilers ("Minimal" installations or CDROM-based
+   + You need either MS Visual C++ (OLE needs 4.2b, NetAdmin needs ver.
+     4.x+, Internet needs ver. 5.0. ver. 2.0 should suffice for the
+     others) or Borland C++ 5.02.  Make sure you have the full installation
+     of either of these compilers ("Minimal" installations or CDROM-based
      installations may have problems finding all the libraries).
      
    + If the Internet extension doesn't build due to lack of libraries
@@ -202,7 +201,9 @@ possible if you use the 4DOS command shell, but YMMV).
      Aldo Calpini's website: "http://www.divinf.it/dada/perl/internet/".
      Look for a file named "WinInet.zip".  If the wininet.h or wininet.dll
      in your system are newer than the ones in WinInet.zip, discard them
-     before copying WinInet.lib into the Internet/ directory.
+     before copying WinInet.lib into the Internet/ directory.  [Aldo's
+     site doesn't seem to exist anymore.  You should be able to get
+     the files from http://www.microsoft.com/ if you look around.]
 
    + Remove the 'blib' directory (it contains the precompiled binaries)
 
@@ -240,7 +241,7 @@ Enjoy!
 
 Gurusamy Sarathy
 gsar@umich.edu
-6 February 1998
+11 May 1998
 
 
 WHATEVER
@@ -255,7 +256,7 @@ copyright statement:
     (c) 1995 Microsoft Corporation. All rights reserved. 
 	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
 
-    Other modifications (c) 1997 by Gurusamy Sarathy <gsar@umich.edu>
+    Other modifications (c) 1997, 1998 by Gurusamy Sarathy <gsar@umich.edu>
 
     You may distribute under the terms of either the GNU General Public
     License or the Artistic License, as specified in the README file
