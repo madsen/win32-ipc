@@ -1,8 +1,8 @@
+Changes
+MANIFEST
+Makefile.PL
+Mutex.hpp
 Mutex.pm
 Mutex.xs
-Mutex.hpp
-Changes
-Makefile.PL
-MANIFEST
 test.pl
 typemap

@@ -1,6 +1,6 @@
 Changes
-Makefile.PL
 MANIFEST
+Makefile.PL
 Semaphore.hpp
 Semaphore.pm
 Semaphore.xs

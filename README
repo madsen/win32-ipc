@@ -1,29 +1,51 @@
-This is a bundle of Win32 extensions that provides a quick migration
-path for people wanting to use the core support for win32 in perl 5.004.
-It features the complete set of Win32-specific extensions available
-from CPAN that could previously only be used with Activeware's
+Welcome to libwin32 version 0.09.
+
+
+WHAT
+----
+
+This is a bundle of "Win32-only" extensions that provides a quick migration
+path for people wanting to use the core support for win32 in perl 5.004
+and later.  It features the complete set of Win32-specific extensions
+available from CPAN that could previously only be used with Activeware's
 "Perl for Win32"(TM).
 
 Most other non-Win32 extensions should build fairly smoothly using
 the MakeMaker support available in perl 5.004 and later, so they are
 not included in this bundle.
 
-
 ---NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
 |                                                                       |
 |  This distribution does not contain binaries.  Look for a binary      |
-|  distribution of perl 5.004_01 and various other goodies on CPAN.     |
+|  distribution of the latest perl and various other goodies on CPAN.   |
 |                                                                       |
 ---NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
 
 
-This collection will build with perl5.004_01 and later, using either
-Visual C++ 4.x+ or Borland C++ 5.0x+, on the Windows NT platform.  You
-need to build and install perl before building this set of modules.  See
-README.win32 in the perl distribution for details on how to build perl
-for the Win32 platform.
+WHAT HAS CHANGED
+----------------
 
-Here is what this bundle contains:
+OLE has been seriously overhauled, thanks largely to the valiant efforts
+of Jan Dubois <jan.dubois@ibm.net>.  Jan has added many exciting new
+features, and a much more streamlined implementation.  See the pod
+documentation for compatibility info.
+
+The AdminMisc extension has been dropped, because newer versions with
+support (and binaries) for the standard perl port are available from the
+original author.  See "http://www.rothd.net/perl" for details.
+
+New compatibility functions (got via C<use Win32;>) : LookupAccountName(),
+LookupAccountSID(), InitiateSystemShutdown(), AbortSystemShutdown(),
+ExpandEnvironmentStrings().
+
+Numerous bugs have been fixed.  See "Changes" files in individual module
+subdirectories.
+
+
+WHAT IT HAS
+-----------
+
+This bundle contains:
 
    * The collection of modules originally distributed by the Activeware
      folks as part of their "Perl for Win32"(TM) port.  These have been
@@ -33,23 +55,23 @@ Here is what this bundle contains:
 
      The complete list of Activeware extensions is available:
 
+        Win32/ChangeNotify
         Win32/EventLog
         Win32/File
         Win32/FileSecurity
+        Win32/IPC
+        Win32/Mutex
         Win32/NetAdmin
         Win32/NetResource
         Win32/OLE
+        Win32/Process
         Win32/Registry
+        Win32/Semaphore
         Win32/Service
         Win32/WinError
-        Win32/ChangeNotify
-        Win32/IPC
-        Win32/Mutex
-        Win32/Process
-        Win32/Semaphore
 
      Note this covers all of the Win32 extensions distributed by
-     Activeware (as of build 306).
+     Activeware (as of build 313).
 
      These extensions have been re-engineered to use the XS interface
      language, yet the changes are compatible with the originals.  This
@@ -76,9 +98,8 @@ Here is what this bundle contains:
      These also have been converted back to XS.  I have added
      bug fixes as I found them during the conversion process.
 
-   * Three useful modules maintained by Dave Roth <rothd@roth.net>.
+   * Two useful modules maintained by Dave Roth <rothd@roth.net>.
 
-        Win32/AdminMisc
         Win32/ODBC
         Win32/Pipe
 
@@ -87,16 +108,24 @@ Here is what this bundle contains:
      masquerading as XS.  Win32/ODBC hasn't been tested much.
 
 
-Building:
+WHAT TO DO
+----------
 
-   + First you need to build perl 5.004_01 (you will need either
-     Visual C++ or Borland C++), and install it.
+This collection will build with perl5.004_01 and later on the Windows
+NT platform.  Building on Windows 95 is not supported (but it may be
+possible if you use the 4DOS command shell, but YMMV).
+
+   + First you need to build perl 5.004_01 or later (you will need
+     either Visual C++ 4.x+ or Borland C++ 5.02+), and install it.  See
+     README.win32 in the perl distribution for details on how to build
+     perl for the Win32 platform.
 
    + That done, you need to extract this distribution into an NTFS
      partition (the tests in the FileSecurity module and Net* modules
      will fail otherwise).  The testsuite for OLE needs Excel to
      run.  NetAdmin will only work if you have some kind of
-     live network connection.  NetResource requires that you
+     live network connection, and are in a domain with a properly
+     configured domain controller.  NetResource requires that you
      be part of a domain or workgroup.  You may also need
      Administrator privileges for running some of the tests.
      If one or more of these conditions will not be met, you may
@@ -106,22 +135,31 @@ Building:
    
    + You need either MS Visual C++ (NetAdmin needs ver. 4.x+, Internet
      needs ver. 5.0. ver. 2.0 should suffice for the others) or
-     Borland C++ 5.0.  Make sure you have the full installation of
+     Borland C++ 5.02.  Make sure you have the full installation of
      either of these compilers ("Minimal" installations or CDROM-based
-     installations may have problems finding all the libraries).  If
-     the Internet extension doesn't build due to lack of libraries
+     installations may have problems finding all the libraries).
+     
+   + If the Internet extension doesn't build due to lack of libraries
      (the wininet.h header is included), fetch the libraries from
      Aldo Calpini's website: "http://www.divinf.it/data/perl/internet/".
-     Look for a file named "WinInet.zip".
+     Look for a file named "WinInet.zip".  If the wininet.h or wininet.dll
+     in your system are newer than the ones in WinInet.zip, discard them
+     before copying WinInet.lib into the Internet/ directory.
 
    + perl Makefile.PL               [either at toplevel or in subdirs]
    
-   + nmake                          [either at toplevel or in subdirs]
+   + $MAKE                          [either at toplevel or in subdirs]
    
-   + nmake test                     [optional, some interactive tests]
+   + $MAKE test                     [optional, some interactive tests]
    
-   + nmake install                  [either at toplevel or in subdirs]
+   + $MAKE install                  [either at toplevel or in subdirs]
 
+$MAKE above stands for either "dmake" or "nmake" depending on your
+available compiler, and perl configuration.
+
+
+WHAT THEN
+---------
 
 A brief statment of intent:  I am doing this to ease the transition
 for many people who may wish to start using the latest perl on win32
@@ -138,23 +176,25 @@ introduced brand new bugs in the process :)
 Suggestions, patches, testsuite additions, wholesale rewrites and
 additional ports of modules welcome.
 
+Enjoy!
 
 Gurusamy Sarathy
 gsar@umich.edu
-28-MAY-1997
+14 December 1997
 
 
-COPYRIGHT
+WHATEVER
+--------
 
 Copyright for the following modules: 
 
-    AdminMisc ODBC Pipe Clipboard Console Internet Shortcut Sound
+    ODBC Pipe Clipboard Console Internet Shortcut Sound
 
 is held by the respective authors.  Look in the module subdirectories
 for any conditions of use.
 
 The following copyright applies to the remaining, Activeware-derived
-modules:
+modules (unless stated otherwise):
 
     (c) 1995 Microsoft Corporation. All rights reserved. 
 	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com

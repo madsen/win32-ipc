@@ -1,8 +1,8 @@
+ChangeNotify.hpp
 ChangeNotify.pm
 ChangeNotify.xs
-ChangeNotify.hpp
 Changes
-Makefile.PL
 MANIFEST
+Makefile.PL
 test.pl
 typemap

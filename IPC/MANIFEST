@@ -2,7 +2,7 @@ Changes
 IPC.hpp
 IPC.pm
 IPC.xs
-Makefile.PL
 MANIFEST
+Makefile.PL
 test.pl
 typemap
