@@ -1,6 +1,10 @@
 Revision history for Perl extension libwin32.
 
 
+0.151 Sun Sep 26 16:29:29 1999
+
+   + The 5.00402 binaries were missing from the package.  Doh!
+
 0.15  Sat Sep 25 15:53:02 1999
 
    + Win32API-File-0.07 has been added (thanks to Tye McQueen).  This module
@@ -151,7 +155,7 @@ Revision history for Perl extension libwin32.
 	will have to load Win32::IPC yourself, because Win32::Process does
 	not.
 
-   + Yet more OLE fixes from Jan Dubois <jan.dubois@ibm.net>.
+   + Yet more OLE fixes from Jan Dubois <jand@activestate.com>.
 
    + NetAdmin enhancements from Jutta Klebe <jmk@exc.bybyte.de>
 
@@ -171,7 +175,7 @@ Revision history for Perl extension libwin32.
 0.09  Sun Dec 14 12:14:08 1997
 
    + OLE has been seriously overhauled, thanks largely to the valiant efforts
-     of Jan Dubois <jan.dubois@ibm.net>.  Jan has added many exciting new
+     of Jan Dubois <jand@activestate.com>.  Jan has added many exciting new
      features, and a much more streamlined implementation.  See the pod
      documentation for compatibility info.
 

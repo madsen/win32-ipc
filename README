@@ -106,7 +106,7 @@ This bundle contains:
 
      Note this covers all of the Win32 extensions distributed by
      ActiveState (as of build 316).  Win32::OLE is currently most
-     actively maintained by Jan Dubois <jan.dubois@ibm.net>.
+     actively maintained by Jan Dubois <jand@activestate.com>.
 
      These extensions have been re-engineered to use the XS interface
      language, but the changes are compatible with the originals.  This
