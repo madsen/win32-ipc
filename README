@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.18.
+Welcome to libwin32 version 0.191.
 
 
 WHAT
@@ -26,46 +26,31 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-This release has the following changes over the previous one (version 0.16):
+This release has the following changes over the previous one (version 0.18):
 
-   + Win32API-Net has been upgraded to v0.09 (thanks to Bret Giddings).
-     See APINet/Changes for list of changes.
+   + Win32::Job is now available (thanks to Neil Watkiss).  This
+     extension allows you to manipulate "job" objects (which are
+     groups of processes) in Windows 2000 or later.  See the pod
+     documentation for details.
 
-   + Win32-EventLog has been upgraded to v0.072 (thanks to Jan Dubois).
-     EventLog/Changes has a list of changes.
+   + Most modules that autoloaded their constants could reset $!
+     during autoloading.  Such locations now localize $! before
+     potentially modifying it.
 
-   + Win32-Internet has a fix for passive FTP mode (thanks to Steve
-     Raynesford and Jan Dubois).  The version number has been bumped to
-     v0.082.  See the POD documentation in Win32::Internet for more
-     information.
+   + EventLog has been upgraded to 0.073 (thanks to Brett Williams).
+     EventLog/Changes has a list of bug fixes.
 
-   + Win32-NetAdmin has been upgraded to v0.08 (thanks to Doug Lankshear).
-     See NetAdmin/Changes for more info.
+   + NetResource has been upgraded to 0.053.  See NetResource/Changes
+     for the change log.
 
-   + Win32-NetResource has been upgraded to v0.052. See NetResource/Changes
-     for details.
+   + A Win32::GetOSName() function is now available.  It is documented
+     in the Win32.pod distributed with perl 5.8.0-RC2 and with
+     ActivePerl.
 
-   + Win32-OLE has been upgraded to v0.1502 (thanks to Jan Dubois).
-     OLE/Changes has a comprehensive list of changes.
+   + Some issues with building it under 5.8.0-RC2 have been fixed.
 
-   + Win32-Process has had a few incremental improvements (thanks to
-     Doug Lankshear, Jand Dubois and Blair Zajac).  The version number
-     is now v0.09.  Process/Changes describes the changes.
-
-   + Win32-TieRegistry has been upgraded to v0.24 (thanks to Tye McQueen).
-     See TieRegistry/Changes for the list of fixes.
-
-   + A Win32::GuidGen() function has been added.  This function generates
-     a new GUID every time it is called.
-
-   + Support for building it under Win64 has been added (with additional
-     help from Randolf Werner <randolf.werner@sap.com>).
-
-   + Various other minor cleanups and bug fixes.
-
-   + This release has only been verified to work with Perl 5.6.0 or
-     later.  If you find problems building it with older releases, please
-     send patches.
+   + This release corresponds to the version of libwin32 included in
+     ActivePerl 5.6.1.633.
 
 Many thanks to all the contributors.
 
@@ -73,13 +58,13 @@ Many thanks to all the contributors.
 WHAT TO DO
 ----------
 
-NOTE: If you already have ActivePerl build 630 or later installed, you
+NOTE: If you already have ActivePerl build 633 or later installed, you
 may already have a more recent version of libwin32 installed, and you
 will not need to install this.  To be sure, run this:
 
-    C:\> perl -e "use Win32; print $Win32::VERSION"
+    C:\> perl -MWin32 -e "print $Win32::VERSION"
 
-If that prints 0.18 or later, you don't need to install this package.
+If that prints 0.191 or later, you don't need to install this package.
 
 Many modules come with their own test files.  You may want to use them
 as a source of examples.  Many of the test files will only run on
@@ -163,7 +148,7 @@ Enjoy!
 
 Gurusamy Sarathy
 gsar@ActiveState.com
-12 Nov 2001
+8 July 2002
 
 
 WHATEVER
@@ -179,7 +164,7 @@ copyright statement:
 	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
 
     Other modifications (c) 1997-2000 by Gurusamy Sarathy <gsar@ActiveState.com>
-                        (c) 1999-2001 by ActiveState Corp.
+                        (c) 1999-2002 by ActiveState Corp.
 
     You may distribute under the terms of either the GNU General Public
     License or the Artistic License, as specified in the README file

@@ -54,6 +54,7 @@ sub AUTOLOAD {
     my $constname;
     ($constname = $AUTOLOAD) =~ s/.*:://;
     if ($constname =~ /^(?:FILE_NOTIFY_CHANGE_|INFINITE)/) {
+	local $! = 0;
         my $val = constant($constname);
         croak("$constname is not defined by Win32::ChangeNotify") if $! != 0;
         eval "sub $AUTOLOAD { $val }";
