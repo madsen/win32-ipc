@@ -12,23 +12,31 @@ The following extensions have been "ported":
     Win32/FileSecurity
     Win32/NetAdmin
     Win32/NetResource
+    Win32/OLE
     Win32/Registry
     Win32/Service
     Win32/WinError
 
 All of the extensions have been re-engineered to use the XS
-interface language (and are hence in pure C).  Working on these
-has become a rather unpleasant task due to what I consider to be
-poor design and implementation of these modules.  While I have
-tried to keep my changes compatible with the originals at the
-present time, I plan to rework these modules radically once there
-is full port of all the Activeware extensions.
+interface language.  Working on these has become a rather
+unpleasant task due to what I consider to be poor design and
+implementation of these modules.  While I have tried to keep my
+changes compatible with the originals at the present time, I plan
+to rework these modules radically once there is full port of all
+the Activeware extensions.
 
 Building:
 
     + You need to extract this into an NTFS file system (the
       tests in the FileSecurity module and Net* modules will
-      fail otherwise.)
+      fail otherwise).  The testsuite for OLE needs Excel to
+      run.  NetAdmin will only work if you have some kind of
+      live network connection.  NetResource requires that you
+      be part of a domain or workgroup.  If one or more of
+      these conditions will not be met, you may wish to build
+      in the subdirectories one by one.  The steps below will
+      work either at the toplevel directory, or in each of the
+      individual extension subdirectories.
    
     + You need MS Visual C++ (NetAdmin needs ver. 4.0+, ver. 2.0
       should suffice for the others).
@@ -50,17 +58,15 @@ available in this one:
     Win32/ChangeNotify
     Win32/IPC
     Win32/Mutex
-    Win32/OLE
     Win32/Process
     Win32/Semaphore
 
-Of these, OLE is almost done (I haven't debugged a few problems yet).
-The others are waiting on the availability of the CPerl object core
-perl.
+They are waiting on the availability of the CPerl object in core
+perl (I may rework them to not rely on CPerl).
 
 Suggestions, patches, rewrites and additional ports of modules welcome.
 
- - Sarathy.
-   gsar@umich.edu
-   07-MAY-1997
+Gurusamy Sarathy
+gsar@umich.edu
+11-MAY-1997
 
