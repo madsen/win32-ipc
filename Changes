@@ -1,6 +1,8 @@
 Revision history for Perl extension libwin32.
 
 
+0.17  (unreleased)
+
 0.16  Mon May 22 22:16:41 2000
 
    + Support for building under Perl 5.6.0.
