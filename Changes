@@ -1,6 +1,19 @@
 Revision history for Perl extension libwin32.
 
 
+0.14  Sat Nov 14 23:02:59 1998
+
+   + Support for building with mingw32/GCC from Nick Ing-Simmons.  Building
+     many of the extensions is skipped, since the mingw32 libraries don't
+     yet support all of the Win32 API.
+
+   + Memory leaks fixed in PerfLib (thanks to Artur Silveira da Cunha).
+
+   + EventLog now returns 'User' and 'Message' fields (thanks to Martin
+     Pauley).
+
+   + Other minor bugfixes.
+
 0.13  Thu Sep 17 19:35:20 1998
 
    + New modules from Tye McQueen: Win32API-Registry-0.15 and
@@ -67,8 +80,9 @@ Revision history for Perl extension libwin32.
 
 0.10  Fri Feb  6 21:32:33 1998
 
-   + Chris Madsen <ac608@yfn.ysu.edu> has rethought and rewritten the IPC
-     related modules.  The Win32::Event module is new.  In his own words:
+   + Chris Madsen <chris_madsen@geocities.com> has rethought and rewritten
+     the IPC related modules.  The Win32::Event module is new.  In his own
+     words:
 
 	The Win32::IPC modules
 

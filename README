@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.13.
+Welcome to libwin32 version 0.14.
 
 
 WHAT
@@ -32,34 +32,18 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-This release has the following changes over the previous one (version 0.12):
+This release has the following changes over the previous one (version 0.13):
 
-   + New modules from Tye McQueen: Win32API-Registry-0.15 and
-     Win32-TieRegistry-0.21.  These are much better designed and implemented
-     than Win32-Registry.  They also begin the concerted effort to layer
-     user-friendly implementations of Win32 functionality on top of a
-     comprehensive set of Win32API-* modules.
+   + Support for building with mingw32/GCC from Nick Ing-Simmons.  Building
+     many of the extensions is skipped, since the mingw32 libraries don't
+     yet support all of the Win32 API.
 
-   + New module from Bret Giddings: Win32API-Net-0.04 provides access to the
-     Lan Manager API.  Currently supports only the account management
-     functions, but the long-term intent is to support most of the Net* API.
+   + Memory leaks fixed in PerfLib (thanks to Artur Silveira da Cunha).
 
-   + Newer version of Win32::OLE from Jan Dubois.  See OLE/Changes for
-     detailed list.
+   + EventLog now returns 'User' and 'Message' fields (thanks to Martin
+     Pauley).
 
-   + PerfLib bugs fixed (thanks to Jutta Klebe and Henry Ptasinski
-     <henry@epigram.com>).
-
-   + Subversive use of LDLOADLIBS in Internet/Makefile.PL fixed.
-
-   + Fixed GPF in NetAdmin::LocalGroupIsMember()
-
-   + Win32::Registry now supports setting REG_NONE entries.  Spurious
-     warnings on 'use' fixed.
-
-   + install.bat has improved sanity checks (thanks to Tye McQueen).
-
-   + Various tweaks to help PERL_OBJECT build
+   + Other minor bugfixes.
 
 Many thanks to all the contributors.
 
@@ -150,6 +134,13 @@ You can either use the binaries that come with this distribution,
 or choose to recompile them from scratch (recommended if you have
 a C compiler that is capable of building perl).
 
+Once again, the included binaries *cannot* be used with the ActivePerl
+binaries from ActiveState.  ActivePerl compatible binaries are
+available via the PPM tool included in ActivePerl.  See
+http://www.activestate.com/ for details on using PPM.  If you have
+ActivePerl, but want to build your own binaries, you will need 
+Visual C++, and a good read of some of the caveats below.
+
 If you want to use the precompiled binaries:
 
    + Download:
@@ -181,8 +172,8 @@ The following applies only if you need to rebuild using your C compiler.
 skip to the next section.
 
 This set of modules will build with perl5.004_01 and later on the Windows
-NT platform.  Building on Windows 95 is not supported (but it may be
-possible if you use the 4DOS command shell, but YMMV).
+NT platform.  Building on Windows 95 is not supported (it *may* be
+possible if you use the 4DOS command shell, but your mileage may vary).
 
    + First you need to build perl 5.004_01 or later (you will need
      either Visual C++ 4.x+ or Borland C++ 5.02+), and install it.  See
@@ -190,8 +181,9 @@ possible if you use the 4DOS command shell, but YMMV).
      perl for the Win32 platform.
 
    + Make sure your perl is properly configured.  "perl -V:libpth" should
-     report a valid path to your compiler's library files.  The perl
-     binaries from ActiveState are known to report a bogus value here.
+     report a valid path to your compiler's library files.  Some versions
+     of ActivePerl are known to report a bogus value here.
+
      To fix the problem, you will have to edit the Config.pm file (found
      somewhere like c:\perl\5.00502\lib\MSWin32-x86-object\Config.pm) and
      set the line that begins with "libpth=" to something like:
@@ -202,10 +194,20 @@ possible if you use the 4DOS command shell, but YMMV).
      didn't specify the library location properly in the Makefile used to
      build perl.
 
-     Another common problem is not making perlcrt.lib available from
-     the 'libpth' location.  perlcrt.lib may or may not be needed
+     If you're one of those people who have fallen (unwittingly or
+     otherwise) for the "spa ces in filenames are co ol" disease,
+     make sure you're using perl 5.00502 or later, and that your libpth
+     entry looks something like:
+
+		libpth='c:\"Program Files"\DevStudio\vc\lib'
+
+     i.e. you have to ensure that any space-filled components in the
+     path are quoted.
+
+     Another common problem is not making perlcrt.lib available at
+     your 'libpth' location.  perlcrt.lib may or may not be needed
      if you have perl 5.005 or later, depending on whether you built
-     perl to use it.  ActiveState's perl binaries need it.
+     perl to use it.  ActivePerl needs it.
 
    + All that done, you need to extract this distribution into an NTFS
      partition (the tests in the FileSecurity module and Net* modules
@@ -263,7 +265,7 @@ Enjoy!
 
 Gurusamy Sarathy
 gsar@umich.edu
-17 Sep 1998
+14 Nov 1998
 
 
 WHATEVER

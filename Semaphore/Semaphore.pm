@@ -9,7 +9,7 @@ package Win32::Semaphore;
 #
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@umich.edu>
 #
-# Author: Christopher J. Madsen <ac608@yfn.ysu.edu>
+# Author: Christopher J. Madsen <chris_madsen@geocities.com>
 # Version: 1.00 (6-Feb-1998)
 #
 # This program is free software; you can redistribute it and/or modify
@@ -119,7 +119,7 @@ Use C<$SemObj-E<gt>release($Count,$LastVal)> instead.
 
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<ac608@yfn.ysu.edu>E<gt>
+Christopher J. Madsen E<lt>F<chris_madsen@geocities.com>E<gt>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 F<http://www.ActiveWare.com>

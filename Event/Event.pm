@@ -3,7 +3,7 @@ package Win32::Event;
 #
 # Copyright 1998 Christopher J. Madsen
 #
-# Author: Christopher J. Madsen <ac608@yfn.ysu.edu>
+# Author: Christopher J. Madsen <chris_madsen@geocities.com>
 # Created: 3 Feb 1998 from the ActiveWare version
 # Version: 1.00 (6-Feb-1998)
 #
@@ -94,7 +94,7 @@ Wait for C<$event> to be signalled.  See L<"Win32::IPC">.
 
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<ac608@yfn.ysu.edu>E<gt>
+Christopher J. Madsen E<lt>F<chris_madsen@geocities.com>E<gt>
 
 =cut
 
