@@ -1,24 +1,37 @@
 This is a collection of modules stolen from the Activeware port
 and modified so that they will build under MakeMaker using perls
-greater than 5.003_97j.  The following extensions have been
-"ported":
+greater than 5.003_99 and Visual C++.  If you only have 5.003_99, you
+will need to apply the supplied patch to the perl5.003_99 sources.
+Read the instructions at the top of the patch file, apply it,
+rebuild perl and install it before attempting to build these extensions.
+
+The following extensions have been "ported":
 
     Win32/EventLog
     Win32/File
     Win32/FileSecurity
+    Win32/NetAdmin
+    Win32/NetResource
     Win32/Registry
     Win32/Service
     Win32/WinError
 
 All of the extensions have been re-engineered to use the XS
-interface language (and are hence in pure C).
+interface language (and are hence in pure C).  Working on these
+has become a rather unpleasant task due to what I consider to be
+poor design and implementation of these modules.  While I have
+tried to keep my changes compatible with the originals at the
+present time, I plan to rework these modules radically once there
+is full port of all the Activeware extensions.
 
 Building:
 
     + You need to extract this into an NTFS file system (the
-      tests in the FileSecurity module will fail otherwise.)
+      tests in the FileSecurity module and Net* modules will
+      fail otherwise.)
    
-    + You need MS Visual C++ (ver. 2.0 and above).
+    + You need MS Visual C++ (NetAdmin needs ver. 4.0+, ver. 2.0
+      should suffice for the others).
    
     + perl Makefile.PL
    
@@ -37,18 +50,17 @@ available in this one:
     Win32/ChangeNotify
     Win32/IPC
     Win32/Mutex
-    Win32/NetAdmin
-    Win32/NetResource
+    Win32/OLE
     Win32/Process
     Win32/Semaphore
 
-Of these, NetAdmin and NetResource are almost done (I haven't debugged
-a few problems yet).  The others either use the CPerl object, or
-use additional C++ objects, and VC2.0 seems unable to mix the perl
-headers and C++.
+Of these, OLE is almost done (I haven't debugged a few problems yet).
+The others are waiting on the availability of the CPerl object core
+perl.
 
 Suggestions, patches, rewrites and additional ports of modules welcome.
 
  - Sarathy.
    gsar@umich.edu
-   26-APR-1997
+   07-MAY-1997
+
