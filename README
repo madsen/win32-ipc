@@ -1,5 +1,4 @@
-Welcome to libwin32 version 0.16.  This is a beta release intended for
-developers only.  Binaries are NOT included.
+Welcome to libwin32 version 0.18.
 
 
 WHAT
@@ -27,35 +26,46 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-This release has the following changes over the previous one (version 0.15):
+This release has the following changes over the previous one (version 0.16):
 
-   + Support for building under Perl 5.6.0.
-   
-   + Partial support for passing Unicode strings to many of the extensions,
-     under Perl 5.6.0.  Not all extensions support this yet.
+   + Win32API-Net has been upgraded to v0.09 (thanks to Bret Giddings).
+     See APINet/Changes for list of changes.
 
-   + Win32API-File has been upgraded to v0.09 (thanks to Tye McQueen).
-     See APIFile/Changes for the detailed list of changes.  The
-     APIFile/ex directory contains several new examples.
+   + Win32-EventLog has been upgraded to v0.072 (thanks to Jan Dubois).
+     EventLog/Changes has a list of changes.
 
-   + Win32API-Registry has been upgraded to v0.22 (thanks again to
-     Tye McQueen).  See APIRegistry/Changes for the details on what's
-     new.
+   + Win32-Internet has a fix for passive FTP mode (thanks to Steve
+     Raynesford and Jan Dubois).  The version number has been bumped to
+     v0.082.  See the POD documentation in Win32::Internet for more
+     information.
 
-   + Win32-Clipboard has been upgraded to v0.51 (thanks to Aldo
-     Calpini).  This version has documentation in POD format, and
-     supports three different formats to access clipboard data,
-     and comes with sample code.  See Clipboard/README and the
-     Clipboard/samples directory.
+   + Win32-NetAdmin has been upgraded to v0.08 (thanks to Doug Lankshear).
+     See NetAdmin/Changes for more info.
 
-   + Win32-OLE has been upgraded to v0.13 (thanks to Jan Dubois
-     <jand@activestate.com>).  The article on Win32::OLE from The Perl Journal
-     is now included in POD format.  For the detailed list of changes, see
-     OLE/Changes and OLE/lib/Win32/OLE/NEWS.pod.
+   + Win32-NetResource has been upgraded to v0.052. See NetResource/Changes
+     for details.
 
-   + Various minor cleanups and bug fixes.
+   + Win32-OLE has been upgraded to v0.1502 (thanks to Jan Dubois).
+     OLE/Changes has a comprehensive list of changes.
 
-   + A TODO file has been added.
+   + Win32-Process has had a few incremental improvements (thanks to
+     Doug Lankshear, Jand Dubois and Blair Zajac).  The version number
+     is now v0.09.  Process/Changes describes the changes.
+
+   + Win32-TieRegistry has been upgraded to v0.24 (thanks to Tye McQueen).
+     See TieRegistry/Changes for the list of fixes.
+
+   + A Win32::GuidGen() function has been added.  This function generates
+     a new GUID every time it is called.
+
+   + Support for building it under Win64 has been added (with additional
+     help from Randolf Werner <randolf.werner@sap.com>).
+
+   + Various other minor cleanups and bug fixes.
+
+   + This release has only been verified to work with Perl 5.6.0 or
+     later.  If you find problems building it with older releases, please
+     send patches.
 
 Many thanks to all the contributors.
 
@@ -63,61 +73,44 @@ Many thanks to all the contributors.
 WHAT TO DO
 ----------
 
-NOTE: If you already have ActivePerl build 614 or later installed, you
+NOTE: If you already have ActivePerl build 630 or later installed, you
 may already have a more recent version of libwin32 installed, and you
 will not need to install this.  To be sure, run this:
 
     C:\> perl -e "use Win32; print $Win32::VERSION"
 
-If that prints 0.16 or later, you don't need to install this package.
+If that prints 0.18 or later, you don't need to install this package.
 
 Many modules come with their own test files.  You may want to use them
 as a source of examples.  Many of the test files will only run on
 Windows NT, others may require Windows NT 4.0, and still others may
 require Administrator privileges, or a full-fledged Windows network.
 
-This set of modules will build with perl5.004_01 and later on the Windows
+This set of modules will build with perl v5.6.0 and later on the Windows
 NT platform.  Building on Windows 95 is not supported (it *may* be
-possible if you use the 4DOS command shell, or if you have Perl 5.6.0,
-but your mileage may vary).
+possible if you use the 4DOS command shell, but your mileage may vary).
 
-   + First you need to build perl 5.004_01 or later (you will need
+   + First you need to build perl 5.6.0 or later (you will need
      either Visual C++ 5.x+ or Borland C++ 5.02+), and install it.  See
      README.win32 in the perl distribution for details on how to build
-     perl for the Win32 platform.  ActivePerl build 522, build 613, or
-     the older bindist04 (5.004_02) release from CPAN will also suffice.
+     perl for the Win32 platform.  ActivePerl build 613 or later will
+     also suffice.
 
    + Make sure your perl is properly configured.  "perl -V:libpth" should
-     report a valid path to your compiler's library files.  Some versions
-     of ActivePerl are known to report a bogus value here.
+     report a valid path to your compiler's library files.
 
-     To fix the problem, you will have to edit the Config.pm file (found
-     somewhere like c:\perl\lib\MSWin32-x86-object\Config.pm) and
-     set the line that begins with "libpth=" to something like:
-
-		libpth='c:\devstudio\vc\lib'
-
-     If you built perl yourself and see the problem, it probably means you
-     didn't specify the library location properly in the Makefile used to
-     build perl.
+     If you built perl yourself, make sure you specify the C compiler's
+     library location properly in the Makefile used to build perl.
 
      If your C compiler and libraries are installed in a path with
-     spaces, you'll need to quote any components with spaces.  For
-     example:
-
-		libpth='c:\"Program Files"\DevStudio\vc\lib'
-
-     Another common problem is not making perlcrt.lib available at
-     your 'libpth' location.  perlcrt.lib may or may not be needed
-     if you have perl 5.005 or later, depending on whether you built
-     perl to use it.  ActivePerl 5xx builds need it.  ActivePerl
-     6xx builds don't.
+     spaces, you'll need to quote any components with spaces, or use
+     the short path name equivalents.
 
    + All that done, you need to extract this distribution into an NTFS
      partition (the tests in the FileSecurity module and Net* modules
-     will fail otherwise).  The testsuite for OLE needs Excel to
-     run.  NetAdmin will only work if you have some kind of
-     live network connection, and are in a domain with a properly
+     will fail otherwise).  The testsuite for OLE needs Excel (from
+     Office 2000) to run.  NetAdmin will only work if you have some kind
+     of live network connection, and are in a domain with a properly
      configured domain controller.  NetResource requires that you
      be part of a domain or workgroup.  You may also need
      Administrator privileges for running some of the tests.
@@ -131,6 +124,9 @@ but your mileage may vary).
      others) or Borland C++ 5.02.  Make sure you have the full installation
      of either of these compilers ("Minimal" installations or CDROM-based
      installations may have problems finding all the libraries).
+     [NOTE: I have only tested building this release with Visual Studio 98,
+     aka Visual C++ 6.0.  Please send patches if you hit problems with
+     the other compilers.] 
      
    + If the Internet extension doesn't build due to lack of libraries
      (the wininet.h header is included), fetch the Platform SDK from
@@ -166,8 +162,8 @@ Suggestions, patches, testsuite additions, and wholesale rewrites welcome.
 Enjoy!
 
 Gurusamy Sarathy
-gsar@activestate.com
-22 May 2000
+gsar@ActiveState.com
+12 Nov 2001
 
 
 WHATEVER
@@ -182,7 +178,8 @@ copyright statement:
     (c) 1995 Microsoft Corporation. All rights reserved. 
 	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
 
-    Other modifications (c) 1997-2000 by Gurusamy Sarathy <gsar@activestate.com>
+    Other modifications (c) 1997-2000 by Gurusamy Sarathy <gsar@ActiveState.com>
+                        (c) 1999-2001 by ActiveState Corp.
 
     You may distribute under the terms of either the GNU General Public
     License or the Artistic License, as specified in the README file

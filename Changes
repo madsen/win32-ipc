@@ -1,6 +1,49 @@
 Revision history for Perl extension libwin32.
 
 
+0.18  Mon Nov 12 22:58:34 2001
+
+   + Support for Borland 5.5 has been added.
+
+   + Win32API-Net has been upgraded to v0.09 (thanks to Bret Giddings).
+     See APINet/Changes for list of changes.
+
+   + Win32-EventLog has been upgraded to v0.072 (thanks to Jan Dubois).
+     EventLog/Changes has a list of changes.
+
+   + Win32-Internet has a fix for passive FTP mode (thanks to Steve
+     Raynesford and Jan Dubois).  The version number has been bumped to
+     v0.082.  See the POD documentation in Win32::Internet for more
+     information.
+
+   + Win32-NetAdmin has been upgraded to v0.08 (thanks to Doug Lankshear).
+     See NetAdmin/Changes for more info.
+
+   + Win32-NetResource has been upgraded to v0.052. See NetResource/Changes
+     for details.
+
+   + Win32-OLE has been upgraded to v0.1502 (thanks to Jan Dubois).
+     OLE/Changes has a comprehensive list of changes.
+
+   + Win32-Process has had a few incremental improvements (thanks to
+     Doug Lankshear, Jand Dubois and Blair Zajac).  The version number
+     is now v0.09.  Process/Changes describes the changes.
+
+   + Win32-TieRegistry has been upgraded to v0.24 (thanks to Tye McQueen).
+     See TieRegistry/Changes for the list of fixes.
+
+   + A Win32::GuidGen() function has been added.  This function generates
+     a new GUID every time it is called.
+
+   + Support for building it under Win64 has been added (with additional
+     help from Randolf Werner <randolf.werner@sap.com>).
+
+   + Various other minor cleanups and bug fixes.
+
+   + This release has only been verified to work with Perl 5.6.0 or
+     later.  If you find problems building it with older releases, please
+     send patches.
+
 0.17  (unreleased)
 
 0.16  Mon May 22 22:16:41 2000
