@@ -1,6 +1,5 @@
-BOOL                    T_IV
-LONG                    T_IV
-LPCSTR                  T_PV
+BOOL			T_IV
+LPCSTR			T_PV
 HANDLE			T_PTROBJ
 
 #############################################################################

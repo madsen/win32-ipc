@@ -1,0 +1,69 @@
+Revision history for Perl extension libwin32.
+
+
+0.10  Fri Feb  6 21:32:33 1998
+
+   + Chris Madsen <ac608@yfn.ysu.edu> has rethought and rewritten the IPC
+     related modules.  The Win32::Event module is new.  In his own words:
+
+	The Win32::IPC modules
+
+		Win32::ChangeNotify
+		Win32::Event
+		Win32::IPC
+		Win32::Mutex
+		Win32::Semaphore
+
+	have been almost completely rewritten and are now at version 1.00.
+	The rather inconsistent ActiveWare interface is still supported, but
+	you should really use the newer and more powerful interface (using
+	lower case method names).
+
+	Consult the documentation for each module for details on how to
+	convert from the old interface.
+
+	In addition, Win32::Process has been slightly altered to work with
+	Win32::IPC.  Process objects should now work with Win32::IPC's wait_*
+	functions (they were supposed to work before, but they didn't).  You
+	will have to load Win32::IPC yourself, because Win32::Process does
+	not.
+
+   + Yet more OLE fixes from Jan Dubois <jan.dubois@ibm.net>.
+
+   + NetAdmin enhancements from Jutta Klebe <jmk@exc.bybyte.de>
+
+   + Updated FileSecurity to base version 0.67.
+
+   + Win32::Registry sports additional functions that correspond to the
+     Win32 Registry API functions.
+
+   + Misc. changes
+	- fixed buggy InitiateSystemShutdown()
+	- New compatibility XSUBs: MsgBox(), LoadLibrary(), FreeLibrary(),
+	  GetProcAddress(), RegisterServer(), UnregisterServer()
+
+   + Other minor bugs have been fixed.  See "Changes" files in individual
+     module subdirectories.
+
+0.09  Sun Dec 14 12:14:08 1997
+
+   + OLE has been seriously overhauled, thanks largely to the valiant efforts
+     of Jan Dubois <jan.dubois@ibm.net>.  Jan has added many exciting new
+     features, and a much more streamlined implementation.  See the pod
+     documentation for compatibility info.
+
+   + The AdminMisc extension has been dropped, because newer versions with
+     support (and binaries) for the standard perl port are available from the
+     original author.  See "http://www.rothd.net/perl" for details.
+
+   + New compatibility functions (got via C<use Win32;>) : LookupAccountName(),
+     LookupAccountSID(), InitiateSystemShutdown(), AbortSystemShutdown(),
+     ExpandEnvironmentStrings().
+
+   + Numerous bugs have been fixed.  See "Changes" files in individual module
+     subdirectories.
+
+0.08  and earlier
+
+   Lost in the mists of time
+

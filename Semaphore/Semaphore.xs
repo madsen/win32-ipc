@@ -1,13 +1,13 @@
-// Semaphore.xs
-// XS file for the Semaphore IPC module extension Dec 1995
-
-// Semaphore object creation layer.
-
-#define WIN32_LEAN_AND_MEAN
-#include <stdlib.h>
-#include <math.h>		// avoid VC-5.0 brainmelt
-#include <windows.h>
-#include "Semaphore.hpp"
+//--------------------------------------------------------------------
+// $Id: Semaphore/Semaphore.xs 18 2008-02-04 19:47:59 -0600 dubiously $
+//--------------------------------------------------------------------
+//
+//   Win32::Semaphore
+//   Copyright 1998 by Christopher J. Madsen
+//
+//   XS file for the Win32::Semaphore IPC module
+//
+//--------------------------------------------------------------------
 
 #if defined(__cplusplus)
 extern "C" {
@@ -17,83 +17,69 @@ extern "C" {
 #include "perl.h"
 #include "XSUB.h"
 
-
-BOOL
-Create( Semaphore* &cSm, LONG lInitial, LONG lMax, LPCSTR lpName )
-{
-    cSm =(Semaphore *) new Semaphore( lInitial, lMax, lpName );
-    return( cSm != NULL );
-}
-
-BOOL
-Open( Semaphore* &cSm,LPCSTR lpName )
-{
-    HANDLE hSemaphore;
-
-    cSm = NULL;
-    hSemaphore = OpenSemaphore( SEMAPHORE_ALL_ACCESS, TRUE,lpName);
-    if ( hSemaphore != NULL)	
-	cSm = (Semaphore *)new Semaphore(hSemaphore); 
-
-    return( cSm != NULL );
-}
-
 #if defined(__cplusplus)
 }
 #endif
 
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+
 MODULE = Win32::Semaphore	PACKAGE = Win32::Semaphore
 
-PROTOTYPES: DISABLE
+PROTOTYPES: ENABLE
 
-BOOL
-Create(cSm,initial,max,name)
-    Semaphore *cSm = NO_INIT
-    LONG initial
-    LONG max
+HANDLE
+new(className, initial, max, name=NULL)
+    char*  className
+    LONG   initial
+    LONG   max
     LPCSTR name
 CODE:
-    RETVAL = Create(cSm, initial, max, name);
+    {
+      SECURITY_ATTRIBUTES  sec;
+      sec.nLength = sizeof(SECURITY_ATTRIBUTES);
+      sec.bInheritHandle = TRUE;	// allow inheritance
+      sec.lpSecurityDescriptor = NULL;  // calling processes' security
+      RETVAL = CreateSemaphore(&sec, initial, max, name);
+    }
+    if (RETVAL == INVALID_HANDLE_VALUE)
+      XSRETURN_UNDEF;
 OUTPUT:
-    cSm
-    RETVAL
-
-BOOL
-Open(cSm,name)
-    Semaphore *cSm = NO_INIT
-    LPCSTR name
-CODE:
-    RETVAL = Open(cSm, name);
-OUTPUT:
-    cSm
     RETVAL
 
 
-BOOL
-Release(cSm,count,prevcount)
-    Semaphore *cSm
-    DWORD count
-    DWORD prevcount = NO_INIT
+HANDLE
+open(className, name)
+    char*  className
+    LPCSTR name
 CODE:
-    RETVAL = cSm->Release(count, (long *)&prevcount);
+    RETVAL = OpenSemaphore(SEMAPHORE_ALL_ACCESS, TRUE, name);
+    if (RETVAL == INVALID_HANDLE_VALUE)
+      XSRETURN_UNDEF;
 OUTPUT:
-    prevcount
     RETVAL
 
 
 void
-DESTROY(cSm)
-    Semaphore *cSm
+DESTROY(semaphore)
+    HANDLE semaphore
 CODE:
-    cSm->~Semaphore();
+    if (semaphore != INVALID_HANDLE_VALUE)
+      CloseHandle(semaphore);
 
 
 BOOL
-Wait(cSm,timeout)
-    Semaphore *cSm
-    DWORD timeout
+release(semaphore,count=1,...)
+    HANDLE semaphore
+    LONG   count
+PROTOTYPE: $$;$
 CODE:
-    RETVAL = cSm->Wait(timeout);
+    {
+      LONG prevcount;
+      RETVAL = ReleaseSemaphore(semaphore, count, &prevcount);
+      if (items > 2)
+	sv_setiv(ST(2), (IV)prevcount);
+    }
 OUTPUT:
     RETVAL
-

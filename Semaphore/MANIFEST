@@ -1,7 +1,6 @@
 Changes
 MANIFEST
 Makefile.PL
-Semaphore.hpp
 Semaphore.pm
 Semaphore.xs
 test.pl

@@ -1,66 +1,123 @@
+#---------------------------------------------------------------------
 package Win32::Mutex;
-use Win32::IPC;
+#
+# Copyright 1998 Christopher J. Madsen
+#
+# Created: 3 Feb 1998 from the ActiveWare version
+#   (c) 1995 Microsoft Corporation. All rights reserved.
+#       Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
+#
+#   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@umich.edu>
+#
+# Author: Christopher J. Madsen <ac608@yfn.ysu.edu>
+# Version: 1.00 (6-Feb-1998)
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the same terms as Perl itself.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
+# GNU General Public License or the Artistic License for more details.
+#
+# Use Win32 mutex objects for synchronization
+#---------------------------------------------------------------------
+
+$VERSION = '1.00';
+
+use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;
 require DynaLoader;
-require AutoLoader;
 
 @ISA = qw(Exporter DynaLoader Win32::IPC);
-
-$VERSION = '0.01';
-
-=head1 NAME
-
-Win32::Mutex - create mutex objects in perl.
-
-=head1 SYNOPSIS
-
-	use Win32::Mutex;
-
-	Win32::Mutex::Create($MutObj,$Initial,$Name);
-	$MutObj->Wait(INFINITE);
-
-=head1 DESCRIPTION
-
-This module creates access to the Win32 mutex objects.  The Wait and
-WaitForMultipleObjects calls are inherited from the Win32::IPC module.
-
-=head1 METHODS AND CONSTRUCTORS
-
-=over 8
-
-=item Create($MutObj,$Initial,$Name)
-
-Creates a mutex object in $MutObj.
-
-   Args:
-	$Initial	Flags to decide initial ownership.(TRUE = I own it).
-	$Name		String to name the mutex.
-
-=item Open($MutObj,$Name)
-
-Create a mutex object from an already created mutex
-
-    Args:
-	$MutObj		Container for mutex object.
-	$Name		name of already created mutex.
-
-=item $MutObj->Release()
-
-Release ownership of a mutex.
-
-=item $MutObj->Wait($Timeout)
-
-Wait for ownership of a mutex.
-
-    Args:
-	$Timeout	amount of time you will wait.forever = INFINITE;
-
-
-=back
-
-=cut
+@EXPORT_OK = qw(
+  wait_all wait_any
+);
 
 bootstrap Win32::Mutex;
 
+sub Create  { $_[0] = Win32::Mutex->new(@_[1..2]) }
+sub Release { &release }
+
 1;
 __END__
+
+=head1 NAME
+
+Win32::Mutex - Use Win32 mutex objects from Perl
+
+=head1 SYNOPSIS
+
+	require Win32::Mutex;
+
+	$mutex = Win32::Mutex->new($initial,$name);
+	$mutex->wait;
+
+=head1 DESCRIPTION
+
+This module allows access to the Win32 mutex objects.  The C<wait>
+method and C<wait_all> & C<wait_any> functions are inherited from the
+L<"Win32::IPC"> module.
+
+=head2 Methods
+
+=over 4
+
+=item $mutex = Win32::Mutex->new([$initial, [$name]])
+
+Constructor for a new mutex object.  If C<$initial> is true, requests
+immediate ownership of the mutex (default false).  If C<$name> is
+omitted, creates an unnamed mutex object.
+
+If C<$name> signifies an existing mutex object, then C<$initial> is
+ignored and the object is opened.
+
+=item $mutex = Win32::Mutex->open($name)
+
+Constructor for opening an existing mutex object.
+
+=item $mutex->release
+
+Release ownership of a C<$mutex>.  You should have obtained ownership
+of the mutex through C<new> or one of the wait functions.  Returns
+true if successful.
+
+=item $mutex->wait([$timeout])
+
+Wait for ownership of C<$mutex>.  See L<"Win32::IPC">.
+
+=back
+
+=head2 Deprecated Functions and Methods
+
+B<Win32::Mutex> still supports the ActiveWare syntax, but its use is
+deprecated.
+
+=over 4
+
+=item Create($MutObj,$Initial,$Name)
+
+Use C<$MutObj = Win32::Mutex-E<gt>new($Initial,$Name)> instead.
+
+=item Open($MutObj,$Name)
+
+Use C<$MutObj = Win32::Mutex-E<gt>open($Name)> instead.
+
+=item $MutObj->Release()
+
+Use C<$MutObj-E<gt>release> instead.
+
+=back
+
+=head1 AUTHOR
+
+Christopher J. Madsen E<lt>F<ac608@yfn.ysu.edu>E<gt>
+
+Loosely based on the original module by ActiveWare Internet Corp.,
+F<http://www.ActiveWare.com>
+
+=cut
+
+# Local Variables:
+# tmtrack-file-task: "Win32::Mutex"
+# End:

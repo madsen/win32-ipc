@@ -1,67 +1,33 @@
+#---------------------------------------------------------------------
 package Win32::ChangeNotify;
-use Carp;
+#
+# Copyright 1998 Christopher J. Madsen
+#
+# Created: 3 Feb 1998 from the ActiveWare version
+#   (c) 1995 Microsoft Corporation. All rights reserved.
+#       Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
+#
+#   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@umich.edu>
+#
+# Author: Christopher J. Madsen <ac608@yfn.ysu.edu>
+# Version: 1.00 (6-Feb-1998)
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the same terms as Perl itself.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
+# GNU General Public License or the Artistic License for more details.
+#
+# Monitor directory for changes
+#---------------------------------------------------------------------
 
-$VERSION = '0.01';
+$VERSION = '1.00';
 
-=head1 NAME
-
-ChangeNotify - monitor events related to files
-
-=head1 SYNOPSIS
-
-	use Win32::ChangeNotify;
-
-	Win32::ChangeNotify::FindFirst($Obj,$PathName,$WatchSubTreeFlag,$filter);
-	$Obj->FindNext();
-	$Obj->Wait(INFINITE) or warn "Something failed: $!\n";
-	# There has been a change.
-	$Obj->Close();
-
-
-=head1 DESCRIPTION
-
-This module allows the user to create a change notification event object
-in Perl.  This object allows the Perl program to monitor events relating
-to files and directory trees.
-
-=head1 MEMBERS
-
-The ChangeNotify module is written entirely in C++. So here is a 
-list of the members etc. (Note: no functions are exported)
-
-=over 8
-
-=item FindFirst($Obj,$PathName,$WathSubTree,$Filter)
-
-This is the constructor for the object. An instantiated object is
-returned in $Obj.
-    Args:
-	$Obj		The container for the created object.
-	$WatchSubTree	A boolean value defining whether the subtree
-			should be included.
-	$Filter		See the exported values below to see the options
-			for this.
-
-=item FindNext()
-
-This method starts the monitoring.
-
-=item Wait( $TimeOut )
-
-This method starts the waiting on the change.
-
-=item Close()
-
-This method stops the monitoring.
-
-=back
-
-=cut
-
-use Win32::IPC;
+use Win32::IPC 1.00 '/./';      # Import everything
 require Exporter;
 require DynaLoader;
-require AutoLoader;
 
 @ISA = qw(Exporter DynaLoader Win32::IPC);
 # Items to export into callers namespace by default. Note: do not export
@@ -76,26 +42,22 @@ require AutoLoader;
 	FILE_NOTIFY_CHANGE_SIZE
 	INFINITE
 );
+@EXPORT_OK = qw(
+  wait_all wait_any
+);
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.  If a constant is not found then control is passed
-    # to the AUTOLOAD in AutoLoader.
+    # XS function.
 
     my($constname);
-    ($constname = $AUTOLOAD) =~ s/.*:://;
+    ($constname = $AUTOLOAD) =~ s/.*::_//;
     #reset $! to zero to reset any current errors.
     $!=0;
     my $val = constant($constname, @_ ? $_[0] : 0);
     if ($! != 0) {
-	if ($! =~ /Invalid/) {
-	    $AutoLoader::AUTOLOAD = $AUTOLOAD;
-	    goto &AutoLoader::AUTOLOAD;
-	}
-	else {
-	    ($pack,$file,$line) = caller;
-	    die "Your vendor has not defined Win32::ChangeNotify macro $constname, used at $file line $line.";
-	}
+        ($pack,$file,$line) = caller;
+        die "Your vendor has not defined Win32::ChangeNotify macro $constname, used at $file line $line.";
     }
     eval "sub $AUTOLOAD { $val }";
     goto &$AUTOLOAD;
@@ -103,5 +65,123 @@ sub AUTOLOAD {
 
 bootstrap Win32::ChangeNotify;
 
+sub new {
+    my ($class,$path,$subtree,$filter) = @_;
+
+    if ($filter =~ /\A[\s|A-Z_]+\Z/i) {
+        $filter = 0;
+        foreach (split(/[\s|]+/, $_[3])) {
+            $filter |= constant("FILE_NOTIFY_CHANGE_" . uc $_);
+        }
+    }
+    _new($class,$path,$subtree,$filter);
+} # end new
+
+sub Close { &close }
+
+sub FindFirst { $_[0] = Win32::ChangeNotify->_new(@_[1..3]); }
+
+sub FindNext { &reset }
+
 1;
 __END__
+
+=head1 NAME
+
+Win32::ChangeNotify - Monitor events related to files and directories
+
+=head1 SYNOPSIS
+
+	require Win32::ChangeNotify;
+
+	$notify = Win32::ChangeNotify->new($Path,$WatchSubTree,$Events);
+	$notify->wait or warn "Something failed: $!\n";
+	# There has been a change.
+
+=head1 DESCRIPTION
+
+This module allows the user to use a Win32 change notification event
+object from Perl.  This allows the Perl program to monitor events
+relating to files and directory trees.
+
+The C<wait> method and C<wait_all> & C<wait_any> functions are
+inherited from the L<"Win32::IPC"> module.
+
+=head2 Methods
+
+=over 4
+
+=item $notify = Win32::ChangeNotify->new($path, $subtree, $filter)
+
+Constructor for a new ChangeNotification object.  C<$path> is the
+directory to monitor.  If C<$subtree> is true, then all directories
+under C<$path> will be monitored.  C<$filter> indicates what events
+should trigger a notification.  It should be a string containing any
+of the following flags (separated by whitespace and/or C<|>).
+
+   ATTRIBUTES	Any attribute change
+   DIR_NAME     Any directory name change
+   FILE_NAME    Any file name change (creating/deleting/renaming)
+   LAST_WRITE   Any change to a file's last write time
+   SECURITY     Any security descriptor change
+   SIZE         Any change in a file's size
+
+(C<$filter> can also be an integer composed from the
+C<FILE_NOTIFY_CHANGE_*> constants.)
+
+=item $notify->close
+
+Shut down monitoring.  You could just C<undef $notify> instead (but
+C<close> works even if there are other copies of the object).  This
+happens automatically when your program exits.
+
+=item $notify->reset
+
+Resets the ChangeNotification object after a change has been detected.
+The object will become signalled again after the next change.  (It is
+OK to call this immediately after C<new>, but it is not required.)
+
+=item $notify->wait
+
+See L<"Win32::IPC">.  Remember to call C<reset> afterwards if you want
+to continue monitoring.
+
+=back
+
+=head2 Deprecated Functions and Methods
+
+B<Win32::ChangeNotify> still supports the ActiveWare syntax, but its
+use is deprecated.
+
+=over 4
+
+=item FindFirst($Obj,$PathName,$WatchSubTree,$Filter)
+
+Use
+
+  $Obj = Win32::ChangeNotify->new($PathName,$WatchSubTree,$Filter)
+
+instead.
+
+=item $obj->FindNext()
+
+Use C<$obj-E<gt>reset> instead.
+
+=item $obj->Close()
+
+Use C<$obj-E<gt>close> instead.
+
+=back
+
+=head1 AUTHOR
+
+Christopher J. Madsen E<lt>F<ac608@yfn.ysu.edu>E<gt>
+
+Loosely based on the original module by ActiveWare Internet Corp.,
+F<http://www.ActiveWare.com>
+
+=cut
+
+# Local Variables:
+# tmtrack-file-task: "Win32::ChangeNotify"
+# End:

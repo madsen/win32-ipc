@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.09.
+Welcome to libwin32 version 0.10.
 
 
 WHAT
@@ -14,32 +14,61 @@ Most other non-Win32 extensions should build fairly smoothly using
 the MakeMaker support available in perl 5.004 and later, so they are
 not included in this bundle.
 
----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
-|                                                                       |
-|  This distribution does not contain binaries.  Look for a binary      |
-|  distribution of the latest perl and various other goodies on CPAN.   |
-|                                                                       |
----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE----NOTE---NOTE---
+This distribution has been pre-compiled for the x86 architecture.  See
+the "WHAT TO DO" section for installation instructions.
 
 
 WHAT HAS CHANGED
 ----------------
 
-OLE has been seriously overhauled, thanks largely to the valiant efforts
-of Jan Dubois <jan.dubois@ibm.net>.  Jan has added many exciting new
-features, and a much more streamlined implementation.  See the pod
-documentation for compatibility info.
+The top level "Changes" file contains a version by version overview of
+the most significant changes.
 
-The AdminMisc extension has been dropped, because newer versions with
-support (and binaries) for the standard perl port are available from the
-original author.  See "http://www.rothd.net/perl" for details.
+This release has the following changes over the previous one:
 
-New compatibility functions (got via C<use Win32;>) : LookupAccountName(),
-LookupAccountSID(), InitiateSystemShutdown(), AbortSystemShutdown(),
-ExpandEnvironmentStrings().
+   + Chris Madsen <ac608@yfn.ysu.edu> has rethought and rewritten the IPC
+     related modules.  The Win32::Event module is new.  In his own words:
 
-Numerous bugs have been fixed.  See "Changes" files in individual module
-subdirectories.
+	The Win32::IPC modules
+
+		Win32::ChangeNotify
+		Win32::Event
+		Win32::IPC
+		Win32::Mutex
+		Win32::Semaphore
+
+	have been almost completely rewritten and are now at version 1.00.
+	The rather inconsistent ActiveWare interface is still supported, but
+	you should really use the newer and more powerful interface (using
+	lower case method names).
+
+	Consult the documentation for each module for details on how to
+	convert from the old interface.
+
+	In addition, Win32::Process has been slightly altered to work with
+	Win32::IPC.  Process objects should now work with Win32::IPC's wait_*
+	functions (they were supposed to work before, but they didn't).  You
+	will have to load Win32::IPC yourself, because Win32::Process does
+	not.
+
+   + Yet more OLE fixes from Jan Dubois <jan.dubois@ibm.net>.
+
+   + NetAdmin enhancements from Jutta Klebe <jmk@exc.bybyte.de>
+
+   + Updated FileSecurity to base version 0.67.
+
+   + Win32::Registry sports additional functions that correspond to the
+     Win32 Registry API functions.
+
+   + Misc. changes
+	- fixed buggy InitiateSystemShutdown()
+	- New compatibility XSUBs: MsgBox(), LoadLibrary(), FreeLibrary(),
+	  GetProcAddress(), RegisterServer(), UnregisterServer()
+
+   + Other minor bugs have been fixed.  See "Changes" files in individual
+     module subdirectories.
+
+Many thanks to all the contributors.
 
 
 WHAT IT HAS
@@ -71,7 +100,7 @@ This bundle contains:
         Win32/WinError
 
      Note this covers all of the Win32 extensions distributed by
-     Activeware (as of build 313).
+     Activeware (as of build 315).
 
      These extensions have been re-engineered to use the XS interface
      language, yet the changes are compatible with the originals.  This
@@ -111,7 +140,36 @@ This bundle contains:
 WHAT TO DO
 ----------
 
-This collection will build with perl5.004_01 and later on the Windows
+You can either use the binaries that come with this distribution,
+or choose to recompile them from scratch (recommended if you have
+a C compiler that is capable of building perl).
+
+If you want to use the precompiled binaries:
+
+   + Download:
+       http://www.perl.com/CPAN/authors/id/GSAR/perl5.00402-bindist04-bc.zip
+     Unzip that, thoroughly read the README file, and install it.  Note that
+     the it comes with an older version of libwin32, but you'll be
+     completely replacing that in the next few steps.
+
+   + Make sure the newly installed perl is available from the command line.
+     Typing "perl -v" should report version 5.004_02.  If not, make sure
+     you've added the installed location of perl.exe to your PATH correctly.
+
+   + cd to wherever you uncompressed this distribution, and type
+     "install.bat".  This should take care of installing everything in the
+     right place.
+
+   + Many modules come with their own test files.  You may want to
+     use them as a source of examples.  Many of the test files will
+     only run on Windows NT, others may require Windows NT 4.0, and
+     still others may require Administrator privileges, or a full
+     fledged Windows network.
+
+The following applies only if you want to rebuild using your C compiler.
+Otherwise, skip to the next section.
+
+This set of modules will build with perl5.004_01 and later on the Windows
 NT platform.  Building on Windows 95 is not supported (but it may be
 possible if you use the 4DOS command shell, but YMMV).
 
@@ -141,10 +199,12 @@ possible if you use the 4DOS command shell, but YMMV).
      
    + If the Internet extension doesn't build due to lack of libraries
      (the wininet.h header is included), fetch the libraries from
-     Aldo Calpini's website: "http://www.divinf.it/data/perl/internet/".
+     Aldo Calpini's website: "http://www.divinf.it/dada/perl/internet/".
      Look for a file named "WinInet.zip".  If the wininet.h or wininet.dll
      in your system are newer than the ones in WinInet.zip, discard them
      before copying WinInet.lib into the Internet/ directory.
+
+   + Remove the 'blib' directory (it contains the precompiled binaries)
 
    + perl Makefile.PL               [either at toplevel or in subdirs]
    
@@ -180,21 +240,17 @@ Enjoy!
 
 Gurusamy Sarathy
 gsar@umich.edu
-14 December 1997
+6 February 1998
 
 
 WHATEVER
 --------
 
-Copyright for the following modules: 
+Copyright for many of the modules is held by their respective authors.
+Look in the module subdirectories for any conditions of use.
 
-    ODBC Pipe Clipboard Console Internet Shortcut Sound
-
-is held by the respective authors.  Look in the module subdirectories
-for any conditions of use.
-
-The following copyright applies to the remaining, Activeware-derived
-modules (unless stated otherwise):
+The following copyright applies to all files that don't have an explicit
+copyright statement:
 
     (c) 1995 Microsoft Corporation. All rights reserved. 
 	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com

@@ -1,11 +1,11 @@
 //--------------------------------------------------------------------
-// $Id: Mutex/Mutex.xs 18 2008-02-04 19:47:59 -0600 dubiously $
+// $Id: Event/Event.xs 18 2008-02-04 19:47:59 -0600 dubiously $
 //--------------------------------------------------------------------
 //
-//   Win32::Mutex
+//   Win32::Event
 //   Copyright 1998 by Christopher J. Madsen
 //
-//   XS file for the Win32::Mutex IPC module
+//   XS file for the Win32::Event IPC module
 //
 //--------------------------------------------------------------------
 
@@ -25,23 +25,24 @@ extern "C" {
 #include <windows.h>
 
 
-MODULE = Win32::Mutex		PACKAGE = Win32::Mutex
+MODULE = Win32::Event		PACKAGE = Win32::Event
 
 PROTOTYPES: ENABLE
 
 
 HANDLE
-new(className, initial=FALSE, name=NULL)
+new(className, manual=FALSE, initial=FALSE, name=NULL)
     char*  className
+    BOOL   manual
     BOOL   initial
     LPCSTR name
 PREINIT:
-      SECURITY_ATTRIBUTES  sec;
+    SECURITY_ATTRIBUTES  sec;
 CODE:
     sec.nLength = sizeof(SECURITY_ATTRIBUTES);
     sec.bInheritHandle = TRUE;        // allow inheritance
     sec.lpSecurityDescriptor = NULL;  // calling processes' security
-    RETVAL = CreateMutex(&sec,initial,name);
+    RETVAL = CreateEvent(&sec,manual,initial,name);
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:
@@ -53,7 +54,7 @@ open(className, name)
     char*  className
     LPCSTR name
 CODE:
-    RETVAL = OpenMutex(MUTEX_ALL_ACCESS, TRUE, name);
+    RETVAL = OpenEvent(EVENT_ALL_ACCESS, TRUE, name);
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:
@@ -61,17 +62,36 @@ OUTPUT:
 
 
 void
-DESTROY(mutex)
-    HANDLE mutex
+DESTROY(event)
+    HANDLE event
 CODE:
-    if (mutex != INVALID_HANDLE_VALUE)
-      CloseHandle(mutex);
+    if (sv_derived_from(ST(0), "Win32::Event") &&
+        (event != INVALID_HANDLE_VALUE))
+      CloseHandle(event);
 
 
 BOOL
-release(mutex)
-    HANDLE mutex
+pulse(event)
+    HANDLE event
 CODE:
-    RETVAL = ReleaseMutex(mutex);
+    RETVAL = PulseEvent(event);
+OUTPUT:
+    RETVAL
+
+
+BOOL
+reset(event)
+    HANDLE event
+CODE:
+    RETVAL = ResetEvent(event);
+OUTPUT:
+    RETVAL
+
+
+BOOL
+set(event)
+    HANDLE event
+CODE:
+    RETVAL = SetEvent(event);
 OUTPUT:
     RETVAL

@@ -1,9 +1,6 @@
-DWORD                   T_NV
-LPCSTR                  T_PV
-LPCTSTR                 T_PV
 BOOL                    T_IV
-LPTSTR                  T_PV
-Mutex *                 T_PTROBJ
+LPCSTR                  T_PV
+HANDLE                  T_PTROBJ
 
 #############################################################################
 INPUT
@@ -18,4 +15,4 @@ T_PTROBJ
 #############################################################################
 OUTPUT
 T_PTROBJ
-	sv_setref_pv($arg, \"${Package}\", (void*)$var);
+	sv_setref_pv($arg, className, (void*)$var);

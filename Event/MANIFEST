@@ -1,7 +1,7 @@
 Changes
+Event.pm
+Event.xs
 MANIFEST
 Makefile.PL
-Mutex.pm
-Mutex.xs
 test.pl
 typemap

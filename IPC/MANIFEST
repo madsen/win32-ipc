@@ -1,5 +1,4 @@
 Changes
-IPC.hpp
 IPC.pm
 IPC.xs
 MANIFEST

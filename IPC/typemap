@@ -1,4 +1,13 @@
 DWORD                   T_IV
-HKEY                    T_IV
-HANDLE                  T_IV
 BOOL			T_IV
+HANDLE                  T_PTROBJ
+
+#############################################################################
+INPUT
+T_PTROBJ
+	if (sv_derived_from($arg, \"${Package}\")) {
+	    IV tmp = SvIV((SV*)SvRV($arg));
+	    $var = ($type) tmp;
+	}
+	else
+	    croak(\"$var is not of type ${Package}\")
