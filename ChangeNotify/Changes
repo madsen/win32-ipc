@@ -1,5 +1,9 @@
 Revision history for Perl extension Win32::ChangeNotify.
 
+1.02  Sun Jun 13 1999 12:33:09
+	- Bug fix to AUTOLOAD (FILE_NOTIFY_CHANGE_* constants now work)
+	  (courtesy Christopher J. Madsen)
+
 1.01  Sun Apr 26 1998 13:28:49
 	- Bug fixes to `new' and `close' methods (courtesy
 	  Chris Madsen)

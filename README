@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.14.
+Welcome to libwin32 version 0.15.
 
 
 WHAT
@@ -19,11 +19,8 @@ time, but we are slowly getting there.
 As the name suggests, all modules in this distribution are Win32-specific.
 They cannot be used on platforms that do not support the Win32 API.
 
-This distribution has been pre-compiled for the x86 architecture.  The
-precompiled binaries can ONLY be used with the perl5.00402-bindist04-bc.zip
-distribution from CPAN.  See the "WHAT TO DO" section for installation
-instructions.  Binaries compatible with "ActivePerl" should be available
-soon from http://www.activestate.com/.
+This distribution contains pre-compiled binaries for the x86 architecture.
+See the "WHAT TO DO" section for installation instructions.
 
 
 WHAT HAS CHANGED
@@ -32,18 +29,50 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-This release has the following changes over the previous one (version 0.13):
+This release has the following changes over the previous one (version 0.14):
 
-   + Support for building with mingw32/GCC from Nick Ing-Simmons.  Building
-     many of the extensions is skipped, since the mingw32 libraries don't
-     yet support all of the Win32 API.
+   + Win32API-File-0.07 has been added (thanks to Tye McQueen).  This module
+     provides low-level access to file and directory functions.
 
-   + Memory leaks fixed in PerfLib (thanks to Artur Silveira da Cunha).
+   + Win32-OLE has been upgraded to v0.1101 (thanks to Jan Dubois).
+     Be sure to check out the cool new component browser (needs IE5).
+     Type "perldoc Win32::OLE::NEWS" and/or see OLE/Changes for detailed
+     notes.
 
-   + EventLog now returns 'User' and 'Message' fields (thanks to Martin
-     Pauley).
+   + Win32API-Net has been upgraded to v0.08 (thanks to Bret Giddings).
+     NOTE: There is a POTENTIAL INCOMPATIBILITY in how empty string values
+     are handled in input hashes.
+     See APINet/Changes and the pod documentation for detailed notes.
 
-   + Other minor bugfixes.
+   + Win32API-Registry has been upgraded to v0.17 (from Tye McQueen).
+     See APIRegistry/Changes for detailed notes.
+
+   + Win32-TieRegistry has been upgraded to v0.23 (from Tye McQueen).
+     See TieRegistry/Changes for detailed notes.
+
+   + Win32-Sound has been upgraded to v0.45 (from Aldo Calpini).  The new
+     version supports wave devices and volume controls, and also sports pod
+     documentation.
+
+   + A few bugs in Win32-EventLog have been fixed (thanks to Bret Giddings
+     and Jan Dubois).  There is also newer documentation in pod format.
+     NOTE: There is a POTENTIAL INCOMPATIBILITY in the Report() method,
+     which will now use the "Source" and "Computer" fields in the passed
+     hashref if they exist.
+     See EventLog/Changes and the pod documentation for details.
+
+   + A typo in Win32::Console::GenerateCtrlEvent() has been fixed.
+     Documentation in pod format has been added (from Jan Dubois).
+
+   + Win32::NetResource::GetSharedResources() now continues the enumeration
+     when there are "Access denied" errors; on other errors, it enumerates
+     all the resources seen until the point the error occurred.
+
+   + Minor changes in Win32-ODBC from various people have been included.
+     See ODBC/Changes for a summary.
+
+   + Other small changes for Perl 5.005xx compatibility and minor bug
+     fixes round out this release.
 
 Many thanks to all the contributors.
 
@@ -58,7 +87,7 @@ This bundle contains:
      modified so that they will build under MakeMaker using perls greater
      than 5.004.  There have been many bugfixes.
 
-     The complete list of ActiveState extensions is available:
+     The following extensions are available:
 
         Win32/ChangeNotify
         Win32/EventLog
@@ -80,10 +109,10 @@ This bundle contains:
      actively maintained by Jan Dubois <jan.dubois@ibm.net>.
 
      These extensions have been re-engineered to use the XS interface
-     language, yet the changes are compatible with the originals.  This
+     language, but the changes are compatible with the originals.  This
      should minimize any problems for people wanting to migrate their
-     application to 5.004.  The design of these modules is subject to
-     change in future.
+     application to 5.004 or later.  The design of these modules is
+     subject to change in future.
 
      The only deliberately incompatible change is in the Win32::OLE
      module.  While the ActiveState port used the "OLE::" and "Win32::"
@@ -122,6 +151,10 @@ This bundle contains:
      Registry API functions.  Both modules are maintained by Tye McQueen
      <tye@metronet.com>.
 
+   * The Win32API::File module to provide low level access to most
+     Win32 API calls related to files, also maintained by Tye McQueen
+     <tye@metronet.com>.
+
    * The Win32API::Net module, which is a small step towards
      comprehensive Net* API functionality, maintained by Bret Giddings
      <bret@essex.ac.uk>.
@@ -130,42 +163,39 @@ This bundle contains:
 WHAT TO DO
 ----------
 
-You can either use the binaries that come with this distribution,
-or choose to recompile them from scratch (recommended if you have
-a C compiler that is capable of building perl).
+NOTE: If you already have ActivePerl build 520 or later, you do not
+need to install this!  ActivePerl build 520 and later are already
+bundled with libwin32-0.15 (or better).
 
-Once again, the included binaries *cannot* be used with the ActivePerl
-binaries from ActiveState.  ActivePerl compatible binaries are
-available via the PPM tool included in ActivePerl.  See
-http://www.activestate.com/ for details on using PPM.  If you have
-ActivePerl, but want to build your own binaries, you will need 
-Visual C++, and a good read of some of the caveats below.
+If you built Perl from source using your C compiler, you need to
+ignore the binaries supplied here and rebuild all the extensions
+here from scratch.
 
-If you want to use the precompiled binaries:
+If you have either a compatible ActivePerl (later than build 509) or
+the older 5.00402 distribution, you can install the binaries that come
+with this distribution.
 
-   + Download:
-       http://www.perl.com/CPAN/authors/id/GSAR/perl5.00402-bindist04-bc.zip
-     Unzip that, thoroughly read the README file, and install it.  Note that
-     the it comes with an older version of libwin32, but you'll be
-     completely replacing that in the next few steps. [Well not completely--
-     the Win32::AdminMisc module has been dropped since Dave Roth is
-     distributing newer versions compatible with the above binary
-     distribution, so the old AdminMisc will be left alone.  See
-     http://www.roth.net/perl/adminmisc for how to get the latest.]
+If you are using ActivePerl build 509 or later:
 
-   + Make sure the newly installed perl is available from the command line.
-     Typing "perl -v" should report version 5.004_02.  If not, make sure
-     you've added the installed location of perl.exe to your PATH correctly.
+   + You will use the PPM tool supplied with ActivePerl for the
+     installation.  Type the following at a command prompt:
 
-   + cd to wherever you uncompressed this distribution, and type
-     "install.bat".  This should take care of installing everything in the
-     right place.
+        ppm install .\libwin32.ppd
 
-   + Many modules come with their own test files.  You may want to
-     use them as a source of examples.  Many of the test files will
-     only run on Windows NT, others may require Windows NT 4.0, and
-     still others may require Administrator privileges, or a full
-     fledged Windows network.
+     That's it.
+
+If you are using $CPAN/authors/id/GSAR/perl5.00402-bindist04-bc.zip :
+
+   + Note that the above distribution comes with an older version of
+     libwin32, but you'll be completely replacing that in the next step.
+
+   + Run the "install.bat" in this distribution from the command prompt.
+     This should take care of installing everything in the right place.
+
+Many modules come with their own test files.  You may want to use them
+as a source of examples.  Many of the test files will only run on
+Windows NT, others may require Windows NT 4.0, and still others may
+require Administrator privileges, or a full-fledged Windows network.
 
 The following applies only if you need to rebuild using your C compiler.
 (Note that you HAVE to do this if you built Perl yourself.)  Otherwise,
@@ -175,7 +205,7 @@ This set of modules will build with perl5.004_01 and later on the Windows
 NT platform.  Building on Windows 95 is not supported (it *may* be
 possible if you use the 4DOS command shell, but your mileage may vary).
 
-   + First you need to build perl 5.004_01 or later (you will need
+   + First you need to build perl 5.005_03 or later (you will need
      either Visual C++ 4.x+ or Borland C++ 5.02+), and install it.  See
      README.win32 in the perl distribution for details on how to build
      perl for the Win32 platform.
@@ -185,7 +215,7 @@ possible if you use the 4DOS command shell, but your mileage may vary).
      of ActivePerl are known to report a bogus value here.
 
      To fix the problem, you will have to edit the Config.pm file (found
-     somewhere like c:\perl\5.00502\lib\MSWin32-x86-object\Config.pm) and
+     somewhere like c:\perl\5.00503\lib\MSWin32-x86-object\Config.pm) and
      set the line that begins with "libpth=" to something like:
 
 		libpth='c:\devstudio\vc\lib'
@@ -194,15 +224,11 @@ possible if you use the 4DOS command shell, but your mileage may vary).
      didn't specify the library location properly in the Makefile used to
      build perl.
 
-     If you're one of those people who have fallen (unwittingly or
-     otherwise) for the "spa ces in filenames are co ol" disease,
-     make sure you're using perl 5.00502 or later, and that your libpth
-     entry looks something like:
+     If your C compiler and libraries are installed in a path with
+     spaces, you'll need to quote any components with spaces.  For
+     example:
 
 		libpth='c:\"Program Files"\DevStudio\vc\lib'
-
-     i.e. you have to ensure that any space-filled components in the
-     path are quoted.
 
      Another common problem is not making perlcrt.lib available at
      your 'libpth' location.  perlcrt.lib may or may not be needed
@@ -235,7 +261,7 @@ possible if you use the 4DOS command shell, but your mileage may vary).
      have, replace the older ones, and copy the newer wininet.lib into the
      Internet/ directory.
 
-   + Remove the 'blib' directory (it contains the precompiled binaries)
+   + Remove the 'blib' directory (it contains precompiled binaries)
 
    + perl Makefile.PL               [either at toplevel or in subdirs]
    
@@ -264,8 +290,8 @@ Suggestions, patches, testsuite additions, and wholesale rewrites welcome.
 Enjoy!
 
 Gurusamy Sarathy
-gsar@umich.edu
-14 Nov 1998
+gsar@activestate.com
+25 Sep 1999
 
 
 WHATEVER
@@ -280,10 +306,8 @@ copyright statement:
     (c) 1995 Microsoft Corporation. All rights reserved. 
 	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
 
-    Other modifications (c) 1997, 1998 by Gurusamy Sarathy <gsar@umich.edu>
+    Other modifications (c) 1997-1999 by Gurusamy Sarathy <gsar@activestate.com>
 
     You may distribute under the terms of either the GNU General Public
     License or the Artistic License, as specified in the README file
     of the Perl distribution.
-
-

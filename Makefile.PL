@@ -1,10 +1,16 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-	NAME => 'Win32',
-	DISTNAME => 'libwin32',
-	VERSION_FROM => 'Win32.pm',
-	'dist' => {COMPRESS => 'gzip -9f', SUFFIX => 'gz'}
+    NAME		=> 'Win32',
+    DISTNAME		=> 'libwin32',
+    VERSION_FROM	=> 'Win32.pm',
+    'dist'		=> {COMPRESS => 'gzip -9f', SUFFIX => 'gz'},
+    ($] < 5.005 ? () :
+      (
+	ABSTRACT	=> 'A collection of extensions that aims to provide '
+			 . 'comprehensive access to the Windows API. ',
+	AUTHOR		=> 'Gurusamy Sarathy <gsar@activestate.com>',
+      )),
 );
 
 

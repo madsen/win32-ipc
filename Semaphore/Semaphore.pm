@@ -7,7 +7,7 @@ package Win32::Semaphore;
 #   (c) 1995 Microsoft Corporation. All rights reserved.
 #       Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
 #
-#   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@umich.edu>
+#   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <chris_madsen@geocities.com>
 # Version: 1.00 (6-Feb-1998)
