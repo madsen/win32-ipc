@@ -1,13 +1,8 @@
-Welcome to libwin32 version 0.24.
+Welcome to libwin32 version 0.26.
 
-This release contains the sources for the libwin32 modules as shipped
-with ActivePerl 5.8.6.811.  I have inherited a mailbox full of patches
-that I plan to apply over the following weeks, but I wanted to release
-the current version as the baseline for all further patches and
-discussion.
-
-A new mailing list for development / maintenance has been created at
-perl.org.  You can subscribe by sending an empty email message to:
+All discussion of development / maintenance of the libwin32 package
+should happen on the libwin32@perl.org mailing list.  You can
+subscribe by sending an empty email message to:
 
     libwin32-subscribe@perl.org
 
@@ -15,10 +10,15 @@ An NNTP archive of previous messages is available from:
 
     http://www.nntp.perl.org/group/perl.libwin32
 
+Please report any bugs or enhancement requests to the CPAN
+request tracker at:
+
+    http://rt.cpan.org/NoAuth/Bugs.html?Dist=libwin32
+
 Cheers,
 Jan Dubois
 jand@ActiveState.com
-14 February 2005
+17 September 2005
 
 
 
@@ -47,39 +47,74 @@ WHAT HAS CHANGED
 The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
-This release has the following changes over the previous one (version 0.191):
+This release has the following changes over the previous one (version 0.24):
 
-   + Win32::EventLog updated to 0.074.  It fixes a bug that made some
-     message texts containing positional parameters unretrievable.
+0.26
 
-   + Win32::Internet had various bug fixes applied.  This includes a
-     memory leak in SetOption() and argument handling of the accept()
-     and HttpOpenRequest() methods.
+   + Identical to 0.25, except that this README got updated too.
 
-   + Win32::Job now propagates environment variables to the subprocesses.
+0.25
 
-   + Win32::OLE updated to 0.17
-     See OLE/changes for list of changes.
+   + All libwin32 modules now compile with Microsoft VC++, cygwin and MingW.
 
-   + Win32::Shortcut coredump during process exit has been fixed.
+   + libwin32 now requires Perl 5.6.0 or later.
 
-   + Win32::GetOSName() now identifies Windows 2003 as "Win2003".
+   + All support for Perl 5.005 style wide character Unicode support has been
+     removed.  This code is incompatible with the way Perl 5.6 and later use
+     Unicode (UTF8), and has been removed in Perl 5.8.
+ 
+   + Win32API::File
 
-   + Win32::GetFolderPath() and CSIDL_xxx constants added to Win32 module.
+     - Added GetFileAttributes() function and corresponding constants.
+
+     - Addition of the GetFileSize(), getFileSize() setFilePointer()
+       and GetOverlappedResult() methods and the experimental new object
+       oriented interface.
+
+   + Win32::Clipboard
+
+     - GetBitmap() should now work correctly with 1 bit, 4 bit, 8 bit,
+       16 bit, 24 bit, and 32 bit colors.
+
+   + Win32::Console
+
+     - Rename GRAY to LIGHTGRAY and add definitions for the "real" GRAY colors.
+
+     - Add support so that Win32::IPC can wait on a console handle.
+
+     - Add SetIcon() method to change the icon of the window.
+
+     - Don't export the scalar variables to %main:: but into the
+       callers namespace.
+
+   + Win32::Process
+
+     - Add STILL_ACTIVE constant for GetExitCode().
+
+     - Add GetCurrentProcessID() for cygwin.
+
+     - Win32::Process::Open() now records the process ID correctly
+       for GetProcessID().  It also creates handle now that can be
+       used with the Wait() method.
+
+   + Win32::Shortcut
+
+     - The Save() function now calls Win32::GetLongPathName() on the filename
+       to make sure to use a fully qualified pathname.
+
+     - The Save() will store the new filename as the 'File' property unless
+       the Shortcut object already has a 'File' property.
+
+   + Win32::TieRegistry
+
+     - Localize $@ in DESTORY method because it uses eval.
+
 
 Many thanks to all the contributors.
 
 
 WHAT TO DO
 ----------
-
-NOTE: If you already have ActivePerl installed, you may already have a
-more recent version of libwin32 installed, and you will not need to
-install this.  To be sure, run this:
-
-    C:\> perl -MWin32 -e "print $Win32::VERSION"
-
-If that prints 0.21 or later, you don't need to install this package.
 
 Many modules come with their own test files.  You may want to use them
 as a source of examples.  Many of the test files will only run on
