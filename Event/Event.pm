@@ -3,7 +3,7 @@ package Win32::Event;
 #
 # Copyright 1998 Christopher J. Madsen
 #
-# Author: Christopher J. Madsen <chris_madsen@geocities.com>
+# Author: Christopher J. Madsen <cjm@pobox.com>
 # Created: 3 Feb 1998 from the ActiveWare version
 # Version: 1.00 (6-Feb-1998)
 #
@@ -64,7 +64,8 @@ If C<$initial> is true, the initial state of the object is signalled
 object.
 
 If C<$name> signifies an existing event object, then C<$manual> and
-C<$initial> are ignored and the object is opened.
+C<$initial> are ignored and the object is opened.  If this happens,
+C<$^E> will be set to 183 (ERROR_ALREADY_EXISTS).
 
 =item $event = Win32::Event->open($name)
 
@@ -94,7 +95,7 @@ Wait for C<$event> to be signalled.  See L<"Win32::IPC">.
 
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<chris_madsen@geocities.com>E<gt>
+Christopher J. Madsen E<lt>F<cjm@pobox.com>E<gt>
 
 =cut
 

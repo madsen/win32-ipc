@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: Mutex/Mutex.xs 119 2008-02-05 03:46:28 -0600 dubiously $
+// $Id: Mutex/Mutex.xs 142 2008-02-05 11:39:59 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::Mutex
@@ -35,14 +35,7 @@ CODE:
     sec.nLength = sizeof(SECURITY_ATTRIBUTES);
     sec.bInheritHandle = TRUE;        // allow inheritance
     sec.lpSecurityDescriptor = NULL;  // calling processes' security
-    if (name && USING_WIDE()) {
-	WCHAR wbuffer[MAX_PATH+1];
-	A2WHELPER(name, wbuffer, sizeof(wbuffer));
-	RETVAL = CreateMutexW(&sec,initial,wbuffer);
-    }
-    else {
-	RETVAL = CreateMutexA(&sec,initial,name);
-    }
+    RETVAL = CreateMutexA(&sec,initial,name);
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:
@@ -54,14 +47,7 @@ open(className, name)
     char*  className
     LPCSTR name
 CODE:
-    if (USING_WIDE()) {
-	WCHAR wbuffer[MAX_PATH+1];
-	A2WHELPER(name, wbuffer, sizeof(wbuffer));
-	RETVAL = OpenMutexW(MUTEX_ALL_ACCESS, TRUE, wbuffer);
-    }
-    else {
-	RETVAL = OpenMutexA(MUTEX_ALL_ACCESS, TRUE, name);
-    }
+    RETVAL = OpenMutexA(MUTEX_ALL_ACCESS, TRUE, name);
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:

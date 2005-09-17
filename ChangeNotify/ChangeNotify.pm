@@ -9,7 +9,7 @@ package Win32::ChangeNotify;
 #
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
-# Author: Christopher J. Madsen <chris_madsen@geocities.com>
+# Author: Christopher J. Madsen <cjm@pobox.com>
 # Version: 1.02 (13-Jun-1999)
 #
 # This program is free software; you can redistribute it and/or modify
@@ -22,8 +22,9 @@ package Win32::ChangeNotify;
 #
 # Monitor directory for changes
 #---------------------------------------------------------------------
+# 1.04 -Minor changes by Yves Orton to fix the trueness of $subtree (Dec 2002)
 
-$VERSION = '1.02';
+$VERSION = '1.05';
 
 use Carp;
 use Win32::IPC 1.00 '/./';      # Import everything
@@ -104,6 +105,16 @@ This module allows the user to use a Win32 change notification event
 object from Perl.  This allows the Perl program to monitor events
 relating to files and directory trees.
 
+Unfortunately, the Win32 API which implements this feature does not
+provide any indication of I<what> triggered the notification (as far
+as I know).  If you're monitoring a directory for file changes, and
+you need to know I<which> file changed, you'll have to find some other
+way of determining that.  Depending on exactly what you're trying to
+do, you may be able to check file timestamps to find recently changed
+files.  Or, you may need to cache the directory contents somewhere and
+compare the current contents to your cached copy when you receive a
+change notification.
+
 The C<wait> method and C<wait_all> & C<wait_any> functions are
 inherited from the L<"Win32::IPC"> module.
 
@@ -175,7 +186,7 @@ Use C<$obj-E<gt>close> instead.
 
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<chris_madsen@geocities.com>E<gt>
+Christopher J. Madsen E<lt>F<cjm@pobox.com>E<gt>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 F<http://www.ActiveWare.com>

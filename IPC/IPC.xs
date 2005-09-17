@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: IPC/IPC.xs 119 2008-02-05 03:46:28 -0600 dubiously $
+// $Id: IPC/IPC.xs 142 2008-02-05 11:39:59 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::IPC
@@ -49,7 +49,9 @@ WaitForMultiple(AV* hArray, BOOL fWaitAll, DWORD dwTimeOut)
      invalid:
       croak("Invalid object passed ($objects[%d])",i);
       return IV_MAX;
-    } else if (sv_derived_from(*svpp,"Win32::Process")) {
+    } else if (sv_derived_from(*svpp,"Win32::IPC")) {
+      handle = INT2PTR(HANDLE, SvIV(SvRV(*svpp)));
+    } else if (sv_isobject(*svpp)) {
       dSP;
       handle = INVALID_HANDLE_VALUE;
       ENTER;
@@ -57,15 +59,15 @@ WaitForMultiple(AV* hArray, BOOL fWaitAll, DWORD dwTimeOut)
       PUSHMARK(sp);
       XPUSHs(*svpp);
       PUTBACK;
-      result = perl_call_method("get_process_handle", G_SCALAR|G_EVAL);
+      result = call_method("get_Win32_IPC_HANDLE", G_SCALAR|G_EVAL);
       SPAGAIN;
-      if ((result == 1) && SvIOKp(TOPs)) handle = (HANDLE)POPi;
+      if ((result == 1) && (SvIOKp(TOPs))) handle = INT2PTR(HANDLE, POPi);
       PUTBACK;
       FREETMPS;
       LEAVE;
-    } else if (sv_derived_from(*svpp,"Win32::IPC")) {
-      handle = (HANDLE)(SvIV(SvRV(*svpp)));
+      if (SvTRUE(ERRSV)) goto unknown;
     } else {
+     unknown:
       croak("Don't know how to wait on $objects[%d]",i);
       return IV_MAX;
     }
@@ -111,14 +113,12 @@ constant(name)
 IV
 wait_any(objects,timeout=INFINITE)
 	SV *  objects
-	BOOL  waitall
 	DWORD timeout
 ALIAS:
 	wait_all = 1
 PROTOTYPE: \@;$
 PREINIT:
 	AV *	av;
-	DWORD 	ret;
 CODE:
 	if (!(SvROK(objects)
 	      && (av = (AV*)SvRV(objects))

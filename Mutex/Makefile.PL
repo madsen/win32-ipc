@@ -4,7 +4,7 @@ WriteMakefile(
     'VERSION_FROM'	=> 'Mutex.pm',
     ($] < 5.005 ? () :
       (
-	'AUTHOR'	=> 'Christopher J. Madsen <ac608@yfn.ysu.edu>',
+	'AUTHOR'	=> 'Christopher J. Madsen <cjm@pobox.com>',
 	'ABSTRACT_FROM'	=> 'Mutex.pm',
       )),
 );

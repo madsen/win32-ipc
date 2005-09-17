@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: Semaphore/Semaphore.xs 119 2008-02-05 03:46:28 -0600 dubiously $
+// $Id: Semaphore/Semaphore.xs 142 2008-02-05 11:39:59 -0600 dubiously $
 //--------------------------------------------------------------------
 //
 //   Win32::Semaphore
@@ -35,14 +35,7 @@ CODE:
 	sec.nLength = sizeof(SECURITY_ATTRIBUTES);
 	sec.bInheritHandle = TRUE;	// allow inheritance
 	sec.lpSecurityDescriptor = NULL;  // calling processes' security
-	if (name && USING_WIDE()) {
-	    WCHAR wbuffer[MAX_PATH+1];
-	    A2WHELPER(name, wbuffer, sizeof(wbuffer));
-	    RETVAL = CreateSemaphoreW(&sec, initial, max, wbuffer);
-	}
-	else {
-	    RETVAL = CreateSemaphoreA(&sec, initial, max, name);
-	}
+        RETVAL = CreateSemaphoreA(&sec, initial, max, name);
     }
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
@@ -55,14 +48,7 @@ open(className, name)
     char*  className
     LPCSTR name
 CODE:
-    if (USING_WIDE()) {
-	WCHAR wbuffer[MAX_PATH+1];
-	A2WHELPER(name, wbuffer, sizeof(wbuffer));
-	RETVAL = OpenSemaphoreW(SEMAPHORE_ALL_ACCESS, TRUE, wbuffer);
-    }
-    else {
-	RETVAL = OpenSemaphoreA(SEMAPHORE_ALL_ACCESS, TRUE, name);
-    }
+    RETVAL = OpenSemaphoreA(SEMAPHORE_ALL_ACCESS, TRUE, name);
     if (RETVAL == INVALID_HANDLE_VALUE)
       XSRETURN_UNDEF;
 OUTPUT:

@@ -4,7 +4,7 @@ WriteMakefile(
     'VERSION_FROM'	=> 'IPC.pm', # finds $VERSION
     ($] < 5.005 ? () :
       (
-	'AUTHOR'	=> 'Christopher J. Madsen <ac608@yfn.ysu.edu>',
+	'AUTHOR'	=> 'Christopher J. Madsen <cjm@pobox.com>',
 	'ABSTRACT_FROM'	=> 'IPC.pm',
       )),
 );

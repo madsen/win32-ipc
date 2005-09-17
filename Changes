@@ -1,5 +1,84 @@
 Revision history for Perl extension libwin32.
 
+0.25  16 September 2005
+
+   + All libwin32 modules now compile with Microsoft VC++, cygwin and MingW.
+     Thanks to Rafael Kitover and Reini Urban for all the work!
+
+   + libwin32 now requires Perl 5.6.0 or later.
+
+   + All support for Perl 5.005 style wide character Unicode support has been
+     removed.  This code is incompatible with the way Perl 5.6 and later use
+     Unicode (UTF8), and has been removed in Perl 5.8 (USING_WIDE is defined
+     as constant 0).
+ 
+   + Win32API::File
+
+     - Added GetFileAttributes() function and corresponding constants.
+       (Patches from Kenneth Olwing from 2004-11-12).
+     - Applied cygwin patches from Rafael Kitover and Reini Urban.
+       This includes the addition of the GetFileSize(), getFileSize()
+       setFilePointer() and GetOverlappedResult() methods and the
+       experimental new object oriented interface.  All file position
+       operations use either Math::BigInt objects or 8 byte integers
+      (cygwin) for file offsets.
+
+   + Win32API::Registry
+
+     - Add DELETE/READ_CONTROL/WRITE_DAC/WRITE_OWNER/SYNCHRONIZE as KEY_*
+
+   + Win32::Clipboard
+
+     - GetBitmap() should now work correctly with 1 bit, 4 bit, 8 bit,
+       16 bit, 24 bit, and 32 bit colors
+
+   + Win32::Console
+
+     - Rename GRAY to LIGHTGRAY and add definitions for the "real" GRAY
+       colors (James K. Lowden).
+
+     - Add get_Win32_IPC_HANDLE() method so that Win32::IPC can wait
+       on a console handle (Christopher J. Madsen)
+
+     - Add SetIcon() method to change the icon of the window
+       (Christopher J. Madsen)
+
+     - Don't export the scalar variables to %main:: but into the
+       callers namespace (Christopher J. Madsen)
+
+   + Win32::IPC.
+
+     - revised how WaitForMultiple handles non-Win32::IPC objects
+
+   + Win32::Process
+
+     - add get_Win32_IPC_HANDLE() method for Win32::IPC compatibility
+       (Christopher J. Madsen)
+
+     - add STILL_ACTIVE constant for GetExitCode()
+       (suggested by Michael Ellery)
+
+     - add GetCurrentProcessID() for cygwin (Reini Urban)
+
+     - Win32::Process::Open() now records the process ID correctly
+       for GetProcessID().  It also creates handle now that can be
+       used with the Wait() method. (Christopher Allan)
+
+     - make it work with the latest cygwin version
+       remove USING_WIDE() codepaths (Jan Dubois)
+
+   + Win32::Shortcut
+
+     - The Save() function now calls Win32::GetLongPathName() on the filename
+       to make sure to use a fully qualified pathname.
+
+     - The Save() will store the new filename as the 'File' property unless
+       the Shortcut object already has a 'File' property.
+
+   + Win32::TieRegistry
+
+     - Localize $@ in DESTORY method because it uses eval (by Eric Promislow)
+
 0.24  14 February 2005
 
    + This release corresponds to libwin32 in ActivePerl 5.8.6.811.

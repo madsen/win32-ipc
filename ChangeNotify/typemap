@@ -1,4 +1,5 @@
 BOOL                    T_IV
+TRUEFALSE	T_TRUEFALSE
 DWORD                   T_IV
 LPCSTR                  T_PV
 HANDLE			T_PTROBJ
@@ -8,12 +9,18 @@ INPUT
 T_PTROBJ
 	if (sv_derived_from($arg, \"${Package}\")) {
 	    IV tmp = SvIV((SV*)SvRV($arg));
-	    $var = ($type) tmp;
+	    $var = INT2PTR($type, tmp);
 	}
 	else
 	    croak(\"$var is not of type ${Package}\")
+
+T_TRUEFALSE
+	$var = SvTRUE($arg)
 
 #############################################################################
 OUTPUT
 T_PTROBJ
 	sv_setref_pv($arg, className, (void*)$var);
+
+T_TRUEFALSE
+	$arg = boolSV($var);

@@ -9,7 +9,7 @@ package Win32::Semaphore;
 #
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
-# Author: Christopher J. Madsen <chris_madsen@geocities.com>
+# Author: Christopher J. Madsen <cjm@pobox.com>
 # Version: 1.00 (6-Feb-1998)
 #
 # This program is free software; you can redistribute it and/or modify
@@ -70,7 +70,8 @@ count, and C<$maximum> is the maximum count for the semaphore.  If
 C<$name> is omitted, creates an unnamed semaphore object.
 
 If C<$name> signifies an existing semaphore object, then C<$initial>
-and C<$maximum> are ignored and the object is opened.
+and C<$maximum> are ignored and the object is opened.  If this
+happens, C<$^E> will be set to 183 (ERROR_ALREADY_EXISTS).
 
 =item $semaphore = Win32::Semaphore->open($name)
 
@@ -119,7 +120,7 @@ Use C<$SemObj-E<gt>release($Count,$LastVal)> instead.
 
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<chris_madsen@geocities.com>E<gt>
+Christopher J. Madsen E<lt>F<cjm@pobox.com>E<gt>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 F<http://www.ActiveWare.com>

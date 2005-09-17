@@ -9,8 +9,8 @@ package Win32::IPC;
 #
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
-# Author: Christopher J. Madsen <chris_madsen@geocities.com>
-# Version: 1.00 (6-Feb-1998)
+# Author: Christopher J. Madsen <cjm@pobox.com>
+# Version: 1.03 (11-Jul-2003)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -23,7 +23,7 @@ package Win32::IPC;
 # Base class for Win32 synchronization objects
 #---------------------------------------------------------------------
 
-$VERSION = '1.02';
+$VERSION = '1.03';
 
 require Exporter;
 require DynaLoader;
@@ -89,6 +89,11 @@ those modules.
 
 The synchronization modules are L<"Win32::ChangeNotify">,
 L<"Win32::Event">, L<"Win32::Mutex">, & L<"Win32::Semaphore">.
+
+In addition, you can use C<wait_any> and C<wait_all> with
+L<"Win32::Console"> and L<"Win32::Process"> objects.  (However, those
+modules do not export the wait functions; you must load one of the
+synchronization modules (or just Win32::IPC)).
 
 =head2 Methods
 
@@ -164,9 +169,21 @@ Similar to C<not $obj-E<gt>wait($timeout)>.
 
 =back
 
+=head1 INTERNALS
+
+The C<wait_any> and C<wait_all> functions support two kinds of
+objects.  Objects derived from C<Win32::IPC> are expected to consist
+of a reference to a scalar containing the Win32 HANDLE as an IV.
+
+Other objects (for which C<UNIVERSAL::isa($object, "Win32::IPC")> is
+false), are expected to implement a C<get_Win32_IPC_HANDLE> method.
+When called in scalar context with no arguments, this method should
+return a Win32 HANDLE (as an IV) suitable for passing to the Win32
+WaitForMultipleObjects API function.
+
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<chris_madsen@geocities.com>E<gt>
+Christopher J. Madsen E<lt>F<cjm@pobox.com>E<gt>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 F<http://www.ActiveWare.com>
