@@ -1,5 +1,11 @@
 Revision history for Perl extension libwin32.
 
+0.27  6 March 2007
+
+   + Identical to 0.26, except that the Win32 and the Win32API::File modules
+     have been removed.  These modules are core Perl modules and are
+     only available individually from CPAN.
+
 0.26  17 September 2005
 
    + Updated the top level README file and some edits to this Changes file.

@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.26.
+Welcome to libwin32 version 0.27.
 
 All discussion of development / maintenance of the libwin32 package
 should happen on the libwin32@perl.org mailing list.  You can
@@ -15,10 +15,24 @@ request tracker at:
 
     http://rt.cpan.org/NoAuth/Bugs.html?Dist=libwin32
 
+This 0.27 release of libwin32 is mostly identical to version 0.26.
+The only change is the removal of the Win32 and Win32API::File
+modules, which have become core Perl modules and will also be available
+separately on CPAN.
+
+Seperating them out of libwin32 has become necessary because later
+Perl releases may require later versions of these modules, making it
+impossible to build older versions of libwin32 with the latest Perl
+releases.
+
+I intend to release updated versions of libwin32 modules to CPAN as
+individual distributions too, to make it easier to release them in
+a more timely manner.
+
 Cheers,
 Jan Dubois
 jand@ActiveState.com
-17 September 2005
+6 March 2007
 
 
 
@@ -48,6 +62,12 @@ The top level "Changes" file contains a version by version overview of
 the most significant changes.
 
 This release has the following changes over the previous one (version 0.24):
+
+0.27
+
+   + Identical to 0.26, except that the Win32 and the Win32API::File modules
+     have been removed.  These modules are core Perl modules and are
+     only available individually from CPAN.
 
 0.26
 
