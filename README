@@ -1,4 +1,4 @@
-Welcome to libwin32 version 0.27.
+Welcome to libwin32 version 0.28.
 
 All discussion of development / maintenance of the libwin32 package
 should happen on the libwin32@perl.org mailing list.  You can
@@ -15,15 +15,12 @@ request tracker at:
 
     http://rt.cpan.org/NoAuth/Bugs.html?Dist=libwin32
 
-This 0.27 release of libwin32 is mostly identical to version 0.26.
-The only change is the removal of the Win32 and Win32API::File
-modules, which have become core Perl modules and will also be available
-separately on CPAN.
+This 0.28 release of libwin32 is mostly identical to version 0.27.
+The only change is the removal of the Win32API::Registry and Tie::Registry
+modules, which are maintained separately on CPAN.
 
-Seperating them out of libwin32 has become necessary because later
-Perl releases may require later versions of these modules, making it
-impossible to build older versions of libwin32 with the latest Perl
-releases.
+I've added a Bundle::libwin32 module to provide an easy way to install
+all modules that used to be included in the libwin32 package.
 
 I intend to release updated versions of libwin32 modules to CPAN as
 individual distributions too, to make it easier to release them in
@@ -32,7 +29,7 @@ a more timely manner.
 Cheers,
 Jan Dubois
 jand@ActiveState.com
-6 March 2007
+14 September 2007
 
 
 
@@ -63,72 +60,15 @@ the most significant changes.
 
 This release has the following changes over the previous one (version 0.24):
 
-0.27
+0.28  14 September 2007
 
-   + Identical to 0.26, except that the Win32 and the Win32API::File modules
-     have been removed.  These modules are core Perl modules and are
-     only available individually from CPAN.
+   + Win32API::Registry and Win32::TieRegistry modules have been removed; they
+     are maintained independently on CPAN.
 
-0.26
-
-   + Identical to 0.25, except that this README got updated too.
-
-0.25
-
-   + All libwin32 modules now compile with Microsoft VC++, cygwin and MingW.
-
-   + libwin32 now requires Perl 5.6.0 or later.
-
-   + All support for Perl 5.005 style wide character Unicode support has been
-     removed.  This code is incompatible with the way Perl 5.6 and later use
-     Unicode (UTF8), and has been removed in Perl 5.8.
- 
-   + Win32API::File
-
-     - Added GetFileAttributes() function and corresponding constants.
-
-     - Addition of the GetFileSize(), getFileSize() setFilePointer()
-       and GetOverlappedResult() methods and the experimental new object
-       oriented interface.
-
-   + Win32::Clipboard
-
-     - GetBitmap() should now work correctly with 1 bit, 4 bit, 8 bit,
-       16 bit, 24 bit, and 32 bit colors.
-
-   + Win32::Console
-
-     - Rename GRAY to LIGHTGRAY and add definitions for the "real" GRAY colors.
-
-     - Add support so that Win32::IPC can wait on a console handle.
-
-     - Add SetIcon() method to change the icon of the window.
-
-     - Don't export the scalar variables to %main:: but into the
-       callers namespace.
-
-   + Win32::Process
-
-     - Add STILL_ACTIVE constant for GetExitCode().
-
-     - Add GetCurrentProcessID() for cygwin.
-
-     - Win32::Process::Open() now records the process ID correctly
-       for GetProcessID().  It also creates handle now that can be
-       used with the Wait() method.
-
-   + Win32::Shortcut
-
-     - The Save() function now calls Win32::GetLongPathName() on the filename
-       to make sure to use a fully qualified pathname.
-
-     - The Save() will store the new filename as the 'File' property unless
-       the Shortcut object already has a 'File' property.
-
-   + Win32::TieRegistry
-
-     - Localize $@ in DESTORY method because it uses eval.
-
+   + Bundle::libwin32 has been added.  Installing this bundle via the
+     CPAN shell will install all the modules that used to be part of
+     libwin32 (currently Win32, Win32API::File, Win32API::Registry and
+     Win32::TieRegistry in addition to libwin32 itself).
 
 Many thanks to all the contributors.
 
