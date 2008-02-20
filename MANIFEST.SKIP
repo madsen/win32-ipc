@@ -2,8 +2,11 @@
 .svn\b
 ~$
 \$$
+\.c$
 \.cmd$
 \.gz$
+\.o$
+\.obj$
 \.pdb$
 ^\#
 ^MANIFEST\.
