@@ -1,7 +1,0 @@
-Changes
-MANIFEST
-Makefile.PL
-Semaphore.pm
-Semaphore.xs
-test.pl
-typemap

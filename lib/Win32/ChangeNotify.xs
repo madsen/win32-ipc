@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: ChangeNotify/ChangeNotify.xs 142 2008-02-05 11:39:59 -0600 dubiously $
+// $Id: lib/Win32/ChangeNotify.xs 224 2008-02-19 22:28:30 -0600 cmadsn $
 //--------------------------------------------------------------------
 //
 //   Win32::ChangeNotify
@@ -13,7 +13,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include "../ppport.h"
+/* #include "ppport.h" */
 
 #define WIN32_LEAN_AND_MEAN
 #define TRUEFALSE bool

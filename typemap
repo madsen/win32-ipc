@@ -1,4 +1,9 @@
+# $Id: typemap 224 2008-02-19 22:28:30 -0600 cmadsn $
+
 BOOL                    T_IV
+TRUEFALSE               T_TRUEFALSE
+DWORD                   T_IV
+LONG                    T_IV
 LPCSTR                  T_PV
 HANDLE                  T_PTROBJ
 
@@ -12,7 +17,13 @@ T_PTROBJ
 	else
 	    croak(\"$var is not of type ${Package}\")
 
+T_TRUEFALSE
+	$var = SvTRUE($arg)
+
 #############################################################################
 OUTPUT
 T_PTROBJ
 	sv_setref_pv($arg, className, (void*)$var);
+
+T_TRUEFALSE
+	$arg = boolSV($var);

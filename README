@@ -1,181 +1,41 @@
-Welcome to libwin32 version 0.28.
+$$Id: README 224 2008-02-19 22:28:30 -0600 cmadsn $
+Win32-IPC version $%v%$
 
-All discussion of development / maintenance of the libwin32 package
-should happen on the libwin32@perl.org mailing list.  You can
-subscribe by sending an empty email message to:
+[ REPLACE THIS...
 
-    libwin32-subscribe@perl.org
-
-An NNTP archive of previous messages is available from:
-
-    http://www.nntp.perl.org/group/perl.libwin32
-
-Please report any bugs or enhancement requests to the CPAN
-request tracker at:
-
-    http://rt.cpan.org/NoAuth/Bugs.html?Dist=libwin32
-
-This 0.28 release of libwin32 is mostly identical to version 0.27.
-The only change is the removal of the Win32API::Registry and Tie::Registry
-modules, which are maintained separately on CPAN.
-
-I've added a Bundle::libwin32 module to provide an easy way to install
-all modules that used to be included in the libwin32 package.
-
-I intend to release updated versions of libwin32 modules to CPAN as
-individual distributions too, to make it easier to release them in
-a more timely manner.
-
-Cheers,
-Jan Dubois
-jand@ActiveState.com
-14 September 2007
+  The README is used to introduce the module and provide instructions on
+  how to install the module, any machine dependencies it may have (for
+  example C compilers and installed libraries) and any other information
+  that should be understood before the module is installed.
+]
 
 
 
-WHAT
-----
+INSTALLATION
 
-This used to be a bundle of extensions that provided a quick migration path
-for people wanting to use the core support for win32 in perl 5.004 and later.
+To install these modules, run the following commands:
 
-With the release of Perl version 5.005 (which brings ActiveState's changes
-to Perl sources into the mainstream), this library of extensions has
-assumed loftier motives.  The long term goal of this project is to provide
-a coherent collection of modules that allow access to the functionality
-provided by the Win32 API, while maintaining the style and spirit of Perl.
-Like Perl, the intention is to make "easy things easy, and hard things
-possible".  Note that we are nowhere close to this goal at the present
-time, but we are slowly getting there.
-
-As the name suggests, all modules in this distribution are Win32-specific.
-They cannot be used on platforms that do not support the Win32 API.
+	perl Build.PL
+	Build
+	Build test
+	Build install
 
 
-WHAT HAS CHANGED
-----------------
+DEPENDENCIES
 
-The top level "Changes" file contains a version by version overview of
-the most significant changes.
-
-This release has the following changes over the previous one (version 0.24):
-
-0.28  14 September 2007
-
-   + Win32API::Registry and Win32::TieRegistry modules have been removed; they
-     are maintained independently on CPAN.
-
-   + Bundle::libwin32 has been added.  Installing this bundle via the
-     CPAN shell will install all the modules that used to be part of
-     libwin32 (currently Win32, Win32API::File, Win32API::Registry and
-     Win32::TieRegistry in addition to libwin32 itself).
-
-Many thanks to all the contributors.
+None.
 
 
-WHAT TO DO
-----------
 
-Many modules come with their own test files.  You may want to use them
-as a source of examples.  Many of the test files will only run on
-Windows NT, others may require Windows NT 4.0, and still others may
-require Administrator privileges, or a full-fledged Windows network.
+COPYRIGHT AND LICENSE
 
-This set of modules will build with perl v5.6.0 and later on the Windows
-NT platform.  Building on Windows 95 is not supported (it *may* be
-possible if you use the 4DOS command shell, but your mileage may vary).
+Copyright 1998-2008 Christopher J. Madsen
 
-   + First you need to build perl 5.6.0 or later (you will need
-     either Visual C++ 5.x+ or Borland C++ 5.02+), and install it.  See
-     README.win32 in the perl distribution for details on how to build
-     perl for the Win32 platform.  ActivePerl build 613 or later will
-     also suffice.
+ Created: 3 Feb 1998 from the ActiveWare version
+   (c) 1995 Microsoft Corporation. All rights reserved.
+       Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
 
-   + Make sure your perl is properly configured.  "perl -V:libpth" should
-     report a valid path to your compiler's library files.
+   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 
-     If you built perl yourself, make sure you specify the C compiler's
-     library location properly in the Makefile used to build perl.
-
-     If your C compiler and libraries are installed in a path with
-     spaces, you'll need to quote any components with spaces, or use
-     the short path name equivalents.
-
-   + All that done, you need to extract this distribution into an NTFS
-     partition (the tests in the FileSecurity module and Net* modules
-     will fail otherwise).  The testsuite for OLE needs Excel (from
-     Office 2000) to run.  NetAdmin will only work if you have some kind
-     of live network connection, and are in a domain with a properly
-     configured domain controller.  NetResource requires that you
-     be part of a domain or workgroup.  You may also need
-     Administrator privileges for running some of the tests.
-     If one or more of these conditions will not be met, you may
-     wish to build in the subdirectories one by one.  The steps
-     below will work either at the toplevel directory, or in each
-     of the individual extension subdirectories.
-   
-   + You need either MS Visual C++ (OLE needs 4.2b, NetAdmin needs ver.
-     4.x+, Internet needs ver. 5.0. ver. 2.0 should suffice for the
-     others) or Borland C++ 5.02.  Make sure you have the full installation
-     of either of these compilers ("Minimal" installations or CDROM-based
-     installations may have problems finding all the libraries).
-     [NOTE: I have only tested building this release with Visual Studio 98,
-     aka Visual C++ 6.0.  Please send patches if you hit problems with
-     the other compilers.] 
-     
-   + If the Internet extension doesn't build due to lack of libraries
-     (the wininet.h header is included), fetch the Platform SDK from
-     "http://www.microsoft.com/msdn/sdk/".  You need to look for wininet.h
-     and wininet.dll.  If either of those is newer than the ones you already
-     have, replace the older ones, and copy the newer wininet.lib into the
-     Internet/ directory.
-
-   + perl Makefile.PL               [either at toplevel or in subdirs]
-   
-   + $MAKE                          [either at toplevel or in subdirs]
-   
-   + $MAKE test                     [optional, some interactive tests]
-   
-   + $MAKE install                  [either at toplevel or in subdirs]
-
-$MAKE above stands for either "dmake" or "nmake" depending on your
-available compiler, and perl configuration.
-
-
-WHAT THEN
----------
-
-If you find any problems with these modules, kindly report them to both
-the original author and to me.  While I have fixed many problems in these
-modules, I may also have introduced brand new bugs in the process :)
-
-I wish to thank the authors of these modules for their effort in making
-them useful, and for making them freely available.
-
-Suggestions, patches, testsuite additions, and wholesale rewrites welcome.
-
-Enjoy!
-
-Gurusamy Sarathy
-gsar@ActiveState.com
-8 July 2002
-
-
-WHATEVER
---------
-
-Copyright for many of the modules is held by their respective authors.
-Look in the module subdirectories for any conditions of use.
-
-The following copyright applies to all files that don't have an explicit
-copyright statement:
-
-    (c) 1995 Microsoft Corporation. All rights reserved. 
-	Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
-
-    Other modifications (c) 1997-2000 by Gurusamy Sarathy <gsar@ActiveState.com>
-                        (c) 1999-2002 by ActiveState Corp.
-
-    You may distribute under the terms of either the GNU General Public
-    License or the Artistic License, as specified in the README file
-    of the Perl distribution.
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.

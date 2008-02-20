@@ -1,7 +1,0 @@
-Changes
-MANIFEST
-Makefile.PL
-Mutex.pm
-Mutex.xs
-test.pl
-typemap
