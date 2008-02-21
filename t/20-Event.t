@@ -1,20 +1,56 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl test.pl'
+#! /usr/bin/perl
+#---------------------------------------------------------------------
+# $Id: t/20-Event.t 242 2008-02-21 12:14:58 -0600 cmadsn $
+#
+# Test Win32::Event
+#---------------------------------------------------------------------
 
-######################### We start with some black magic to print on failure.
+use strict;
+use warnings;
+use Test::More tests => 18;
 
-# Change 1..1 below to 1..last_test_to_print .
-# (It may become useful if the test is moved to ./t subdirectory.)
-
-BEGIN { $| = 1; print "1..1\n"; }
-END {print "not ok 1\n" unless $loaded;}
 use Win32::Event;
-$loaded = 1;
-print "ok 1\n";
 
-######################### End of black magic.
+diag(<<'END_WARNING');
+This test should take no more than 10 seconds.
+If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
+END_WARNING
 
-# Insert your test code below (better if it prints "ok 13"
-# (correspondingly "not ok 13") depending on the success of chunk 13
-# of the test code):
+my $e = Win32::Event->new(1,1); # Manual-reset, currently signalled
+pass('created manual-reset event');
 
+isa_ok($e, 'Win32::Event');
+
+is($e->wait(10), 1, 'wait(10)');
+
+is($e->wait(0), 1, 'wait(0)');
+
+is($e->wait, 1, 'wait()');
+
+ok($e->reset, 'reset event');
+
+is($e->wait(0), 0, 'wait(0) times out');
+
+is($e->wait(10), 0, 'wait(10) times out');
+
+ok($e->set, 'set event');
+
+is($e->wait(0), 1, 'wait(0) succeeds now');
+
+#---------------------------------------------------------------------
+$e = Win32::Event->new(0,0);    # Auto-reset, unsignalled
+pass('created auto-reset event');
+
+isa_ok($e, 'Win32::Event');
+
+is($e->wait(0), 0, 'wait(0) times out again');
+
+ok($e->set, 'set event 2');
+
+is($e->wait(2), 1, 'wait(2) succeeds');
+
+is($e->wait(3), 0, 'wait(3) times out');
+
+ok($e->set, 'set event 3');
+
+is($e->wait(4), 1, 'wait(4) succeeds');

@@ -1,20 +1,46 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl test.pl'
+#! /usr/bin/perl
+#---------------------------------------------------------------------
+# $Id: t/30-Mutex.t 242 2008-02-21 12:14:58 -0600 cmadsn $
+#
+# Test Win32::Mutex
+#---------------------------------------------------------------------
 
-######################### We start with some black magic to print on failure.
+use strict;
+use warnings;
+use Test::More tests => 14;
 
-# Change 1..1 below to 1..last_test_to_print .
-# (It may become useful if the test is moved to ./t subdirectory.)
-
-BEGIN { $| = 1; print "1..1\n"; }
-END {print "not ok 1\n" unless $loaded;}
 use Win32::Mutex;
-$loaded = 1;
-print "ok 1\n";
 
-######################### End of black magic.
+diag(<<'END_WARNING');
+This test should take no more than 10 seconds.
+If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
+END_WARNING
 
-# Insert your test code below (better if it prints "ok 13"
-# (correspondingly "not ok 13") depending on the success of chunk 13
-# of the test code):
+my $m = Win32::Mutex->new(0);   # Unowned mutex
+pass('created unowned mutex');
 
+isa_ok($m, 'Win32::Mutex');
+
+is($m->wait(10), 1, 'wait(10)');
+
+is($m->wait(0), 1, 'wait(0)');
+
+is($m->wait, 1, 'wait()');
+
+ok($m->release, 'release 1');
+ok($m->release, 'release 2');
+ok($m->release, 'release 3');
+
+is($m->release, 0, 'release 4 fails');
+
+#---------------------------------------------------------------------
+$m = Win32::Mutex->new();   # Unowned mutex (by default)
+pass('created unowned mutex 2');
+
+isa_ok($m, 'Win32::Mutex');
+
+is($m->release, 0, 'release unowned mutex 2 fails');
+
+is($m->wait(2), 1, 'wait(2)');
+
+ok($m->release, 'release unowned mutex 2');

@@ -1,11 +1,12 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/40-Semaphore.t 238 2008-02-20 22:09:52 -0600 cmadsn $
+# $Id: t/40-Semaphore.t 242 2008-02-21 12:14:58 -0600 cmadsn $
 #
 # Test Win32::Semaphore
 #---------------------------------------------------------------------
 
 use strict;
+use warnings;
 use Test::More tests => 12;
 
 use Win32::Semaphore;

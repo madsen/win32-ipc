@@ -21,7 +21,6 @@ t/01-load.t
 t/02-load.t
 t/03-load.t
 t/04-load.t
-t/10-IPC.t
 t/20-Event.t
 t/30-Mutex.t
 t/40-Semaphore.t
