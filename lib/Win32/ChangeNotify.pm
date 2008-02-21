@@ -9,8 +9,8 @@ package Win32::ChangeNotify;
 #
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
-# Author: Christopher J. Madsen <cjm@pobox.com>
-# Version: 1.02 (13-Jun-1999)
+# Author: Christopher J. Madsen <perl@cjmweb.net>
+# $Id: lib/Win32/ChangeNotify.pm 235 2008-02-20 21:44:48 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -22,9 +22,8 @@ package Win32::ChangeNotify;
 #
 # Monitor directory for changes
 #---------------------------------------------------------------------
-# 1.04 -Minor changes by Yves Orton to fix the trueness of $subtree (Dec 2002)
 
-$VERSION = '1.05';
+$VERSION = '1.06';
 
 use Carp;
 use Win32::IPC 1.00 '/./';      # Import everything
@@ -184,12 +183,69 @@ Use C<$obj-E<gt>close> instead.
 
 =back
 
+
+=head1 DIAGNOSTICS
+
+None.
+
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+Win32::ChangeNotify requires no configuration files or environment variables.
+
+It runs under 32-bit or 64-bit Microsoft Windows, either natively or
+under Cygwin.
+
+
+=head1 DEPENDENCIES
+
+L<Win32::IPC>
+
+
+=head1 INCOMPATIBILITIES
+
+None reported.
+
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+
 =head1 AUTHOR
 
-Christopher J. Madsen E<lt>F<cjm@pobox.com>E<gt>
+Christopher J. Madsen E<lt>F<perl AT cjmweb.net>E<gt>
+
+Please report any bugs or feature requests to
+S<< C<< <bug-Win32-IPC AT rt.cpan.org> >> >>,
+or through the web interface at
+L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Win32-IPC>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 F<http://www.ActiveWare.com>
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
+YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
+NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENSE, BE
+LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
+THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
 
 =cut
 
