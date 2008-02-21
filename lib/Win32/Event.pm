@@ -5,7 +5,7 @@ package Win32::Event;
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created: 3 Feb 1998 from the ActiveWare version
-# $Id: lib/Win32/Event.pm 235 2008-02-20 21:44:48 -0600 cmadsn $
+# $Id: lib/Win32/Event.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -49,7 +49,7 @@ Win32::Event - Use Win32 event objects from Perl
 
 This module allows access to the Win32 event objects.  The C<wait>
 method and C<wait_all> & C<wait_any> functions are inherited from the
-L<"Win32::IPC"> module.
+L<Win32::IPC> module.
 
 =head2 Methods
 
@@ -73,23 +73,34 @@ Constructor for opening an existing event object.
 
 =item $event->pulse
 
+B<Microsoft has stated this function is unreliable and should be
+avoided.> Consult Microsoft's documentation for C<PulseEvent> for
+details.
+
 Signal the C<$event> and then immediately reset it.  If C<$event> is a
 manual-reset event, releases all threads currently blocking on it.  If
 it's an auto-reset event, releases just one thread.
 
 If no threads are waiting, just resets the event.
 
+It returns a true value if successful, or zero on failure
+(additional error information can be found in C<$^E>).
+
 =item $event->reset
 
-Reset the C<$event> to nonsignalled.
+Reset the C<$event> to nonsignalled.  It returns a true value if
+successful, or zero on failure (additional error information can be
+found in C<$^E>).
 
 =item $event->set
 
-Set the C<$event> to signalled.
+Set the C<$event> to signalled.  It returns a true value if
+successful, or zero on failure (additional error information can be
+found in C<$^E>).
 
 =item $event->wait([$timeout])
 
-Wait for C<$event> to be signalled.  See L<"Win32::IPC">.
+Wait for C<$event> to be signalled.  See L<Win32::IPC>.
 
 =back
 

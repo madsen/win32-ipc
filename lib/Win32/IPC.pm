@@ -10,7 +10,7 @@ package Win32::IPC;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/IPC.pm 236 2008-02-20 21:50:07 -0600 cmadsn $
+# $Id: lib/Win32/IPC.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -87,11 +87,11 @@ This module is loaded by the other Win32 synchronization modules.  You
 shouldn't need to load it yourself.  It supplies the wait functions to
 those modules.
 
-The synchronization modules are L<"Win32::ChangeNotify">,
-L<"Win32::Event">, L<"Win32::Mutex">, & L<"Win32::Semaphore">.
+The synchronization modules are L<Win32::ChangeNotify>,
+L<Win32::Event>, L<Win32::Mutex>, & L<Win32::Semaphore>.
 
 In addition, you can use C<wait_any> and C<wait_all> with
-L<"Win32::Console"> and L<"Win32::Process"> objects.  (However, those
+L<Win32::Console> and L<Win32::Process> objects.  (However, those
 modules do not export the wait functions; you must load one of the
 synchronization modules (or just Win32::IPC)).
 

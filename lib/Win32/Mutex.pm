@@ -10,7 +10,7 @@ package Win32::Mutex;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/Mutex.pm 236 2008-02-20 21:50:07 -0600 cmadsn $
+# $Id: lib/Win32/Mutex.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -58,7 +58,7 @@ Win32::Mutex - Use Win32 mutex objects from Perl
 
 This module allows access to the Win32 mutex objects.  The C<wait>
 method and C<wait_all> & C<wait_any> functions are inherited from the
-L<"Win32::IPC"> module.
+L<Win32::IPC> module.
 
 =head2 Methods
 
@@ -82,17 +82,22 @@ Constructor for opening an existing mutex object.
 
 Release ownership of a C<$mutex>.  You should have obtained ownership
 of the mutex through C<new> or one of the wait functions.  Returns
-true if successful.
+true if successful, or zero if it fails (additional error
+information can be found in C<$^E>).
 
 =item $mutex->wait([$timeout])
 
-Wait for ownership of C<$mutex>.  See L<"Win32::IPC">.
+Wait for ownership of C<$mutex>.  See L<Win32::IPC>.
+
+If this thread has already obtained ownership of C<$mutex>, additional
+calls to C<wait> will always succeed.  You must call C<release> once
+for each successful call to C<wait>.
 
 =back
 
 =head2 Deprecated Functions and Methods
 
-B<Win32::Mutex> still supports the ActiveWare syntax, but its use is
+Win32::Mutex still supports the ActiveWare syntax, but its use is
 deprecated.
 
 =over 4

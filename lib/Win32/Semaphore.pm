@@ -10,7 +10,7 @@ package Win32::Semaphore;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/Semaphore.pm 236 2008-02-20 21:50:07 -0600 cmadsn $
+# $Id: lib/Win32/Semaphore.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -57,7 +57,7 @@ Win32::Semaphore - Use Win32 semaphore objects from Perl
 
 This module allows access to Win32 semaphore objects.  The C<wait>
 method and C<wait_all> & C<wait_any> functions are inherited from the
-L<"Win32::IPC"> module.
+L<Win32::IPC> module.
 
 =head2 Methods
 
@@ -82,7 +82,8 @@ Constructor for opening an existing semaphore object.
 Increment the count of C<$semaphore> by C<$increment> (default 1).
 If C<$increment> plus the semaphore's current count is more than its
 maximum count, the count is not changed.  Returns true if the
-increment is successful.
+increment is successful, or zero if it fails (additional error
+information can be found in C<$^E>).
 
 The semaphore's count (before incrementing) is stored in the second
 argument (if any).
@@ -93,7 +94,7 @@ but you'd better know what you're doing.
 =item $semaphore->wait([$timeout])
 
 Wait for C<$semaphore>'s count to be nonzero, then decrement it by 1.
-See L<"Win32::IPC">.
+See L<Win32::IPC>.
 
 =back
 

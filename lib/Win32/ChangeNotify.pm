@@ -10,7 +10,7 @@ package Win32::ChangeNotify;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/ChangeNotify.pm 236 2008-02-20 21:50:07 -0600 cmadsn $
+# $Id: lib/Win32/ChangeNotify.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -115,7 +115,7 @@ compare the current contents to your cached copy when you receive a
 change notification.
 
 The C<wait> method and C<wait_all> & C<wait_any> functions are
-inherited from the L<"Win32::IPC"> module.
+inherited from the L<Win32::IPC> module.
 
 =head2 Methods
 
@@ -150,10 +150,12 @@ happens automatically when your program exits.
 Resets the ChangeNotification object after a change has been detected.
 The object will become signalled again after the next change.  (It is
 OK to call this immediately after C<new>, but it is not required.)
+Returns true if successful, or zero if it fails (additional error
+information can be found in C<$^E>).
 
 =item $notify->wait
 
-See L<"Win32::IPC">.  Remember to call C<reset> afterwards if you want
+See L<Win32::IPC>.  Remember to call C<reset> afterwards if you want
 to continue monitoring.
 
 =back
