@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: Build.PL 224 2008-02-19 22:28:30 -0600 cmadsn $
+# $Id: Build.PL 233 2008-02-20 19:02:43 -0600 cmadsn $
 # Copyright 2008 Christopher J. Madsen
 #
 # Build.PL for Win32::IPC
@@ -26,6 +26,7 @@ my $builder = My_Build->new(
       'File::Spec'         => 0,
       'FindBin'            => 0,
       'Module::Build'      => '0.21',
+      'ExtUtils::ParseXS'  => 0, # Had problems with 5.8.8's xsubpp
       'ExtUtils::CBuilder' => '0.15',
       'Test::More'         => 0,
   },
