@@ -1,13 +1,21 @@
-$$Id: README 224 2008-02-19 22:28:30 -0600 cmadsn $
+$$Id: README 239 2008-02-21 00:04:38 -0600 cmadsn $
 Win32-IPC version $%v%$
 
-[ REPLACE THIS...
+The Win32-IPC modules provide access to the Win32 sychronization
+objects, which are (currently) documented at
 
-  The README is used to introduce the module and provide instructions on
-  how to install the module, any machine dependencies it may have (for
-  example C compilers and installed libraries) and any other information
-  that should be understood before the module is installed.
-]
+  http://msdn2.microsoft.com/en-us/library/ms686364(VS.85).aspx
+
+The supported sychronization objects and associated modules are:
+  Event     - Win32::Event
+  Mutex     - Win32::Mutex
+  Semaphore - Win32::Semaphore
+
+In addition, the Win32::ChangeNotify module provides access to
+directory change notifications, which let you monitor a specified
+directory tree for file modifications.  While not strictly a
+synchronization object, change notifications are often used in similar
+ways.
 
 
 
@@ -21,9 +29,12 @@ To install these modules, run the following commands:
 	Build install
 
 
+
 DEPENDENCIES
 
-None.
+You'll need a suitable C compiler.
+Microsoft Visual C++ 6 or MinGW GCC should work.
+You can also build it with GCC under Cygwin.
 
 
 
@@ -33,7 +44,7 @@ Copyright 1998-2008 Christopher J. Madsen
 
  Created: 3 Feb 1998 from the ActiveWare version
    (c) 1995 Microsoft Corporation. All rights reserved.
-       Developed by ActiveWare Internet Corp., http://www.ActiveWare.com
+       Developed by ActiveWare Internet Corp., http://www.ActiveState.com
 
    Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 
