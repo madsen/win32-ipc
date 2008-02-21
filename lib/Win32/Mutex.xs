@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: lib/Win32/Mutex.xs 224 2008-02-19 22:28:30 -0600 cmadsn $
+// $Id: lib/Win32/Mutex.xs 240 2008-02-21 12:09:49 -0600 cmadsn $
 //--------------------------------------------------------------------
 //
 //   Win32::Mutex
@@ -18,6 +18,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+typedef bool TRUEFALSE;
 
 MODULE = Win32::Mutex		PACKAGE = Win32::Mutex
 
@@ -26,9 +27,9 @@ PROTOTYPES: ENABLE
 
 HANDLE
 new(className, initial=FALSE, name=NULL)
-    char*  className
-    BOOL   initial
-    LPCSTR name
+    char*      className
+    TRUEFALSE  initial
+    LPCSTR     name
 PREINIT:
       SECURITY_ATTRIBUTES  sec;
 CODE:

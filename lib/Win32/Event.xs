@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: lib/Win32/Event.xs 224 2008-02-19 22:28:30 -0600 cmadsn $
+// $Id: lib/Win32/Event.xs 240 2008-02-21 12:09:49 -0600 cmadsn $
 //--------------------------------------------------------------------
 //
 //   Win32::Event
@@ -18,6 +18,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+typedef bool TRUEFALSE;
 
 MODULE = Win32::Event		PACKAGE = Win32::Event
 
@@ -26,10 +27,10 @@ PROTOTYPES: ENABLE
 
 HANDLE
 new(className, manual=FALSE, initial=FALSE, name=NULL)
-    char*  className
-    BOOL   manual
-    BOOL   initial
-    LPCSTR name
+    char*      className
+    TRUEFALSE  manual
+    TRUEFALSE  initial
+    LPCSTR     name
 PREINIT:
     SECURITY_ATTRIBUTES  sec;
 CODE:
