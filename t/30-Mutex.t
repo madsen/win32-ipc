@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/30-Mutex.t 242 2008-02-21 12:14:58 -0600 cmadsn $
+# $Id: t/30-Mutex.t 243 2008-02-21 17:05:49 -0600 cmadsn $
 #
 # Test Win32::Mutex
 #---------------------------------------------------------------------
@@ -17,7 +17,7 @@ If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
 END_WARNING
 
 my $m = Win32::Mutex->new(0);   # Unowned mutex
-pass('created unowned mutex');
+ok($m, 'created unowned mutex');
 
 isa_ok($m, 'Win32::Mutex');
 
@@ -35,7 +35,7 @@ is($m->release, 0, 'release 4 fails');
 
 #---------------------------------------------------------------------
 $m = Win32::Mutex->new();   # Unowned mutex (by default)
-pass('created unowned mutex 2');
+ok($m, 'created unowned mutex 2');
 
 isa_ok($m, 'Win32::Mutex');
 

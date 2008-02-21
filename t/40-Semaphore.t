@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/40-Semaphore.t 242 2008-02-21 12:14:58 -0600 cmadsn $
+# $Id: t/40-Semaphore.t 243 2008-02-21 17:05:49 -0600 cmadsn $
 #
 # Test Win32::Semaphore
 #---------------------------------------------------------------------
@@ -17,7 +17,7 @@ If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
 END_WARNING
 
 my $s = Win32::Semaphore->new(3,3);
-ok(1, 'created $s');
+ok($s, 'created $s');
 
 isa_ok($s, 'Win32::Semaphore');
 

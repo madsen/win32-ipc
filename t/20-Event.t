@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/20-Event.t 242 2008-02-21 12:14:58 -0600 cmadsn $
+# $Id: t/20-Event.t 243 2008-02-21 17:05:49 -0600 cmadsn $
 #
 # Test Win32::Event
 #---------------------------------------------------------------------
@@ -17,7 +17,7 @@ If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
 END_WARNING
 
 my $e = Win32::Event->new(1,1); # Manual-reset, currently signalled
-pass('created manual-reset event');
+ok($e, 'created manual-reset event');
 
 isa_ok($e, 'Win32::Event');
 
@@ -39,7 +39,7 @@ is($e->wait(0), 1, 'wait(0) succeeds now');
 
 #---------------------------------------------------------------------
 $e = Win32::Event->new(0,0);    # Auto-reset, unsignalled
-pass('created auto-reset event');
+ok($e, 'created auto-reset event');
 
 isa_ok($e, 'Win32::Event');
 

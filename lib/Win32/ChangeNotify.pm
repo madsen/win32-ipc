@@ -10,7 +10,7 @@ package Win32::ChangeNotify;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/ChangeNotify.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
+# $Id: lib/Win32/ChangeNotify.pm 243 2008-02-21 17:05:49 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -138,6 +138,9 @@ of the following flags (separated by whitespace and/or C<|>).
 
 (C<$filter> can also be an integer composed from the
 C<FILE_NOTIFY_CHANGE_*> constants.)
+
+Under Cygwin, C<$path> must be a Windows pathname, not a Cygwin
+Unix-like pathname.
 
 =item $notify->close
 

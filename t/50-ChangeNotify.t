@@ -1,25 +1,117 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl test.pl'
+#! /usr/bin/perl
+#---------------------------------------------------------------------
+# $Id: t/50-ChangeNotify.t 243 2008-02-21 17:05:49 -0600 cmadsn $
+#
+# Test Win32::Semaphore
+#---------------------------------------------------------------------
 
-######################### We start with some black magic to print on failure.
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
 
-# Change 1..1 below to 1..last_test_to_print .
-# (It may become useful if the test is moved to ./t subdirectory.)
-
-BEGIN { $| = 1; print "1..3\n"; }
-END {print "not ok 1\n" unless $loaded;}
 use Win32::ChangeNotify;
-$loaded = 1;
-print "ok 1\n";
 
-######################### End of black magic.
+eval "use File::Temp 'tempdir';";
+plan skip_all => "File::Temp required for testing Win32::ChangeNotify" if $@;
 
-# Insert your test code below (better if it prints "ok 13"
-# (correspondingly "not ok 13") depending on the success of chunk 13
-# of the test code):
+eval "use File::Path 'rmtree';";
+plan skip_all => "File::Path required for testing Win32::ChangeNotify" if $@;
 
-print 'not ' if FILE_NOTIFY_CHANGE_FILE_NAME == 0;
-print "ok 2\n";
+plan tests => 20;
 
-print 'not ' if INFINITE == 0;
-print "ok 3\n";
+diag(<<'END_WARNING');
+This test should take no more than 10 seconds.
+If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
+END_WARNING
+
+#=====================================================================
+my $dir = tempdir(CLEANUP => 1);
+
+#---------------------------------------------------------------------
+sub appendFile
+{
+  my $contents = pop @_;
+  my $path = File::Spec->catfile($dir, @_);
+
+  open(TMP, '>>', $path) or die "Unable to open $path";
+  print TMP $contents;
+  close TMP;
+
+  ok(-s $path, "file $path is not empty");
+} # end appendFile
+
+#---------------------------------------------------------------------
+sub createFile
+{
+  my $path = File::Spec->catfile($dir, @_);
+
+  open(TMP, '>', $path) or die "Unable to create $path";
+  close TMP;
+
+  ok(-f $path, "created file $path");
+
+  return $path;
+} # end createFile
+
+#---------------------------------------------------------------------
+# Convert a path to Windows format (a no-op, except under Cygwin):
+
+sub wPath
+{
+  my ($path) = @_;
+
+  if ($^O eq 'cygwin') {
+    $path =~ s/(['\\])/\\$1/g;  # quote metachars
+    $path = `cygpath -w '$path'`;
+
+    die "Failed to convert path $_[0]" if $?;
+
+    chomp $path;
+  } # end if running under Cygwin
+
+  return $path;
+} # end wPath
+
+#=====================================================================
+
+ok(FILE_NOTIFY_CHANGE_FILE_NAME != 0, 'FILE_NOTIFY_CHANGE_FILE_NAME');
+
+ok(INFINITE != 0, 'INFINITE');
+
+#---------------------------------------------------------------------
+ok(-d $dir, "$dir is a directory");
+
+my $n = Win32::ChangeNotify->new(wPath($dir), undef, 'FILE_NAME|SIZE');
+ok($n, 'created $n');
+
+isa_ok($n, 'Win32::ChangeNotify');
+
+is($n->wait(0), 0, 'wait(0) times out');
+
+createFile('empty.txt');
+
+is($n->wait(1), 1, 'wait(1) succeeds');
+
+ok($n->reset, 'reset');
+
+is($n->wait(2), 0, 'wait(2) times out');
+
+createFile('empty2.txt');
+createFile('file.txt');
+
+is($n->wait(3), 1, 'wait(3) succeeds');
+
+ok($n->reset, 'reset');
+
+is($n->wait(4), 1, 'wait(4) succeeds');
+
+ok($n->reset, 'reset');
+
+is($n->wait(5), 0, 'wait(5) times out');
+
+appendFile('file.txt', "This is the file contents.\n");
+
+is($n->wait(6), 1, 'wait(6) succeeds');
+
+ok($n->close, 'closing $n');
