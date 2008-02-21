@@ -1,48 +1,41 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl test.pl'
+#! /usr/bin/perl
+#---------------------------------------------------------------------
+# $Id: t/40-Semaphore.t 238 2008-02-20 22:09:52 -0600 cmadsn $
+#
+# Test Win32::Semaphore
+#---------------------------------------------------------------------
 
-######################### We start with some black magic to print on failure.
+use strict;
+use Test::More tests => 12;
 
-# Change 1..1 below to 1..last_test_to_print .
-# (It may become useful if the test is moved to ./t subdirectory.)
-
-BEGIN { $| = 1; print "1..9\n"; }
-END {print "not ok 1\n" unless $loaded;}
 use Win32::Semaphore;
-$loaded = 1;
-print "ok 1\n";
 
-######################### End of black magic.
+diag(<<'END_WARNING');
+This test should take no more than 10 seconds.
+If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
+END_WARNING
 
-# Insert your test code below (better if it prints "ok 13"
-# (correspondingly "not ok 13") depending on the success of chunk 13
-# of the test code):
+my $s = Win32::Semaphore->new(3,3);
+ok(1, 'created $s');
 
-my $test = 1;
+isa_ok($s, 'Win32::Semaphore');
 
-my $s = Win32::Semaphore->new(3,3) or die "Can't create semaphore";
-++$test; print "ok $test\n";
+is($s->wait(10), 1, 'wait(10)');
 
-print 'not ' unless $s->wait(10);
-++$test; print "ok $test\n";
+is($s->wait(0), 1, 'wait(0)');
 
-print 'not ' unless $s->wait(0);
-++$test; print "ok $test\n";
+is($s->wait, 1, 'wait()');
 
-printf "If you don't see `ok %d' immediately, you'd better hit Ctrl-C\n",
-       $test+1;
-print 'not ' unless $s->wait;
-++$test; print "ok $test\n";
+is($s->wait(0), 0, 'wait(0) times out');
 
-print 'not ' if $s->wait(0);
-++$test; print "ok $test\n";
+is($s->wait(10), 0, 'wait(10) times out');
 
-print 'not ' unless $s->release;
-++$test; print "ok $test\n";
+ok($s->release, 'release');
 
-print 'not ' unless $s->release(1);
-++$test; print "ok $test\n";
+is($s->wait(0), 1, 'wait(0) succeeds now');
+
+ok($s->release(1), 'release(1)');
 
 my $result;
-print 'not ' unless $s->release(1,$result) and $result == 2;
-++$test; print "ok $test\t(\$result is $result)\n";
+ok($s->release(1,$result), 'release(1,$result)');
+is($result, 1, 'count was 1');
