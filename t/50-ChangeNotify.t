@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/50-ChangeNotify.t 243 2008-02-21 17:05:49 -0600 cmadsn $
+# $Id: t/50-ChangeNotify.t 244 2008-02-21 23:28:42 -0600 cmadsn $
 #
 # Test Win32::Semaphore
 #---------------------------------------------------------------------
@@ -102,7 +102,7 @@ createFile('file.txt');
 
 is($n->wait(3), 1, 'wait(3) succeeds');
 
-ok($n->reset, 'reset');
+ok($n->FindNext, 'FindNext'); # Deprecated method name (now called reset)
 
 is($n->wait(4), 1, 'wait(4) succeeds');
 

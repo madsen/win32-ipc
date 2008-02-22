@@ -1,20 +1,23 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/20-Event.t 243 2008-02-21 17:05:49 -0600 cmadsn $
+# $Id: t/20-Event.t 244 2008-02-21 23:28:42 -0600 cmadsn $
 #
 # Test Win32::Event
 #---------------------------------------------------------------------
 
 use strict;
 use warnings;
-use Test::More tests => 18;
+use Test::More tests => 19;
 
-use Win32::Event;
+use Win32::Event ();
 
 diag(<<'END_WARNING');
 This test should take no more than 10 seconds.
 If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
 END_WARNING
+
+# Make sure we can import the functions:
+use_ok('Win32::Event', qw(wait_all wait_any INFINITE));
 
 my $e = Win32::Event->new(1,1); # Manual-reset, currently signalled
 ok($e, 'created manual-reset event');

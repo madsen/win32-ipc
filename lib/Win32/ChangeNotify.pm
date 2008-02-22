@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Win32::ChangeNotify;
 #
-# Copyright 1998 Christopher J. Madsen
+# Copyright 1998-2008 Christopher J. Madsen
 #
 # Created: 3 Feb 1998 from the ActiveWare version
 #   (c) 1995 Microsoft Corporation. All rights reserved.
@@ -10,7 +10,7 @@ package Win32::ChangeNotify;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/ChangeNotify.pm 243 2008-02-21 17:05:49 -0600 cmadsn $
+# $Id: lib/Win32/ChangeNotify.pm 244 2008-02-21 23:28:42 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -23,29 +23,34 @@ package Win32::ChangeNotify;
 # Monitor directory for changes
 #---------------------------------------------------------------------
 
-$VERSION = '1.06';
+use strict;
+use warnings;
+use vars qw($AUTOLOAD $VERSION @ISA @EXPORT @EXPORT_OK);
 
 use Carp;
 use Win32::IPC 1.00 '/./';      # Import everything
-require Exporter;
-require DynaLoader;
 
-@ISA = qw(Exporter DynaLoader Win32::IPC);
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT = qw(
-	FILE_NOTIFY_CHANGE_ATTRIBUTES
-	FILE_NOTIFY_CHANGE_DIR_NAME
-	FILE_NOTIFY_CHANGE_FILE_NAME
-	FILE_NOTIFY_CHANGE_LAST_WRITE
-	FILE_NOTIFY_CHANGE_SECURITY
-	FILE_NOTIFY_CHANGE_SIZE
-	INFINITE
-);
-@EXPORT_OK = qw(
-  wait_all wait_any
-);
+BEGIN
+{
+  $VERSION = '1.06';
+
+  @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
+  @EXPORT = qw(
+    FILE_NOTIFY_CHANGE_ATTRIBUTES
+    FILE_NOTIFY_CHANGE_DIR_NAME
+    FILE_NOTIFY_CHANGE_FILE_NAME
+    FILE_NOTIFY_CHANGE_LAST_WRITE
+    FILE_NOTIFY_CHANGE_SECURITY
+    FILE_NOTIFY_CHANGE_SIZE
+    INFINITE
+  );
+  @EXPORT_OK = qw(
+    wait_any wait_all
+  );
+
+  require XSLoader;
+  XSLoader::load('Win32::ChangeNotify', $VERSION);
+} # end BEGIN bootstrap
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -53,16 +58,14 @@ sub AUTOLOAD {
 
     my $constname;
     ($constname = $AUTOLOAD) =~ s/.*:://;
-    if ($constname =~ /^(?:FILE_NOTIFY_CHANGE_|INFINITE)/) {
+    if ($constname =~ /^FILE_NOTIFY_CHANGE_/) {
 	local $! = 0;
         my $val = constant($constname);
         croak("$constname is not defined by Win32::ChangeNotify") if $! != 0;
-        eval "sub $AUTOLOAD { $val }";
+        eval "sub $AUTOLOAD () { $val }";
         goto &$AUTOLOAD;
     }
 } # end AUTOLOAD
-
-bootstrap Win32::ChangeNotify;
 
 sub new {
     my ($class,$path,$subtree,$filter) = @_;
@@ -77,11 +80,10 @@ sub new {
     _new($class,$path,$subtree,$filter);
 } # end new
 
-sub Close { &close }
-
+# Deprecated ActiveWare functions:
 sub FindFirst { $_[0] = Win32::ChangeNotify->_new(@_[1..3]); }
-
-sub FindNext { &reset }
+*Close    = \&close;            # Alias close to Close
+*FindNext = \&reset;            # Alias reset to FindNext
 
 1;
 __END__

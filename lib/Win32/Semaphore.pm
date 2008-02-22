@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Win32::Semaphore;
 #
-# Copyright 1998 Christopher J. Madsen
+# Copyright 1998-2008 Christopher J. Madsen
 #
 # Created: 3 Feb 1998 from the ActiveWare version
 #   (c) 1995 Microsoft Corporation. All rights reserved.
@@ -10,7 +10,7 @@ package Win32::Semaphore;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/Semaphore.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
+# $Id: lib/Win32/Semaphore.pm 244 2008-02-21 23:28:42 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -23,22 +23,29 @@ package Win32::Semaphore;
 # Use Win32 semaphore objects for synchronization
 #---------------------------------------------------------------------
 
-$VERSION = '1.06';
+use strict;
+use warnings;
+use vars qw($VERSION @ISA @EXPORT_OK);
 
 use Win32::IPC 1.00 '/./';      # Import everything
-require Exporter;
-require DynaLoader;
 
-@ISA = qw(Exporter DynaLoader Win32::IPC);
-@EXPORT_OK = qw(
-  wait_all wait_any
-);
+BEGIN
+{
+  $VERSION = '1.06';
 
-bootstrap Win32::Semaphore;
+  @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
+  @EXPORT_OK = qw(
+    wait_any wait_all INFINITE
+  );
 
-sub Create  { $_[0] = new('Win32::Semaphore',@_[1..3]) }
+  require XSLoader;
+  XSLoader::load('Win32::Semaphore', $VERSION);
+} # end BEGIN bootstrap
+
+# Deprecated ActiveWare functions:
+sub Create  { $_[0] = Win32::Semaphore->new(@_[1..3]) }
 sub Open  { $_[0] = Win32::Semaphore->open($_[1]) }
-sub Release { &release }
+*Release = \&release;           # Alias release to Release
 
 1;
 __END__

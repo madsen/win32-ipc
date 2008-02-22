@@ -1,20 +1,23 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/40-Semaphore.t 243 2008-02-21 17:05:49 -0600 cmadsn $
+# $Id: t/40-Semaphore.t 244 2008-02-21 23:28:42 -0600 cmadsn $
 #
 # Test Win32::Semaphore
 #---------------------------------------------------------------------
 
 use strict;
 use warnings;
-use Test::More tests => 12;
+use Test::More tests => 17;
 
-use Win32::Semaphore;
+use Win32::Semaphore ();
 
 diag(<<'END_WARNING');
 This test should take no more than 10 seconds.
 If it takes longer, please kill it with Ctrl-Break (Ctrl-C won't work right).
 END_WARNING
+
+# Make sure we can import the functions:
+use_ok('Win32::Semaphore', qw(wait_all wait_any INFINITE));
 
 my $s = Win32::Semaphore->new(3,3);
 ok($s, 'created $s');
@@ -40,3 +43,10 @@ ok($s->release(1), 'release(1)');
 my $result;
 ok($s->release(1,$result), 'release(1,$result)');
 is($result, 1, 'count was 1');
+
+ok($s->Release(1,$result), 'Release(1,$result)'); # Deprecated method name
+is($result, 2, 'count was 2');
+
+is($s->release(1), 0, 'release(1) fails now');
+
+is($s->wait(2), 1, 'wait(2) succeeds');

@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Win32::IPC;
 #
-# Copyright 1998 Christopher J. Madsen
+# Copyright 1998-2008 Christopher J. Madsen
 #
 # Created: 3 Feb 1998 from the ActiveWare version
 #   (c) 1995 Microsoft Corporation. All rights reserved.
@@ -10,7 +10,7 @@ package Win32::IPC;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/IPC.pm 241 2008-02-21 12:11:36 -0600 cmadsn $
+# $Id: lib/Win32/IPC.pm 244 2008-02-21 23:28:42 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -23,44 +23,33 @@ package Win32::IPC;
 # Base class for Win32 synchronization objects
 #---------------------------------------------------------------------
 
-$VERSION = '1.06';
-
-require Exporter;
-require DynaLoader;
 use strict;
-use vars qw($AUTOLOAD $VERSION @ISA @EXPORT @EXPORT_OK);
+use warnings;
+use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
-@ISA = qw(Exporter DynaLoader);
-@EXPORT = qw(
-	INFINITE
-	WaitForMultipleObjects
-);
-@EXPORT_OK = qw(
-  wait_any wait_all
-);
+BEGIN
+{
+  $VERSION = '1.06';
 
-sub AUTOLOAD {
-    # This AUTOLOAD is used to 'autoload' constants from the constant()
-    # XS function.
-    my($constname);
-    ($constname = $AUTOLOAD) =~ s/.*:://;
-    local $! = 0;
-    my $val = constant($constname);
-    if ($! != 0) {
-        my ($pack,$file,$line) = caller;
-        die "Your vendor has not defined Win32::IPC macro $constname, used at $file line $line.";
-    }
-    eval "sub $AUTOLOAD { $val }";
-    goto &$AUTOLOAD;
-} # end AUTOLOAD
+  require Exporter;
+  @ISA       = qw( Exporter );
+  @EXPORT    = qw( INFINITE WaitForMultipleObjects );
+  @EXPORT_OK = qw( wait_any wait_all );
 
-bootstrap Win32::IPC;
+  require XSLoader;
+  XSLoader::load('Win32::IPC', $VERSION);
+
+  # Generate INFINITE constant function:
+  my $INFINITE = constant('INFINITE');
+  die "Our DLL does not define INFINITE" if $! != 0;
+  eval "sub INFINITE () { $INFINITE } 1" or die;
+} # end BEGIN bootstrap
 
 # How's this for cryptic?  Use wait_any or wait_all!
 sub WaitForMultipleObjects
 {
-    my $result = (($_[1] ? wait_all($_[0], $_[2])
-                   : wait_any($_[0], $_[2]))
+    my $result = (($_[1] ? &wait_all($_[0], $_[2])
+                   : &wait_any($_[0], $_[2]))
                   ? 1
                   : 0);
     @{$_[0]} = (); # Bug for bug compatibility!  Use wait_any or wait_all!
@@ -79,7 +68,7 @@ Win32::IPC - Base class for Win32 synchronization objects
     use Win32::Event 1.00 qw(wait_any);
     #Create objects.
 
-    wait_any(@ListOfObjects,$timeout);
+    wait_any(@ListOfObjects, $timeout);
 
 =head1 DESCRIPTION
 
