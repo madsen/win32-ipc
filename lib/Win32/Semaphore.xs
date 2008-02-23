@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: lib/Win32/Semaphore.xs 224 2008-02-19 22:28:30 -0600 cmadsn $
+// $Id: lib/Win32/Semaphore.xs 245 2008-02-23 17:23:27 -0600 cmadsn $
 //--------------------------------------------------------------------
 //
 //   Win32::Semaphore
@@ -18,6 +18,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+typedef LPCSTR LPCSTR_OPT;
 
 MODULE = Win32::Semaphore	PACKAGE = Win32::Semaphore
 
@@ -28,7 +29,7 @@ new(className, initial, max, name=NULL)
     char*  className
     LONG   initial
     LONG   max
-    LPCSTR name
+    LPCSTR_OPT  name
 CODE:
     {
 	SECURITY_ATTRIBUTES  sec;

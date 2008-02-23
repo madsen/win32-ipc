@@ -1,6 +1,18 @@
-Revision history for Perl extension Win32-IPC.
+Revision history for the Perl Win32-IPC modules.
 
 1.06  Feb ? 2008
+	- *** INCOMPATIBLE CHANGE ***
+
+	  Passing undef as the value of an optional parameter is now
+	  the same as omitting that parameter.	In previous versions,
+	  undef was interpreted as either the empty string or 0 (along
+	  with a warning about "Use of uninitialized value...").
+
+	  In particular, if you pass undef as the timeout, it now
+	  means INFINITE, but to previous versions it meant 0.
+
+	- The modules now use XSLoader instead of DynaLoader.
+
 	- Win32::IPC and its subclasses are now distributed separately
 	  from libwin32 (which has been broken up).  Prior to this
 	  release, each module had its own Changes file, and their

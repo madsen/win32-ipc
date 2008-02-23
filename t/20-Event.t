@@ -1,13 +1,13 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: t/20-Event.t 244 2008-02-21 23:28:42 -0600 cmadsn $
+# $Id: t/20-Event.t 245 2008-02-23 17:23:27 -0600 cmadsn $
 #
 # Test Win32::Event
 #---------------------------------------------------------------------
 
 use strict;
 use warnings;
-use Test::More tests => 19;
+use Test::More tests => 20;
 
 use Win32::Event ();
 
@@ -29,6 +29,8 @@ is($e->wait(10), 1, 'wait(10)');
 is($e->wait(0), 1, 'wait(0)');
 
 is($e->wait, 1, 'wait()');
+
+is($e->wait(undef), 1, 'wait(undef)');
 
 ok($e->reset, 'reset event');
 

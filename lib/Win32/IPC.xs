@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------
-// $Id: lib/Win32/IPC.xs 224 2008-02-19 22:28:30 -0600 cmadsn $
+// $Id: lib/Win32/IPC.xs 245 2008-02-23 17:23:27 -0600 cmadsn $
 //--------------------------------------------------------------------
 //
 //   Win32::IPC
@@ -18,6 +18,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+typedef DWORD TIMEOUT;
 
 static IV
 WaitForMultiple(AV* hArray, BOOL fWaitAll, DWORD dwTimeOut)
@@ -113,7 +114,7 @@ constant(name)
 IV
 wait_any(objects,timeout=INFINITE)
 	SV *  objects
-	DWORD timeout
+	TIMEOUT timeout
 ALIAS:
 	wait_all = 1
 PROTOTYPE: \@;$
@@ -134,7 +135,7 @@ OUTPUT:
 IV
 wait(handle, timeout=INFINITE)
     HANDLE handle
-    DWORD  timeout
+    TIMEOUT  timeout
 PREINIT:
 	DWORD result;
 CODE:

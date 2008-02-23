@@ -10,7 +10,7 @@ package Win32::Mutex;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/Mutex.pm 244 2008-02-21 23:28:42 -0600 cmadsn $
+# $Id: lib/Win32/Mutex.pm 245 2008-02-23 17:23:27 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -75,7 +75,7 @@ L<Win32::IPC> module.
 
 Constructor for a new mutex object.  If C<$initial> is true, requests
 immediate ownership of the mutex (default false).  If C<$name> is
-omitted, creates an unnamed mutex object.
+omitted or C<undef>, creates an unnamed mutex object.
 
 If C<$name> signifies an existing mutex object, then C<$initial> is
 ignored and the object is opened.  If this happens, C<$^E> will be set
@@ -143,7 +143,11 @@ L<Win32::IPC>
 
 =head1 INCOMPATIBILITIES
 
-None reported.
+Prior to version 1.06, Win32::Mutex treated C<undef> values
+differently.  In version 1.06 and later, passing C<undef> as the value
+of an optional parameter is the same as omitting that parameter.  In
+previous versions, C<undef> was interpreted as either the empty string
+or 0 (along with a warning about "Use of uninitialized value...").
 
 
 =head1 BUGS AND LIMITATIONS

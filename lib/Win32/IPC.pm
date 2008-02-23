@@ -10,7 +10,7 @@ package Win32::IPC;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/IPC.pm 244 2008-02-21 23:28:42 -0600 cmadsn $
+# $Id: lib/Win32/IPC.pm 245 2008-02-23 17:23:27 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -93,15 +93,15 @@ B<Win32::IPC> supplies one method to all synchronization objects.
 =item $obj->wait([$timeout])
 
 Waits for C<$obj> to become signalled.  C<$timeout> is the maximum time
-to wait (in milliseconds).  If C<$timeout> is omitted, waits forever.
-If C<$timeout> is 0, returns immediately.
+to wait (in milliseconds).  If C<$timeout> is omitted or C<undef>,
+waits forever.  If C<$timeout> is 0, returns immediately.
 
 Returns:
 
    +1    The object is signalled
    -1    The object is an abandoned mutex
     0    Timed out
-  undef  An error occurred
+  undef  An error occurred (check C<$^E> for details)
 
 =back
 
@@ -113,15 +113,15 @@ Returns:
 
 Waits for at least one of the C<@objects> to become signalled.
 C<$timeout> is the maximum time to wait (in milliseconds).  If
-C<$timeout> is omitted, waits forever.  If C<$timeout> is 0, returns
-immediately.
+C<$timeout> is omitted or C<undef>, waits forever.  If C<$timeout> is
+0, returns immediately.
 
 The return value indicates which object ended the wait:
 
    +N    $object[N-1] is signalled
    -N    $object[N-1] is an abandoned mutex
     0    Timed out
-  undef  An error occurred
+  undef  An error occurred (check C<$^E> for details)
 
 If more than one object became signalled, the one with the lowest
 index is used.
@@ -145,7 +145,12 @@ deprecated.
 =item INFINITE
 
 Constant value for an infinite timeout.  Omit the C<$timeout> argument
-instead.
+(or pass C<undef>) instead.
+
+C<INFINITE> is only mildly deprecated.  If you have a good use for it,
+feel free to continue to use it.  That is, C<< $object->wait(INFINITE) >>
+is pointless, but C<< $object->wait($timeout) >> (where C<$timeout>
+may or may not equal C<INFINITE>) may make sense.
 
 =item WaitForMultipleObjects(\@objects, $wait_all, $timeout)
 
@@ -191,7 +196,11 @@ None.
 
 =head1 INCOMPATIBILITIES
 
-None reported.
+Prior to version 1.06, the Win32 IPC modules treated C<undef> values
+differently.  In version 1.06 and later, passing C<undef> as the value
+of an optional parameter is the same as omitting that parameter.  In
+previous versions, C<undef> was interpreted as either the empty string
+or 0 (along with a warning about "Use of uninitialized value...").
 
 
 =head1 BUGS AND LIMITATIONS
