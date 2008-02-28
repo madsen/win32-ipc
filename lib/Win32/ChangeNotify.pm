@@ -7,10 +7,10 @@ package Win32::ChangeNotify;
 #   (c) 1995 Microsoft Corporation. All rights reserved.
 #       Developed by ActiveWare Internet Corp., http://www.ActiveState.com
 #
-#   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
+#   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/ChangeNotify.pm 245 2008-02-23 17:23:27 -0600 cmadsn $
+# $Id: lib/Win32/ChangeNotify.pm 254 2008-02-27 19:51:58 -0600 dubiously $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.

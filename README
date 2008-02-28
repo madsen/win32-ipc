@@ -1,4 +1,4 @@
-$$Id: README 239 2008-02-21 00:04:38 -0600 cmadsn $
+$$Id: README 254 2008-02-27 19:51:58 -0600 dubiously $
 Win32-IPC version $%v%$
 
 The Win32-IPC modules provide access to the Win32 sychronization
@@ -46,7 +46,7 @@ Copyright 1998-2008 Christopher J. Madsen
    (c) 1995 Microsoft Corporation. All rights reserved.
        Developed by ActiveWare Internet Corp., http://www.ActiveState.com
 
-   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@activestate.com>
+   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
