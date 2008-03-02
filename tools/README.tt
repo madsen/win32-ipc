@@ -1,5 +1,5 @@
-$$Id: README 254 2008-02-27 19:51:58 -0600 dubiously $
-Win32-IPC version $%v%$
+[% # $Id: tools/README.tt 256 2008-03-01 21:07:35 -0600 cmadsn $ %]
+Win32-IPC version [%version%], released [%date%]
 
 The Win32-IPC modules provide access to the Win32 sychronization
 objects, which are (currently) documented at
@@ -35,6 +35,14 @@ DEPENDENCIES
 You'll need a suitable C compiler.
 Microsoft Visual C++ 6 or MinGW GCC should work.
 You can also build it with GCC under Cygwin.
+
+
+
+CHANGES
+    Here's what's new in version [%version%] of Win32-IPC:
+    (See the file "Changes" for the full revision history.)
+
+[%changes%]
 
 
 

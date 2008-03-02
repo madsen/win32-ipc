@@ -10,7 +10,7 @@ package Win32::ChangeNotify;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/ChangeNotify.pm 254 2008-02-27 19:51:58 -0600 dubiously $
+# $Id: lib/Win32/ChangeNotify.pm 256 2008-03-01 21:07:35 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -91,6 +91,11 @@ __END__
 =head1 NAME
 
 Win32::ChangeNotify - Monitor events related to files and directories
+
+=head1 VERSION
+
+This section is filled in by C<Build distdir>.
+
 
 =head1 SYNOPSIS
 

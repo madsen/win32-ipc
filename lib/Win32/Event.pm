@@ -5,7 +5,7 @@ package Win32::Event;
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
 # Created: 3 Feb 1998 from the ActiveWare version
-# $Id: lib/Win32/Event.pm 245 2008-02-23 17:23:27 -0600 cmadsn $
+# $Id: lib/Win32/Event.pm 256 2008-03-01 21:07:35 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -43,6 +43,11 @@ __END__
 =head1 NAME
 
 Win32::Event - Use Win32 event objects from Perl
+
+=head1 VERSION
+
+This section is filled in by C<Build distdir>.
+
 
 =head1 SYNOPSIS
 

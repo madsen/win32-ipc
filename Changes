@@ -1,6 +1,6 @@
 Revision history for the Perl Win32-IPC modules.
 
-1.06  Feb ? 2008
+1.06  March ?, 2008
 	- *** INCOMPATIBLE CHANGE ***
 
 	  Passing undef as the value of an optional parameter is now
@@ -12,6 +12,9 @@ Revision history for the Perl Win32-IPC modules.
 	  means INFINITE, but to previous versions it meant 0.
 
 	- The modules now use XSLoader instead of DynaLoader.
+
+	- Copied Yves Orton's fix (from Win32::ChangeNotify 1.04) so
+	  "a true value" no longer has to be a non-zero number.
 
 	- Win32::IPC and its subclasses are now distributed separately
 	  from libwin32 (which has been broken up).  Prior to this

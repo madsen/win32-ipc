@@ -27,4 +27,5 @@ t/40-Semaphore.t
 t/50-ChangeNotify.t
 t/pod-coverage.t
 t/pod.t
+tools/README.tt
 typemap

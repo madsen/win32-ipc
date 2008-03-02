@@ -10,7 +10,7 @@ package Win32::Semaphore;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/Semaphore.pm 254 2008-02-27 19:51:58 -0600 dubiously $
+# $Id: lib/Win32/Semaphore.pm 256 2008-03-01 21:07:35 -0600 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -53,6 +53,11 @@ __END__
 =head1 NAME
 
 Win32::Semaphore - Use Win32 semaphore objects from Perl
+
+=head1 VERSION
+
+This section is filled in by C<Build distdir>.
+
 
 =head1 SYNOPSIS
 	require Win32::Semaphore;
