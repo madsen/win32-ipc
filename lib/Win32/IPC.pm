@@ -10,7 +10,7 @@ package Win32::IPC;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/IPC.pm 256 2008-03-01 21:07:35 -0600 cmadsn $
+# $Id: lib/Win32/IPC.pm 284 2008-04-16 21:17:41 -0500 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -29,7 +29,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
 BEGIN
 {
-  $VERSION = '1.06';
+  $VERSION = '1.07';
 
   require Exporter;
   @ISA       = qw( Exporter );
@@ -41,7 +41,6 @@ BEGIN
 
   # Generate INFINITE constant function:
   my $INFINITE = constant('INFINITE');
-  die "Our DLL does not define INFINITE" if $! != 0;
   eval "sub INFINITE () { $INFINITE } 1" or die;
 } # end BEGIN bootstrap
 
@@ -224,6 +223,21 @@ L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Win32-IPC>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 L<http://www.ActiveState.com>
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 1998-2008 Christopher J. Madsen
+
+Created: 3 Feb 1998 from the ActiveWare version
+  (c) 1995 Microsoft Corporation. All rights reserved.
+      Developed by ActiveWare Internet Corp., http://www.ActiveState.com
+
+  Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
 
 =head1 DISCLAIMER OF WARRANTY
 

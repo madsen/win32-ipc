@@ -10,7 +10,7 @@ package Win32::ChangeNotify;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/ChangeNotify.pm 256 2008-03-01 21:07:35 -0600 cmadsn $
+# $Id: lib/Win32/ChangeNotify.pm 284 2008-04-16 21:17:41 -0500 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -32,7 +32,7 @@ use Win32::IPC 1.00 '/./';      # Import everything
 
 BEGIN
 {
-  $VERSION = '1.06';
+  $VERSION = '1.07';
 
   @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
   @EXPORT = qw(
@@ -239,6 +239,21 @@ L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Win32-IPC>
 
 Loosely based on the original module by ActiveWare Internet Corp.,
 L<http://www.ActiveState.com>
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 1998-2008 Christopher J. Madsen
+
+Created: 3 Feb 1998 from the ActiveWare version
+  (c) 1995 Microsoft Corporation. All rights reserved.
+      Developed by ActiveWare Internet Corp., http://www.ActiveState.com
+
+  Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
 
 =head1 DISCLAIMER OF WARRANTY
 
