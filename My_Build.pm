@@ -1,11 +1,11 @@
 #---------------------------------------------------------------------
 package My_Build;
 #
-# Copyright 2007 Christopher J. Madsen
+# Copyright 2008 Christopher J. Madsen
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# Created: 18 Feb 2007
-# $Id: My_Build.pm 256 2008-03-01 21:07:35 -0600 cmadsn $
+# Created: 29 Feb 2008
+# $Id: My_Build.pm 281 2008-04-16 19:20:17 -0500 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.

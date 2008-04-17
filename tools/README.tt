@@ -1,5 +1,6 @@
-[% # $Id: tools/README.tt 256 2008-03-01 21:07:35 -0600 cmadsn $ %]
+[% # $Id: tools/README.tt 281 2008-04-16 19:20:17 -0500 cmadsn $ %]
 Win32-IPC version [%version%], released [%date%]
+
 
 The Win32-IPC modules provide access to the Win32 sychronization
 objects, which are (currently) documented at
