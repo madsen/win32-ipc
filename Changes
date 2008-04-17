@@ -1,5 +1,15 @@
 Revision history for the Perl Win32-IPC modules.
 
+1.07  April 16, 2008
+	- There are no significant functional changes in 1.07.	If
+	  you've already installed 1.06, don't bother upgrading.
+
+	- Give a more useful error message if Module::Build is not installed
+
+	- Don't bother to test $! after fetching constant('INFINITE')
+
+	- Added LICENSE AND COPYRIGHT section to documentation
+
 1.06  April 15, 2008
 	- *** INCOMPATIBLE CHANGE ***
 

@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 #---------------------------------------------------------------------
-# $Id: Build.PL 244 2008-02-21 23:28:42 -0600 cmadsn $
+# $Id: Build.PL 285 2008-04-16 21:36:34 -0500 cmadsn $
 # Copyright 2008 Christopher J. Madsen
 #
 # Build.PL for Win32::IPC
@@ -9,8 +9,9 @@
 use strict;
 use warnings;
 
+# Make sure we're using My_Build from our distribution:
 use FindBin;
-use lib $FindBin::Bin; # Make sure we're using My_Build from our distribution
+use lib "$FindBin::Bin/tools";
 
 use My_Build;          # Our customized version of Module::Build
 
@@ -39,7 +40,7 @@ my $builder = My_Build->new(
   create_makefile_pl => 'passthrough',
   dynamic_config     => 0,
   meta_merge         => {
-    no_index  => { file     => ['My_Build.pm'] },
+    no_index  => { directory => [ 'tools' ] },
     resources => { homepage => 'http://code.google.com/p/libwin32/' },
   },
 );
