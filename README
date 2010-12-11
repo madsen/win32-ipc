@@ -1,5 +1,4 @@
-[% # $Id: tools/README.tt 281 2008-04-16 19:20:17 -0500 cmadsn $ %]
-Win32-IPC version [%version%], released [%date%]
+Win32-IPC version {{$version}}, released {{$date}}
 
 
 The Win32-IPC modules provide access to the Win32 sychronization
@@ -24,10 +23,7 @@ INSTALLATION
 
 To install these modules, run the following commands:
 
-	perl Build.PL
-	Build
-	Build test
-	Build install
+{{ $t->build_instructions('    ') }}
 
 
 
@@ -37,19 +33,21 @@ You'll need a suitable C compiler.
 Microsoft Visual C++ 6 or MinGW GCC should work.
 You can also build it with GCC under Cygwin.
 
+{{ $t->dependency_list }}
+
 
 
 CHANGES
-    Here's what's new in version [%version%] of Win32-IPC:
+    Here's what's new in version {{$version}} of Win32-IPC:
     (See the file "Changes" for the full revision history.)
 
-[%changes%]
+{{$changes}}
 
 
 
 COPYRIGHT AND LICENSE
 
-Copyright 1998-2008 Christopher J. Madsen
+Copyright 1998-{{$zilla->copyright_year}} Christopher J. Madsen
 
  Created: 3 Feb 1998 from the ActiveWare version
    (c) 1995 Microsoft Corporation. All rights reserved.

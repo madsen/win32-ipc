@@ -12,6 +12,8 @@
 ^\#
 ^MANIFEST\.
 ^Makefile$
+^MYMETA.yml
+^README.md
 ^\.
 ^blib/
 \bcjm_
@@ -20,3 +22,6 @@
 ^_build\b
 ^Build$
 ^Build.bat$
+^dist\.ini$
+^tools/loom\.pl
+^tools/IPCTemplate\.pm

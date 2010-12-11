@@ -10,7 +10,6 @@ package Win32::Mutex;
 #   Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
 #
 # Author: Christopher J. Madsen <perl@cjmweb.net>
-# $Id: lib/Win32/Mutex.pm 284 2008-04-16 21:17:41 -0500 cmadsn $
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
@@ -20,7 +19,7 @@ package Win32::Mutex;
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either the
 # GNU General Public License or the Artistic License for more details.
 #
-# Use Win32 mutex objects for synchronization
+# ABSTRACT: Use Win32 mutex objects from Perl
 #---------------------------------------------------------------------
 
 use strict;
@@ -31,7 +30,8 @@ use Win32::IPC 1.00 '/./';      # Import everything
 
 BEGIN
 {
-  $VERSION = '1.07';
+  $VERSION = '1.08';
+  # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
   @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
   @EXPORT_OK = qw(
@@ -49,15 +49,6 @@ sub Open  { $_[0] = Win32::Mutex->open($_[1]) }
 
 1;
 __END__
-
-=head1 NAME
-
-Win32::Mutex - Use Win32 mutex objects from Perl
-
-=head1 VERSION
-
-This section is filled in by C<Build distdir>.
-
 
 =head1 SYNOPSIS
 
@@ -133,82 +124,9 @@ Use C<$MutObj-E<gt>release> instead.
 None.
 
 
-=head1 CONFIGURATION AND ENVIRONMENT
-
-Win32::Mutex requires no configuration files or environment variables.
-
-It runs under 32-bit or 64-bit Microsoft Windows, either natively or
-under Cygwin.
-
-
 =head1 DEPENDENCIES
 
 L<Win32::IPC>
-
-
-=head1 INCOMPATIBILITIES
-
-Prior to version 1.06, Win32::Mutex treated C<undef> values
-differently.  In version 1.06 and later, passing C<undef> as the value
-of an optional parameter is the same as omitting that parameter.  In
-previous versions, C<undef> was interpreted as either the empty string
-or 0 (along with a warning about "Use of uninitialized value...").
-
-
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
-
-=head1 AUTHOR
-
-Christopher J. Madsen E<lt>F<perl AT cjmweb.net>E<gt>
-
-Please report any bugs or feature requests to
-S<< C<< <bug-Win32-IPC AT rt.cpan.org> >> >>,
-or through the web interface at
-L<http://rt.cpan.org/Public/Bug/Report.html?Queue=Win32-IPC>
-
-Loosely based on the original module by ActiveWare Internet Corp.,
-L<http://www.ActiveState.com>
-
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 1998-2008 Christopher J. Madsen
-
-Created: 3 Feb 1998 from the ActiveWare version
-  (c) 1995 Microsoft Corporation. All rights reserved.
-      Developed by ActiveWare Internet Corp., http://www.ActiveState.com
-
-  Other modifications (c) 1997 by Gurusamy Sarathy <gsar@cpan.org>
-
-This module is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself. See L<perlartistic>.
-
-
-=head1 DISCLAIMER OF WARRANTY
-
-BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
-YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
-NECESSARY SERVICING, REPAIR, OR CORRECTION.
-
-IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENSE, BE
-LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
-OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
-THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
-RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-SUCH DAMAGES.
 
 =cut
 

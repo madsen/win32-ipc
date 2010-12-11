@@ -1,5 +1,10 @@
 Build.PL
 Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+README
 lib/Win32/ChangeNotify.pm
 lib/Win32/ChangeNotify.xs
 lib/Win32/Event.pm
@@ -8,13 +13,9 @@ lib/Win32/IPC.pm
 lib/Win32/IPC.xs
 lib/Win32/Mutex.pm
 lib/Win32/Mutex.xs
-lib/Win32/ppport.h
 lib/Win32/Semaphore.pm
 lib/Win32/Semaphore.xs
-Makefile.PL
-MANIFEST
-META.yml
-README
+lib/Win32/ppport.h
 t/00-load.t
 t/01-load.t
 t/02-load.t
@@ -24,8 +25,7 @@ t/20-Event.t
 t/30-Mutex.t
 t/40-Semaphore.t
 t/50-ChangeNotify.t
-t/pod-coverage.t
-t/pod.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
 tools/My_Build.pm
-tools/README.tt
 typemap
