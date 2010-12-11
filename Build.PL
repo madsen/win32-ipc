@@ -24,6 +24,7 @@ my $builder = My_Build->new(
   dist_abstract       => 'Use Win32 synchronization objects',
   dist_author         => 'Christopher J. Madsen <perl@cjmweb.net>',
   dist_version_from   => 'lib/Win32/IPC.pm',
+  add_to_cleanup      => ['vc*.pdb'],
   # Prerequisites inserted by DistZilla:
 ##{ $plugin->get_prereqs ##}
 );
