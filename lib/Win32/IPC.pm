@@ -180,6 +180,9 @@ None.
 
 None.
 
+=for Pod::Coverage
+^constant$
+
 =cut
 
 # Local Variables:

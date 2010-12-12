@@ -123,6 +123,10 @@ Use C<$SemObj-E<gt>release($Count,$LastVal)> instead.
 
 =back
 
+=for Pod::Coverage
+^Create$
+^Open$
+
 =head1 DEPENDENCIES
 
 L<Win32::IPC>

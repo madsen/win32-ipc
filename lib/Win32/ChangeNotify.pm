@@ -196,6 +196,9 @@ None.
 
 L<Win32::IPC>
 
+=for Pod::Coverage
+^constant$
+
 =cut
 
 # Local Variables:
