@@ -16,11 +16,11 @@ lib/Win32/Mutex.xs
 lib/Win32/Semaphore.pm
 lib/Win32/Semaphore.xs
 lib/Win32/ppport.h
-t/00-load.t
-t/01-load.t
-t/02-load.t
-t/03-load.t
-t/04-load.t
+t/00-load-ipc.t
+t/01-load-cn.t
+t/02-load-event.t
+t/03-load-mutex.t
+t/04-load-sem.t
 t/20-Event.t
 t/30-Mutex.t
 t/40-Semaphore.t
