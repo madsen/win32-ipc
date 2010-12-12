@@ -1,6 +1,6 @@
 Revision history for the Perl Win32-IPC modules.
 
-1.08  NOT
+1.08  December 11, 2010
 	- Localize $@ when using eval
 
 	- Includes a CPAN Meta v2 META.json file.
