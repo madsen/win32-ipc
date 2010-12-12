@@ -1,8 +1,7 @@
 Revision history for the Perl Win32-IPC modules.
 
 1.08  NOT
-	- There are no significant functional changes in 1.08.  If
-	  you've already installed 1.07, don't bother upgrading.
+	- Localize $@ when using eval
 
 	- Includes a CPAN Meta v2 META.json file.
 
