@@ -18,7 +18,7 @@ plan skip_all => "File::Temp required for testing Win32::ChangeNotify" if $@;
 eval "use File::Path 'rmtree';";
 plan skip_all => "File::Path required for testing Win32::ChangeNotify" if $@;
 
-plan tests => 20;
+plan tests => 21;
 
 diag(<<'END_WARNING');
 This test should take no more than 10 seconds.
@@ -76,6 +76,10 @@ sub wPath
 #=====================================================================
 
 ok(FILE_NOTIFY_CHANGE_FILE_NAME != 0, 'FILE_NOTIFY_CHANGE_FILE_NAME');
+
+is(FILE_NOTIFY_CHANGE_DIR_NAME,
+   Win32::ChangeNotify::constant('FILE_NOTIFY_CHANGE_DIR_NAME'),
+   'FILE_NOTIFY_CHANGE_DIR_NAME');
 
 ok(INFINITE != 0, 'INFINITE');
 
