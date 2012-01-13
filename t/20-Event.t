@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 20;
+use Test::More 0.88 tests => 20; # recent version
 
 use Win32::Event ();
 
