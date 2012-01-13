@@ -22,13 +22,14 @@ package Win32::IPC;
 # ABSTRACT: Base class for Win32 synchronization objects
 #---------------------------------------------------------------------
 
+use 5.006;
 use strict;
 use warnings;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
 BEGIN
 {
-  $VERSION = '1.08';
+  $VERSION = '1.09';
   # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
   require Exporter;

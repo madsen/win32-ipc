@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------
-package My_Build;
+package inc::My_Build;
 #
 # Copyright 2010 Christopher J. Madsen
 #
@@ -27,7 +27,7 @@ use base 'Module::Build';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.08';
+our $VERSION = '1.09';
 
 #=====================================================================
 # Compile an XS file, but use the version number from the module

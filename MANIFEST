@@ -5,6 +5,7 @@ MANIFEST
 META.json
 META.yml
 README
+inc/My_Build.pm
 lib/Win32/ChangeNotify.pm
 lib/Win32/ChangeNotify.xs
 lib/Win32/Event.pm
@@ -16,6 +17,7 @@ lib/Win32/Mutex.xs
 lib/Win32/Semaphore.pm
 lib/Win32/Semaphore.xs
 lib/Win32/ppport.h
+t/00-all_prereqs.t
 t/00-load-ipc.t
 t/01-load-cn.t
 t/02-load-event.t
@@ -27,5 +29,4 @@ t/40-Semaphore.t
 t/50-ChangeNotify.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
-tools/My_Build.pm
 typemap

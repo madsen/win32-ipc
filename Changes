@@ -1,5 +1,9 @@
 Revision history for the Perl Win32-IPC modules.
 
+1.09  NOT
+	- The tools directory has been renamed inc for consistency
+	  with other CPAN distributions
+
 1.08  December 11, 2010
 	- Localize $@ when using eval
 
