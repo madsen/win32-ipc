@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Win32::Mutex;
 #
-# Copyright 1998-2008 Christopher J. Madsen
+# Copyright 1998-2012 Christopher J. Madsen
 #
 # Created: 3 Feb 1998 from the ActiveWare version
 #   (c) 1995 Microsoft Corporation. All rights reserved.
@@ -22,19 +22,19 @@ package Win32::Mutex;
 # ABSTRACT: Use Win32 mutex objects from Perl
 #---------------------------------------------------------------------
 
+use 5.006;
 use strict;
 use warnings;
-use vars qw($VERSION @ISA @EXPORT_OK);
 
 use Win32::IPC 1.00 '/./';      # Import everything
 
 BEGIN
 {
-  $VERSION = '1.08';
+  our $VERSION = '1.09';
   # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
-  @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
-  @EXPORT_OK = qw(
+  our @ISA = qw(Win32::IPC);    # Win32::IPC isa Exporter
+  our @EXPORT_OK = qw(
     wait_any wait_all INFINITE
   );
 
@@ -127,6 +127,11 @@ None.
 =head1 DEPENDENCIES
 
 L<Win32::IPC>
+
+=head1 BUGS AND LIMITATIONS
+
+Signal handlers will not be called during the C<wait> method.
+See L<Win32::IPC/"BUGS AND LIMITATIONS"> for details.
 
 =cut
 

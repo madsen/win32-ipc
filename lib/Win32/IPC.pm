@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Win32::IPC;
 #
-# Copyright 1998-2008 Christopher J. Madsen
+# Copyright 1998-2012 Christopher J. Madsen
 #
 # Created: 3 Feb 1998 from the ActiveWare version
 #   (c) 1995 Microsoft Corporation. All rights reserved.
@@ -25,17 +25,16 @@ package Win32::IPC;
 use 5.006;
 use strict;
 use warnings;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 
 BEGIN
 {
-  $VERSION = '1.09';
+  our $VERSION = '1.09';
   # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
   require Exporter;
-  @ISA       = qw( Exporter );
-  @EXPORT    = qw( INFINITE WaitForMultipleObjects );
-  @EXPORT_OK = qw( wait_any wait_all );
+  our @ISA       = qw( Exporter );
+  our @EXPORT    = qw( INFINITE WaitForMultipleObjects );
+  our @EXPORT_OK = qw( wait_any wait_all );
 
   require XSLoader;
   XSLoader::load('Win32::IPC', $VERSION);
@@ -180,6 +179,30 @@ None.
 =head1 DEPENDENCIES
 
 None.
+
+
+=head1 BUGS AND LIMITATIONS
+
+If your program uses signal handlers (installed using C<%SIG>), and a
+handled signal arrives while the program is in one of the IPC wait
+functions (C<wait>, C<wait_any>, or C<wait_all>), the signal handler
+will not be executed until the wait ends.  For instance, this means
+you can't interrupt a wait with Control-C if you have installed a
+C<$SIG{INT}> handler.
+
+The root cause of this is that Perl defers running the signal handler
+until the Perl interpreter is in a safe state.
+See L<perlipc/"Deferred Signals (Safe Signals)">.  I don't know of any
+proper solution to this; if you do, please let me know.
+
+One possible workaround is to use threads, and do the wait in a
+secondary thread while the main thread continues to handle signals.
+The main thread could signal the secondary thread using a
+L<Win32::Event> object.
+
+Another workaround is to use a relatively short timeout.  You can
+retry the wait as needed.  Each timeout gives any queued-up signal
+handlers a chance to run.
 
 =for Pod::Coverage
 ^constant$

@@ -1,8 +1,12 @@
 Revision history for the Perl Win32-IPC modules.
 
 1.09  NOT
+	- There are no functional changes in 1.09.
+
+	- Document incompatibility with signal handlers.
+
 	- The tools directory has been renamed inc for consistency
-	  with other CPAN distributions
+	  with other CPAN distributions.
 
 1.08  December 11, 2010
 	- Localize $@ when using eval

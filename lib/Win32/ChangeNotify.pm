@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------
 package Win32::ChangeNotify;
 #
-# Copyright 1998-2008 Christopher J. Madsen
+# Copyright 1998-2012 Christopher J. Madsen
 #
 # Created: 3 Feb 1998 from the ActiveWare version
 #   (c) 1995 Microsoft Corporation. All rights reserved.
@@ -22,20 +22,20 @@ package Win32::ChangeNotify;
 # ABSTRACT: Monitor events related to files and directories
 #---------------------------------------------------------------------
 
+use 5.006;
 use strict;
 use warnings;
-use vars qw($AUTOLOAD $VERSION @ISA @EXPORT @EXPORT_OK);
 
 use Carp;
 use Win32::IPC 1.00 '/./';      # Import everything
 
 BEGIN
 {
-  $VERSION = '1.08';
+  our $VERSION = '1.09';
   # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
-  @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
-  @EXPORT = qw(
+  our @ISA = qw(Win32::IPC);        # Win32::IPC isa Exporter
+  our @EXPORT = qw(
     FILE_NOTIFY_CHANGE_ATTRIBUTES
     FILE_NOTIFY_CHANGE_DIR_NAME
     FILE_NOTIFY_CHANGE_FILE_NAME
@@ -44,7 +44,7 @@ BEGIN
     FILE_NOTIFY_CHANGE_SIZE
     INFINITE
   );
-  @EXPORT_OK = qw(
+  our @EXPORT_OK = qw(
     wait_any wait_all
   );
 
@@ -57,7 +57,7 @@ sub AUTOLOAD {
     # XS function.
 
     my $constname;
-    ($constname = $AUTOLOAD) =~ s/.*:://;
+    ($constname = our $AUTOLOAD) =~ s/.*:://;
     if ($constname =~ /^FILE_NOTIFY_CHANGE_/) {
         local $! = 0;
         my $val = constant($constname);
@@ -195,6 +195,11 @@ None.
 =head1 DEPENDENCIES
 
 L<Win32::IPC>
+
+=head1 BUGS AND LIMITATIONS
+
+Signal handlers will not be called during the C<wait> method.
+See L<Win32::IPC/"BUGS AND LIMITATIONS"> for details.
 
 =for Pod::Coverage
 ^constant$
