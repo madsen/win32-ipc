@@ -1,6 +1,6 @@
 Revision history for the Perl Win32-IPC modules.
 
-1.09  NOT
+1.09  January 14, 2012
 	- There are no functional changes in 1.09.
 
 	- Document incompatibility with signal handlers.
