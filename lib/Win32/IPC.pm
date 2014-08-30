@@ -28,7 +28,7 @@ use warnings;
 
 BEGIN
 {
-  our $VERSION = '1.09';
+  our $VERSION = '1.10';
   # This file is part of {{$dist}} {{$dist_version}} ({{$date}})
 
   require Exporter;

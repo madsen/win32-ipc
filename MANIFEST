@@ -27,6 +27,6 @@ t/20-Event.t
 t/30-Mutex.t
 t/40-Semaphore.t
 t/50-ChangeNotify.t
-t/release-pod-coverage.t
-t/release-pod-syntax.t
 typemap
+xt/release/pod-coverage.t
+xt/release/pod-syntax.t

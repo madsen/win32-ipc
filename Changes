@@ -1,6 +1,9 @@
 Revision history for the Perl Win32-IPC modules.
 
-1.09  January 14, 2012
+1.10  NOT
+	- Release tests moved to xt/
+
+1.09  2012-01-14
 	- There are no functional changes in 1.09.
 
 	- Document incompatibility with signal handlers.
@@ -8,14 +11,14 @@ Revision history for the Perl Win32-IPC modules.
 	- The tools directory has been renamed inc for consistency
 	  with other CPAN distributions.
 
-1.08  December 11, 2010
+1.08  2010-12-11
 	- Localize $@ when using eval
 
 	- Includes a CPAN Meta v2 META.json file.
 
 	- The passthrough Makefile.PL has been removed.
 
-1.07  April 16, 2008
+1.07  2008-04-16
 	- There are no significant functional changes in 1.07.	If
 	  you've already installed 1.06, don't bother upgrading.
 
@@ -25,7 +28,7 @@ Revision history for the Perl Win32-IPC modules.
 
 	- Added LICENSE AND COPYRIGHT section to documentation
 
-1.06  April 15, 2008
+1.06  2008-04-15
 	- *** INCOMPATIBLE CHANGE ***
 
 	  Passing undef as the value of an optional parameter is now
@@ -52,112 +55,112 @@ Revision history for the Perl Win32-IPC modules.
 ======================================================================
 Revision history for Perl extension Win32::IPC.
 
-1.03  Fri Jul 11 15:40:00 2003
+1.03  2003-07-11
 	- revised how WaitForMultiple handles non-Win32::IPC objects
 
-1.02  Mon May 22 21:16:37 2000
+1.02  2000-05-22
 	- support for building under Perl v5.6.0
 
-1.01  Tue Sep 15 12:25:16 1998
+1.01  1998-09-15
 	- use New/Safefree instead of safemalloc/safefree
 
-1.00  Fri Feb  6 1998 10:51:40
+1.00  1998-02-06
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C
 	- Fixed fatal bugs in WaitForMultipleObjects
 	- New interface using lower-case method names
 
-0.03  Mon Feb  2 13:44:17 1998
+0.03  1998-02-02
 	- added Win32::Event to WaitForMultipleObjects
 
-0.02  Fri Jul  4 12:19:12 1997
+0.02  1997-07-04
 	- fixed refs to obsolete "ChangeNotification"
 
-0.01  Sat Apr  5 14:24:55 1997
+0.01  1997-04-05
 	- original version; created by h2xs 1.18
 
 
 ======================================================================
 Revision history for Perl extension Win32::ChangeNotify.
 
-1.05  2005/09/06
+1.05  2005-09-06
 	- Remove USING_WIDE() code and fix cygwin compiler warnings
 
-1.04  2002/12/18 21:48
+1.04  2002-12-18
 	- Fixed $subtree handling. Up till now it had to be a true numeric value
 	  contrary to what the docs say "a true value...." (Yves Orton)
 
-1.03  Mon May 22 2000 20:32:04
+1.03  2000-05-22
         - support for passing Unicode strings to new() method
 
-1.02  Sun Jun 13 1999 12:33:09
+1.02  1999-06-13
 	- Bug fix to AUTOLOAD (FILE_NOTIFY_CHANGE_* constants now work)
 	  (courtesy Christopher J. Madsen)
 
-1.01  Sun Apr 26 1998 13:28:49
+1.01  1998-04-26
 	- Bug fixes to `new' and `close' methods (courtesy
 	  Chris Madsen)
 
-1.00  Fri Feb  6 1998 10:35:22
+1.00  1998-02-06
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C
 	- New interface using lower-case method names
 
-0.01  Sat Apr  5 1997 14:24:50
+0.01  1997-04-05
 	- original version; created by h2xs 1.18
 
 
 ======================================================================
 Revision history for Perl extension Win32::Event.
 
-1.01  Mon May 22 2000 20:56:41
+1.01  2000-05-22
 	- support for passing Unicode strings to the new() and open() methods
 	  under Perl 5.6.0 (thanks to Doug Lankshear <doug@lankshear.net>)
 
-1.00  Fri Feb  6 1998 10:35:22
+1.00  1998-02-06
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C
 	- New interface using lower-case method names
 
-0.01  Mon Feb 2 1998 12:39:07
+0.01  1998-02-02
 	- original version; copied from Win32::Mutex 0.01 (libwin32 0.9)
 
 
 ======================================================================
 Revision history for Perl extension Win32::Mutex.
 
-1.02  Mon May 22 21:19:43 2000
+1.02  2000-05-22
 	- support for passing Unicode strings to the new() and open()
 	  methods (thanks to Doug Lankshear <doug@lankshear.net>)
 
-1.01  Sun Feb  8 1998 20:17:15
+1.01  1998-02-08
 	- Added Open() function for compat
 
-1.00  Fri Feb  6 1998 10:56:09
+1.00  1998-02-06
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C
 	- New interface using lower-case method names
 
-0.01  Sat Apr  5 14:25:17 1997
+0.01  1997-04-05
 	- original version; created by h2xs 1.18
 
 
 ======================================================================
 Revision history for Perl extension Win32::Semaphore.
 
-1.02  Mon May 22 2000 21:53:04
+1.02  2000-05-22
 	- support for passing Unicode strings to new() and open() methods
 	  (Doug Lankshear <doug@lankshear.net>)
 
-1.01  Sun Feb  8 1998 20:16:56
+1.01  1998-02-08
 	- Add Open() function for compat
 
-1.00  Fri Feb  6 1998 11:01:57
+1.00  1998-02-06
 	- Rewritten from ActiveWare version by Christopher J. Madsen
 	- Simplified code; converted from C++ to C
 	- New interface using lower-case method names
 	- Created some tests in test.pl
 
-0.01  Sat Apr  5 14:24:13 1997
+0.01  1997-04-05
 	- original version; created by h2xs 1.18
 	- imported Activeware version
