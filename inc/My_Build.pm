@@ -21,6 +21,7 @@ use strict;
 use warnings;
 use File::Spec ();
 use Module::Build ();
+use Module::Metadata ();
 
 use base 'Module::Build';
 
@@ -40,7 +41,7 @@ sub process_xs
 
   # Get the version number from the corresponding .pm file:
   $pm_file =~ s/\.xs$/.pm/i or die "$pm_file: Not an .xs file";
-  my $pm_info = Module::Build::ModuleInfo->new_from_file($pm_file)
+  my $pm_info = Module::Metadata->new_from_file($pm_file)
       or die "Can't find file $pm_file to determine version";
 
   # Tell dist_version to use it:
