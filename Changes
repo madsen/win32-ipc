@@ -1,5 +1,9 @@
 Revision history for the Perl Win32-IPC modules.
 
+1.11  NOT
+	- Change build process to use Module::Metadata instead of deprecated
+	  Module::Build::ModuleInfo (Klaus Eichner, GitHub#1)
+
 1.10  2014-08-30
 	- There are no functional changes in 1.10.
 

@@ -28,7 +28,7 @@ use base 'Module::Build';
 #=====================================================================
 # Package Global Variables:
 
-our $VERSION = '1.09';
+our $VERSION = '1.11';
 
 #=====================================================================
 # Compile an XS file, but use the version number from the module
