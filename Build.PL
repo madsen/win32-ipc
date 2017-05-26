@@ -8,6 +8,7 @@
 use strict;
 use warnings;
 
+use lib '.';
 use inc::My_Build;           # Our customized version of Module::Build
 
 unless ($^O eq "MSWin32" || $^O eq "cygwin") {
